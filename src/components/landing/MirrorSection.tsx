@@ -11,6 +11,10 @@ export const MirrorSection = () => {
             Mas o relatório não espera.
           </p>
           
+          <p className="text-lg md:text-xl leading-relaxed text-foreground/70 mt-2">
+            E o prazo chega do mesmo jeito.
+          </p>
+          
           <div className="mt-8 pt-8 border-t border-border/50">
             <p className="text-muted-foreground leading-relaxed">
               Se você se reconheceu nessa cena, saiba que você não está sozinha. E mais importante: 

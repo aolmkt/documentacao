@@ -28,7 +28,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         </Button>
         
         <p className="mt-6 text-sm text-muted-foreground">
-          Acesso imediato após a compra
+          Aplicável mesmo para quem nunca conseguiu manter anotações organizadas.
         </p>
       </div>
     </section>
