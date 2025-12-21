@@ -2,16 +2,16 @@ import { X } from "lucide-react";
 
 const items = [
   {
+    title: "Não aumenta sua carga de trabalho",
+    description: "O objetivo é justamente o contrário: diminuir o tempo que você gasta com relatórios."
+  },
+  {
     title: "Não é material acadêmico",
     description: "Nada de teorias complicadas ou linguagem rebuscada. É prático e direto ao ponto."
   },
   {
     title: "Não é modelo genérico de relatório",
     description: "Você vai aprender um método, não copiar frases prontas que não têm a sua cara."
-  },
-  {
-    title: "Não aumenta sua carga de trabalho",
-    description: "O objetivo é justamente o contrário: diminuir o tempo que você gasta com relatórios."
   }
 ];
 

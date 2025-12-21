@@ -7,6 +7,10 @@ export const MirrorSection = () => {
             "Domingo à noite. O notebook está aberto na mesa da sala. No celular, dezenas de fotos das atividades da semana. Em outra aba, a BNCC — que você já leu tantas vezes, mas que nunca parece se encaixar direito. O café esfriou faz tempo. E a sensação de que você deveria estar descansando, não trabalhando, pesa mais do que qualquer palavra que você tenta escrever."
           </p>
           
+          <p className="text-lg md:text-xl leading-relaxed text-foreground font-medium mt-4">
+            Mas o relatório não espera.
+          </p>
+          
           <div className="mt-8 pt-8 border-t border-border/50">
             <p className="text-muted-foreground leading-relaxed">
               Se você se reconheceu nessa cena, saiba que você não está sozinha. E mais importante: 

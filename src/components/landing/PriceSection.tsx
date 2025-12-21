@@ -11,10 +11,14 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
         <div className="bg-card rounded-2xl p-8 md:p-12 border-2 border-primary/20 shadow-lg text-center">
           <p className="text-muted-foreground mb-2">Investimento único</p>
           
-          <div className="mb-6">
+          <div className="mb-2">
             <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 27</span>
             <span className="text-muted-foreground">,00</span>
           </div>
+          
+          <p className="text-sm text-primary font-medium mb-6">
+            Pagamento único. Sem mensalidade.
+          </p>
           
           <p className="text-muted-foreground mb-8">
             Menos do que você gasta com café em uma semana.
