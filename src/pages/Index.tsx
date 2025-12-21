@@ -1,13 +1,39 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useRef } from "react";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { MirrorSection } from "@/components/landing/MirrorSection";
+import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
+import { MethodSection } from "@/components/landing/MethodSection";
+import { WhatIsNotSection } from "@/components/landing/WhatIsNotSection";
+import { ProofSection } from "@/components/landing/ProofSection";
+import { WhatYouGetSection } from "@/components/landing/WhatYouGetSection";
+import { PriceSection } from "@/components/landing/PriceSection";
+import { SecuritySection } from "@/components/landing/SecuritySection";
+import { FutureSaasSection } from "@/components/landing/FutureSaasSection";
+import { Footer } from "@/components/landing/Footer";
 
 const Index = () => {
+  const priceRef = useRef<HTMLDivElement>(null);
+
+  const scrollToPrice = () => {
+    priceRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <main className="min-h-screen bg-background">
+      <HeroSection onCtaClick={scrollToPrice} />
+      <MirrorSection />
+      <GuiltBreakSection />
+      <MethodSection />
+      <WhatIsNotSection />
+      <ProofSection />
+      <WhatYouGetSection />
+      <div ref={priceRef}>
+        <PriceSection onCtaClick={() => window.open("#", "_blank")} />
       </div>
-    </div>
+      <SecuritySection />
+      <FutureSaasSection />
+      <Footer />
+    </main>
   );
 };
 
