@@ -15,7 +15,7 @@ export const GuiltBreakSection = () => {
               O modelo tradicional de fazer relatórios é cruel: esperar semanas ou meses para sentar e escrever sobre cada criança, tentando lembrar de detalhes que já se perderam na correria do dia a dia.
             </p>
             <p>
-              Nenhuma memória aguenta isso. Nenhuma professora deveria passar por isso.
+              Nenhuma professora deveria trabalhar assim.
             </p>
             <p className="font-medium text-foreground">
               O que falta não é esforço — é um método diferente.
