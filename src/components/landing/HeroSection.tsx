@@ -22,7 +22,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         <Button 
           onClick={onCtaClick}
           size="lg"
-          className="bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
         >
           Quero parar de sofrer todo domingo
         </Button>
