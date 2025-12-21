@@ -31,6 +31,9 @@ export const MethodSection = () => {
           <p className="text-primary font-medium mb-3">
             Eu chamo isso de Documentação Pedagógica Contínua.
           </p>
+          <p className="text-sm text-muted-foreground mb-3">
+            Esse é o mesmo método que será automatizado no futuro.
+          </p>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
             O método que vai mudar sua relação com relatórios
           </h2>
