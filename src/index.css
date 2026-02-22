@@ -50,6 +50,9 @@
     
     --success: 145 60% 40%;
     --success-foreground: 0 0% 100%;
+
+    --lavanda: 260 40% 96%;
+    --lavanda-light: 260 35% 98%;
   }
 
   .dark {
@@ -90,6 +93,9 @@
     
     --success: 145 50% 45%;
     --success-foreground: 0 0% 100%;
+
+    --lavanda: 260 30% 20%;
+    --lavanda-light: 260 25% 15%;
   }
 }
 

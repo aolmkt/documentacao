@@ -8,26 +8,26 @@ interface HeroSectionProps {
 export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   return (
     <>
-      <section className="flex items-center justify-center px-4 pt-8 pb-10 md:pt-12 md:pb-14 bg-[hsl(260,40%,96%)]">
+      <section className="flex items-center justify-center px-4 pt-10 pb-12 md:pt-14 md:pb-16 bg-lavanda">
         <div className="container max-w-3xl text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-foreground mb-4 text-balance uppercase tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] text-foreground mb-4 text-balance uppercase tracking-tight">
             Chega de virar a noite escrevendo relatório.
           </h1>
 
-          <p className="text-base md:text-lg text-foreground/75 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
+          <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
             Organize seus registros ao longo do período e transforme semanas de observação em um relatório evolutivo claro, seguro e estruturado.
           </p>
 
           <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[hsl(168,45%,55%)]">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary">
               Método Relatório Evolutivo com IA
             </h2>
-            <h3 className="text-sm md:text-base text-muted-foreground mt-1">
+            <h3 className="text-sm md:text-base text-muted-foreground mt-1 tracking-wide">
               Sistema de Documentação Pedagógica Contínua para Educação Infantil
             </h3>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-5 md:p-6 max-w-md mx-auto mb-6">
+          <div className="bg-card rounded-xl shadow-md border border-border/60 p-5 md:p-6 max-w-md mx-auto mb-6">
             <ul className="text-left space-y-3 text-sm md:text-base text-foreground/90">
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">

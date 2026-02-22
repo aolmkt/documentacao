@@ -64,6 +64,10 @@ export default {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        lavanda: {
+          DEFAULT: "hsl(var(--lavanda))",
+          light: "hsl(var(--lavanda-light))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

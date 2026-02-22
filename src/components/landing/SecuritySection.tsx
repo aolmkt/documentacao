@@ -1,3 +1,5 @@
+import { Shield } from "lucide-react";
+
 const items = [
   "Linguagem descritiva da Educação Infantil",
   "Uso exclusivamente textual (sem envio de fotos ou vídeos)",
@@ -8,35 +10,42 @@ const items = [
 
 export const SecuritySection = () => {
   return (
-    <section className="py-16 md:py-20 px-4">
+    <section className="py-12 md:py-16 px-4 bg-lavanda-light">
       <div className="container max-w-3xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4 uppercase">
-          Segurança e responsabilidade
-        </h2>
+        <div className="bg-card rounded-xl p-6 md:p-8 border border-border/60 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-foreground uppercase">
+              Segurança e responsabilidade
+            </h2>
+          </div>
 
-        <p className="text-center text-muted-foreground mb-8">
-          Este método foi estruturado respeitando:
-        </p>
-
-        <ul className="space-y-3 mb-8">
-          {items.map((item, index) => (
-            <li
-              key={index}
-              className="flex items-start gap-3 text-foreground/80"
-            >
-              <span className="text-muted-foreground mt-0.5">–</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="bg-muted/50 rounded-xl p-6 border border-border/50">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            O Assistente não substitui avaliação diagnóstica ou parecer técnico.
+          <p className="text-muted-foreground mb-5 text-sm">
+            Este método foi estruturado respeitando:
           </p>
-          <p className="text-sm text-foreground font-medium mt-2">
-            Ele organiza o que você registra.
-          </p>
+
+          <ul className="space-y-2.5 mb-6">
+            {items.map((item, index) => (
+              <li
+                key={index}
+                className="flex items-start gap-3 text-foreground/80 text-sm"
+              >
+                <span className="text-muted-foreground mt-0.5">–</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="bg-lavanda rounded-lg p-4">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              O Assistente não substitui avaliação diagnóstica ou parecer técnico.
+            </p>
+            <p className="text-sm text-foreground font-medium mt-1.5">
+              Ele organiza o que você registra.
+            </p>
+          </div>
         </div>
       </div>
     </section>

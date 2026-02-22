@@ -23,34 +23,44 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <HeroSection onCtaClick={scrollToPrice} />
       <MirrorSection />
+      <div className="h-px bg-border" />
       <GuiltBreakSection />
+      <div className="h-px bg-border" />
       <MethodSection />
-      <div className="py-10 md:py-14 px-4 text-center">
+      <div className="h-px bg-border" />
+      <div className="py-8 md:py-10 px-4 text-center bg-lavanda">
         <Button 
           onClick={scrollToPrice}
           size="lg"
-          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-base px-6 sm:px-8 py-5 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
         >
           Quero aplicar o método na minha rotina
         </Button>
       </div>
+      <div className="h-px bg-border" />
       <WhatIsNotSection />
+      <div className="h-px bg-border" />
       <WhatYouGetSection />
+      <div className="h-px bg-border" />
       <SecuritySection />
-      <TimeSection />
-      <div className="py-12 md:py-16 px-4 text-center bg-secondary/30">
-        <p className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground max-w-3xl mx-auto leading-snug">
+      <div className="h-px bg-border" />
+      <TimeSection onCtaClick={scrollToPrice} />
+      <div className="h-px bg-border" />
+      <div className="py-8 md:py-10 px-4 text-center bg-lavanda">
+        <p className="text-lg md:text-xl font-bold text-foreground max-w-3xl mx-auto leading-snug">
           Método aplicado na prática com estrutura real de relatório evolutivo.
         </p>
       </div>
+      <div className="h-px bg-border" />
       <div ref={priceRef}>
         <PriceSection onCtaClick={() => window.open("#", "_blank")} />
       </div>
-      <div className="py-6 px-4 text-center">
-        <p className="text-sm md:text-base text-muted-foreground font-medium">
+      <div className="py-4 px-4 text-center">
+        <p className="text-xs text-muted-foreground">
           Valor de lançamento válido por tempo limitado.
         </p>
       </div>
+      <div className="h-px bg-border" />
       <FutureSaasSection onCtaClick={scrollToPrice} />
       <Footer />
     </main>
