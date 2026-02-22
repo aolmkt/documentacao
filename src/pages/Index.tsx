@@ -46,6 +46,11 @@ const Index = () => {
       <div ref={priceRef}>
         <PriceSection onCtaClick={() => window.open("#", "_blank")} />
       </div>
+      <div className="py-6 px-4 text-center">
+        <p className="text-sm md:text-base text-muted-foreground font-medium">
+          Valor de lançamento válido por tempo limitado.
+        </p>
+      </div>
       <FutureSaasSection onCtaClick={scrollToPrice} />
       <Footer />
     </main>
