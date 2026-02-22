@@ -6,10 +6,10 @@ interface PriceSectionProps {
 
 export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
   return (
-    <section className="py-16 md:py-24 px-4 bg-secondary/30">
+    <section className="py-12 md:py-16 px-4">
       <div className="container max-w-2xl">
-        <div className="bg-card rounded-2xl p-8 md:p-12 border-2 border-primary/20 shadow-lg text-center">
-          <p className="text-muted-foreground mb-2 uppercase tracking-wide text-sm">Investimento</p>
+        <div className="bg-card rounded-xl p-6 md:p-10 border-2 border-primary/20 shadow-md text-center">
+          <p className="text-muted-foreground mb-2 uppercase tracking-widest text-xs font-medium">Investimento</p>
           
           <div className="mb-2">
             <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 37</span>
@@ -20,7 +20,7 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             Pagamento único. Sem mensalidade.
           </p>
 
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground text-sm mb-6">
             Menos do que você gasta com café em uma semana.
             <br />
             <span className="text-foreground font-medium">
@@ -36,11 +36,9 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             Quero aplicar o método agora
           </Button>
           
-          <div className="mt-8 pt-6 border-t border-border/50">
-            <p className="text-sm text-muted-foreground">
-              ✓ Acesso imediato após a compra
-              <br />
-              ✓ Pagamento 100% seguro
+          <div className="mt-6 pt-5 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">
+              ✓ Acesso imediato após a compra &nbsp;•&nbsp; ✓ Pagamento 100% seguro
             </p>
           </div>
         </div>
