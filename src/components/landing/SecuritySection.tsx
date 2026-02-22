@@ -1,38 +1,42 @@
-import { Shield, Eye, Lock } from "lucide-react";
-
 const items = [
-  { 
-    icon: Shield, 
-    text: "Nenhum dado de criança é coletado" 
-  },
-  { 
-    icon: Eye, 
-    text: "Nenhuma imagem é armazenada" 
-  },
-  { 
-    icon: Lock, 
-    text: "Tudo é aplicado no seu próprio ambiente" 
-  },
+  "Linguagem descritiva da Educação Infantil",
+  "Uso exclusivamente textual (sem envio de fotos ou vídeos)",
+  "Inserção de imagens apenas no documento oficial da escola",
+  "Revisão obrigatória antes de arquivar",
+  "Autoria pedagógica integralmente sua",
 ];
 
 export const SecuritySection = () => {
   return (
     <section className="py-16 md:py-20 px-4">
       <div className="container max-w-3xl">
-        <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">
-          Sua segurança e privacidade
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4 uppercase">
+          Segurança e responsabilidade
         </h2>
-        
-        <div className="flex flex-wrap justify-center gap-6">
+
+        <p className="text-center text-muted-foreground mb-8">
+          Este método foi estruturado respeitando:
+        </p>
+
+        <ul className="space-y-3 mb-8">
           {items.map((item, index) => (
-            <div 
+            <li
               key={index}
-              className="flex items-center gap-3 px-5 py-3 rounded-full bg-muted/50 border border-border/50"
+              className="flex items-start gap-3 text-foreground/80"
             >
-              <item.icon className="w-5 h-5 text-primary" />
-              <span className="text-sm text-foreground">{item.text}</span>
-            </div>
+              <span className="text-muted-foreground mt-0.5">–</span>
+              <span>{item}</span>
+            </li>
           ))}
+        </ul>
+
+        <div className="bg-muted/50 rounded-xl p-6 border border-border/50">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            O Assistente não substitui avaliação diagnóstica ou parecer técnico.
+          </p>
+          <p className="text-sm text-foreground font-medium mt-2">
+            Ele organiza o que você registra.
+          </p>
         </div>
       </div>
     </section>

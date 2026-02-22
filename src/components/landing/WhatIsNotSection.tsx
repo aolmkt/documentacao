@@ -1,52 +1,42 @@
-import { X } from "lucide-react";
+import { Check } from "lucide-react";
 
 const items = [
-  {
-    title: "Não aumenta sua carga de trabalho",
-    description: "O objetivo é justamente o contrário: diminuir o tempo que você gasta com relatórios."
-  },
-  {
-    title: "Não é material acadêmico",
-    description: "Nada de teorias complicadas ou linguagem rebuscada. É prático e direto ao ponto."
-  },
-  {
-    title: "Não é modelo genérico de relatório",
-    description: "Você vai aprender um método, não copiar frases prontas que não têm a sua cara."
-  }
+  "Menos sobrecarga no final do período",
+  "Relatórios mais organizados",
+  "Maior clareza no acompanhamento",
+  "Processo mais leve",
+  "Segurança institucional",
 ];
 
 export const WhatIsNotSection = () => {
   return (
     <section className="py-16 md:py-24 px-4">
       <div className="container max-w-3xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12">
-          O que este ebook <span className="text-primary">não</span> é
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12 uppercase">
+          O resultado
         </h2>
-        
-        <div className="space-y-4">
-          {items.map((item, index) => (
-            <div 
-              key={index}
-              className="flex items-start gap-4 p-5 rounded-xl bg-muted/50 border border-border/30"
-            >
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-destructive/10 flex items-center justify-center">
-                <X className="w-4 h-4 text-destructive" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  {item.description}
-                </p>
-              </div>
-            </div>
-          ))}
+
+        <div className="bg-card rounded-2xl p-8 border border-border shadow-sm">
+          <ul className="space-y-4">
+            {items.map((item, index) => (
+              <li key={index} className="flex items-center gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
+                  <Check className="w-5 h-5 text-success" />
+                </div>
+                <span className="text-foreground font-medium">{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        
-        <p className="text-center mt-8 text-foreground font-medium">
-          Este ebook é prático, aplicável e feito para a sua rotina real.
-        </p>
+
+        <div className="text-center mt-8 space-y-2">
+          <p className="text-foreground/80">
+            Você não muda sua prática pedagógica.
+          </p>
+          <p className="text-foreground font-medium">
+            Você organiza o que já faz.
+          </p>
+        </div>
       </div>
     </section>
   );

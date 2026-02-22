@@ -4,10 +4,10 @@ import { MirrorSection } from "@/components/landing/MirrorSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
 import { MethodSection } from "@/components/landing/MethodSection";
 import { WhatIsNotSection } from "@/components/landing/WhatIsNotSection";
-import { ProofSection } from "@/components/landing/ProofSection";
 import { WhatYouGetSection } from "@/components/landing/WhatYouGetSection";
-import { PriceSection } from "@/components/landing/PriceSection";
 import { SecuritySection } from "@/components/landing/SecuritySection";
+import { TimeSection } from "@/components/landing/TimeSection";
+import { PriceSection } from "@/components/landing/PriceSection";
 import { FutureSaasSection } from "@/components/landing/FutureSaasSection";
 import { Footer } from "@/components/landing/Footer";
 
@@ -25,13 +25,13 @@ const Index = () => {
       <GuiltBreakSection />
       <MethodSection />
       <WhatIsNotSection />
-      <ProofSection />
       <WhatYouGetSection />
+      <SecuritySection />
+      <TimeSection />
       <div ref={priceRef}>
         <PriceSection onCtaClick={() => window.open("#", "_blank")} />
       </div>
-      <SecuritySection />
-      <FutureSaasSection />
+      <FutureSaasSection onCtaClick={scrollToPrice} />
       <Footer />
     </main>
   );
