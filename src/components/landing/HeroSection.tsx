@@ -11,13 +11,17 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground mb-6 text-balance uppercase">
           Chega de virar a noite escrevendo relatório.
         </h1>
-        
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed">
-          Existe uma forma mais organizada, leve e profissional de fazer isso.
-        </p>
+
+        <h2 className="text-2xl md:text-3xl font-bold text-primary mb-3">
+          Método Relatório Evolutivo com IA
+        </h2>
+
+        <h3 className="text-base md:text-lg text-muted-foreground mb-6">
+          Sistema de Documentação Pedagógica Contínua para Educação Infantil
+        </h3>
 
         <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Conheça o <strong className="text-primary">Método de Documentação Pedagógica Contínua com IA</strong> — um sistema estruturado para transformar semanas de observação em relatórios evolutivos claros, organizados e sem sobrecarga no final do período.
+          Um método estruturado para organizar seus registros ao longo do período e transformar semanas de observação em relatórios evolutivos claros e seguros.
         </p>
         
         <Button 
