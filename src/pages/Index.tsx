@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
@@ -24,6 +25,15 @@ const Index = () => {
       <MirrorSection />
       <GuiltBreakSection />
       <MethodSection />
+      <div className="py-10 md:py-14 px-4 text-center">
+        <Button 
+          onClick={scrollToPrice}
+          size="lg"
+          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+        >
+          Quero aplicar o método na minha rotina
+        </Button>
+      </div>
       <WhatIsNotSection />
       <WhatYouGetSection />
       <SecuritySection />
