@@ -1,105 +1,36 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Sparkles, CheckCircle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
-export const FutureSaasSection = () => {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
+interface FinalCtaSectionProps {
+  onCtaClick: () => void;
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !email.includes("@")) {
-      toast({
-        title: "Email inválido",
-        description: "Por favor, insira um email válido.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    
-    // Simulate API call - replace with actual implementation later
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Store in localStorage for now
-    const existingEmails = JSON.parse(localStorage.getItem("waitlistEmails") || "[]");
-    if (!existingEmails.includes(email)) {
-      existingEmails.push(email);
-      localStorage.setItem("waitlistEmails", JSON.stringify(existingEmails));
-    }
-    
-    setIsLoading(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: "Inscrição confirmada!",
-      description: "Você será uma das primeiras a saber sobre a ferramenta.",
-    });
-  };
-
+export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
   return (
-    <section className="py-16 md:py-24 px-4 bg-primary/5">
+    <section className="py-16 md:py-24 px-4">
       <div className="container max-w-2xl text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-6">
-          <Sparkles className="w-7 h-7 text-primary" />
-        </div>
-        
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          O futuro da documentação pedagógica
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 uppercase">
+          Não é sobre IA.
         </h2>
-        
-        <p className="text-muted-foreground leading-relaxed mb-8">
-          Estamos desenvolvendo uma ferramenta para automatizar esse método no futuro. 
-          Uma forma ainda mais simples de aplicar tudo o que você vai aprender no ebook.
+        <p className="text-xl md:text-2xl text-primary font-medium mb-8">
+          É sobre organização profissional.
         </p>
-        
-        <div className="bg-card rounded-xl p-6 md:p-8 border border-border/50 shadow-sm">
-          {isSubmitted ? (
-            <div className="flex flex-col items-center gap-3 py-4">
-              <CheckCircle className="w-12 h-12 text-success" />
-              <p className="text-foreground font-medium">
-                Você está na lista!
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Entraremos em contato quando a ferramenta estiver disponível.
-              </p>
-            </div>
-          ) : (
-            <>
-              <p className="text-sm text-foreground mb-4">
-                Quem adquirir o ebook pode se inscrever para participar dos testes:
-              </p>
-              
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="Seu melhor email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 bg-background"
-                  disabled={isLoading}
-                />
-                <Button 
-                  type="submit"
-                  className="h-12 px-6 bg-primary hover:bg-primary/90"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Inscrevendo..." : "Quero participar"}
-                </Button>
-              </form>
-              
-              <p className="text-xs text-muted-foreground mt-3">
-                Prometemos não enviar spam. Apenas novidades sobre a ferramenta.
-              </p>
-            </>
-          )}
+
+        <div className="text-foreground/80 leading-relaxed space-y-4 mb-10">
+          <p>
+            Se você quer continuar concentrando tudo no final do período, nada muda.
+          </p>
+          <p>
+            Mas se você quer um sistema simples para reduzir sobrecarga e manter sua autoria pedagógica, o método está pronto.
+          </p>
         </div>
+
+        <Button
+          onClick={onCtaClick}
+          size="lg"
+          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+        >
+          Quero começar agora
+        </Button>
       </div>
     </section>
   );
