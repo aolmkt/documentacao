@@ -8,13 +8,13 @@ interface HeroSectionProps {
 export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   return (
     <>
-      <section className="flex items-center justify-center px-4 pt-8 pb-10 md:pt-12 md:pb-14 bg-[hsl(220,20%,14%)]">
+      <section className="flex items-center justify-center px-4 pt-8 pb-10 md:pt-12 md:pb-14 bg-[hsl(260,40%,96%)]">
         <div className="container max-w-3xl text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-white mb-4 text-balance uppercase tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-foreground mb-4 text-balance uppercase tracking-tight">
             Chega de virar a noite escrevendo relatório.
           </h1>
 
-          <p className="text-base md:text-lg text-white/75 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
+          <p className="text-base md:text-lg text-foreground/75 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
             Organize seus registros ao longo do período e transforme semanas de observação em um relatório evolutivo claro, seguro e estruturado.
           </p>
 
@@ -22,7 +22,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             <h2 className="text-2xl md:text-3xl font-bold text-[hsl(168,45%,55%)]">
               Método Relatório Evolutivo com IA
             </h2>
-            <h3 className="text-sm md:text-base text-white/50 mt-1">
+            <h3 className="text-sm md:text-base text-muted-foreground mt-1">
               Sistema de Documentação Pedagógica Contínua para Educação Infantil
             </h3>
           </div>
@@ -58,7 +58,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             Quero aplicar o método agora
           </Button>
 
-          <p className="mt-4 text-xs md:text-sm text-white/50">
+          <p className="mt-4 text-xs md:text-sm text-muted-foreground">
             Pagamento único • Sem mensalidade • Aplicação imediata
           </p>
         </div>
