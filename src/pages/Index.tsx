@@ -38,6 +38,11 @@ const Index = () => {
       <WhatYouGetSection />
       <SecuritySection />
       <TimeSection />
+      <div className="py-12 md:py-16 px-4 text-center bg-secondary/30">
+        <p className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground max-w-3xl mx-auto leading-snug">
+          Método aplicado na prática com estrutura real de relatório evolutivo.
+        </p>
+      </div>
       <div ref={priceRef}>
         <PriceSection onCtaClick={() => window.open("#", "_blank")} />
       </div>
