@@ -10,6 +10,7 @@ import { SecuritySection } from "@/components/landing/SecuritySection";
 import { TimeSection } from "@/components/landing/TimeSection";
 import { PriceSection } from "@/components/landing/PriceSection";
 import { FutureSaasSection } from "@/components/landing/FutureSaasSection";
+import { FaqSection } from "@/components/landing/FaqSection";
 import { Footer } from "@/components/landing/Footer";
 
 const Index = () => {
@@ -60,6 +61,8 @@ const Index = () => {
           Valor de lançamento válido por tempo limitado.
         </p>
       </div>
+      <div className="h-px bg-border" />
+      <FaqSection />
       <div className="h-px bg-border" />
       <FutureSaasSection onCtaClick={scrollToPrice} />
       <Footer />
