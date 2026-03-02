@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
 import { MethodSection } from "@/components/landing/MethodSection";
+import { BeforeAfterSection } from "@/components/landing/BeforeAfterSection";
 import { WhatIsNotSection } from "@/components/landing/WhatIsNotSection";
 import { WhatYouGetSection } from "@/components/landing/WhatYouGetSection";
 import { SecuritySection } from "@/components/landing/SecuritySection";
@@ -34,6 +35,8 @@ const Index = () => {
       <GuiltBreakSection />
       <div className="h-px bg-border" />
       <MethodSection />
+      <div className="h-px bg-border" />
+      <BeforeAfterSection />
       <div className="h-px bg-border" />
       <div className="py-8 md:py-10 px-4 text-center bg-lavanda">
         <Button 
