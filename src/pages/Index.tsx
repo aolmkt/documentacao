@@ -20,7 +20,7 @@ const Index = () => {
   const hotmartUrl = "https://pay.hotmart.com/L104708967T";
 
   const openHotmart = () => {
-    window.open(hotmartUrl, "_blank");
+    window.open(hotmartUrl, "_self");
   };
 
   const scrollToPrice = () => {
