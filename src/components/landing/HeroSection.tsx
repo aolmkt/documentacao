@@ -11,7 +11,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       <section className="flex items-center justify-center px-4 pt-10 pb-12 md:pt-14 md:pb-16 bg-lavanda">
         <div className="container max-w-3xl text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] text-foreground mb-4 text-balance uppercase tracking-tight">
-            Pare de improvisar relatórios no final do período.
+            Pare de improvisar relatórios no final do período
           </h1>
 
           <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
