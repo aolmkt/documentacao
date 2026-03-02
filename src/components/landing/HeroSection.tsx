@@ -11,11 +11,11 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       <section className="flex items-center justify-center px-4 pt-10 pb-12 md:pt-14 md:pb-16 bg-lavanda">
         <div className="container max-w-3xl text-center">
           <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] text-foreground mb-4 text-balance uppercase tracking-tight">
-            Chega de virar a noite escrevendo relatório.
+            Pare de improvisar relatórios no final do período.
           </h1>
 
           <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
-            Organize seus registros ao longo do período e transforme semanas de observação em um relatório evolutivo claro, seguro e estruturado.
+            Organize seus registros de forma contínua e transforme observações semanais em um relatório evolutivo claro, seguro e pedagogicamente estruturado.
           </p>
 
           <div className="mb-6">
@@ -33,13 +33,13 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
                   <Check className="w-3.5 h-3.5 text-primary" strokeWidth={3} />
                 </span>
-                <span>Reduza drasticamente a sobrecarga no final do bimestre</span>
+                <span>Reduza a sobrecarga no final do bimestre</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
                   <Check className="w-3.5 h-3.5 text-primary" strokeWidth={3} />
                 </span>
-                <span>Gere relatórios evolutivos em minutos</span>
+                <span>Transforme registros semanais em relatórios evolutivos organizados</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
