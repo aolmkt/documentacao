@@ -12,15 +12,17 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
           Não é sobre IA.
         </h2>
         <p className="text-xl md:text-2xl text-primary font-medium mb-6">
-          É sobre organização profissional.
+          É sobre trabalhar com método.
         </p>
 
         <div className="text-foreground/80 leading-relaxed space-y-3 mb-8 text-sm md:text-base">
-          <p>
-            Se você quer continuar concentrando tudo no final do período, nada muda.
-          </p>
-          <p>
-            Mas se você quer um sistema estruturado para reduzir sobrecarga e manter sua autoria pedagógica, o método está pronto.
+          <p>Relatórios consistentes não nascem da pressa.</p>
+          <p>Nascem de organização contínua.</p>
+          <p>Você continua sendo a observadora, a mediadora e a autora.</p>
+          <p>A tecnologia apenas estrutura o que você já constrói diariamente.</p>
+          <p className="font-medium text-foreground">
+            Organização não substitui o olhar pedagógico.<br />
+            Ela fortalece.
           </p>
         </div>
 
