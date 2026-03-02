@@ -12,7 +12,7 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
           <p className="text-muted-foreground mb-2 uppercase tracking-widest text-xs font-medium">Investimento</p>
           
           <div className="mb-2">
-            <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 37</span>
+            <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 67</span>
             <span className="text-muted-foreground">,00</span>
           </div>
           
