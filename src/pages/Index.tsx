@@ -16,6 +16,12 @@ import { Footer } from "@/components/landing/Footer";
 const Index = () => {
   const priceRef = useRef<HTMLDivElement>(null);
 
+  const hotmartUrl = "https://pay.hotmart.com/L104708967T";
+
+  const openHotmart = () => {
+    window.open(hotmartUrl, "_blank");
+  };
+
   const scrollToPrice = () => {
     priceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -54,7 +60,7 @@ const Index = () => {
       </div>
       <div className="h-px bg-border" />
       <div ref={priceRef}>
-        <PriceSection onCtaClick={() => window.open("#", "_blank")} />
+        <PriceSection onCtaClick={openHotmart} />
       </div>
       <div className="py-4 px-4 text-center">
         <p className="text-xs text-muted-foreground">
@@ -64,7 +70,7 @@ const Index = () => {
       <div className="h-px bg-border" />
       <FaqSection />
       <div className="h-px bg-border" />
-      <FutureSaasSection onCtaClick={scrollToPrice} />
+      <FutureSaasSection onCtaClick={openHotmart} />
       <Footer />
     </main>
   );
