@@ -58,7 +58,7 @@ const Index = () => {
           size="lg"
           className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-base px-6 sm:px-8 py-5 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
         >
-          Quero aplicar o método na minha rotina
+          Quero organizar meus relatórios
         </Button>
       </div>
       <div className="h-px bg-border" />

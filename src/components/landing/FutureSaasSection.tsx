@@ -31,7 +31,7 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
           size="lg"
           className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
         >
-          Quero começar agora
+          Acessar o método agora
         </Button>
 
         <p className="mt-6 text-xs text-muted-foreground italic">

@@ -60,7 +60,7 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             size="lg"
             className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-10 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
           >
-            Quero aplicar o método agora
+            Quero organizar meus relatórios
           </Button>
           
           <div className="mt-6 pt-5 border-t border-border/50">
