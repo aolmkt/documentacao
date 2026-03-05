@@ -55,7 +55,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             size="lg"
             className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg md:text-xl font-bold px-8 sm:px-12 py-7 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
           >
-            Quero aplicar o método agora
+            Quero organizar meus relatórios
           </Button>
 
           <p className="mt-4 text-xs md:text-sm text-muted-foreground">
