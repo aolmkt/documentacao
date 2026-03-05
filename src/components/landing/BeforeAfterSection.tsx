@@ -112,13 +112,27 @@ export const BeforeAfterSection = () => {
               </p>
             </div>
 
-            <div className="text-sm text-foreground/80 leading-relaxed space-y-3 flex-1">
+            <div className="text-sm text-foreground/80 leading-relaxed space-y-3 mb-5 flex-1">
               <p>
                 Durante o período observado, Maria ampliou sua participação nas atividades coletivas, especialmente nas propostas de contação de histórias. Na semana dedicada à narrativa de Chapeuzinho Vermelho demonstrou curiosidade ao formular perguntas sobre os personagens, evidenciando maior envolvimento na escuta.
               </p>
               <p>
                 Nas atividades de recorte e colagem de formas geométricas apresentou progressiva autonomia no manuseio da tesoura. Nas interações com o grupo buscou novas parcerias nas brincadeiras de movimento como jogos com bola e pega-pega, demonstrando maior segurança corporal e integração ao grupo.
               </p>
+            </div>
+
+            <div className="border-t border-border/40 pt-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                O que muda com o método
+              </p>
+              <ul className="space-y-1.5 text-xs text-foreground/70">
+                {["Evidência concreta", "Situações reais da rotina", "Linguagem pedagógica adequada", "Desenvolvimento descrito ao longo do tempo", "Individualidade preservada"].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" strokeWidth={2.5} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
