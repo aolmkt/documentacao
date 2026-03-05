@@ -31,10 +31,14 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             </div>
           </div>
 
-          <div className="mb-2">
+          <div className="mb-3">
             <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 67</span>
             <span className="text-muted-foreground">,00</span>
           </div>
+
+          <p className="text-base md:text-lg font-medium text-foreground/80 mb-3">
+            Menos de R$70 para organizar os relatórios de todo o seu próximo período letivo.
+          </p>
           
           <p className="text-sm text-primary font-medium mb-6">
             Pagamento único. Sem mensalidade.
