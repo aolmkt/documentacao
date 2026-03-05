@@ -26,6 +26,15 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
           </p>
         </div>
 
+        <div className="mb-10 space-y-3">
+          <p className="text-lg md:text-xl text-foreground/80">
+            Você não precisa mudar sua prática pedagógica.
+          </p>
+          <p className="text-lg md:text-xl font-bold text-foreground">
+            Você só precisa organizar o que já observa todos os dias.
+          </p>
+        </div>
+
         <Button
           onClick={onCtaClick}
           size="lg"
