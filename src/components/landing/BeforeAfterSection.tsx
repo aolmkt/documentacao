@@ -114,10 +114,10 @@ export const BeforeAfterSection = () => {
 
             <div className="text-sm text-foreground/80 leading-relaxed space-y-3 mb-5 flex-1">
               <p>
-                Durante o período observado, Maria ampliou sua participação nas atividades coletivas, especialmente nas propostas de contação de histórias. Na semana dedicada à narrativa de Chapeuzinho Vermelho demonstrou curiosidade ao formular perguntas sobre os personagens, evidenciando maior envolvimento na escuta.
+                Durante o período observado, Maria ampliou sua participação nas atividades coletivas, especialmente nas propostas de contação de histórias. Na semana dedicada à narrativa de "Chapeuzinho Vermelho", demonstrou curiosidade ao formular perguntas sobre os personagens e os desfechos da história, evidenciando maior envolvimento na escuta e na construção de sentido.
               </p>
               <p>
-                Nas atividades de recorte e colagem de formas geométricas apresentou progressiva autonomia no manuseio da tesoura. Nas interações com o grupo buscou novas parcerias nas brincadeiras de movimento como jogos com bola e pega-pega, demonstrando maior segurança corporal e integração ao grupo.
+                Nas atividades de recorte e colagem de formas geométricas, apresentou progressiva autonomia no manuseio da tesoura e organização do espaço de trabalho. Nas interações com o grupo, buscou novas parcerias nas brincadeiras de movimento, como jogos com bola e pega-pega, demonstrando maior segurança corporal e integração social ao longo do período.
               </p>
             </div>
 
