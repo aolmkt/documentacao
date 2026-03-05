@@ -1,11 +1,11 @@
 import { Check } from "lucide-react";
 
 const items = [
-  "Menos sobrecarga no final do período",
-  "Relatórios mais organizados e coerentes",
-  "Maior clareza no acompanhamento pedagógico",
-  "Processo contínuo e estruturado",
-  "Segurança institucional garantida",
+  "Reduzir o esforço concentrado no final do bimestre ou semestre",
+  "Organizar observações ao longo do período",
+  "Produzir relatórios com evidências reais da rotina da criança",
+  "Manter linguagem pedagógica adequada à Educação Infantil",
+  "Visualizar com mais clareza a evolução de cada criança",
 ];
 
 export const WhatIsNotSection = () => {
@@ -15,6 +15,10 @@ export const WhatIsNotSection = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase">
           O resultado de um processo organizado
         </h2>
+
+        <p className="text-center text-foreground/80 text-base md:text-lg mb-6">
+          Com o método você consegue:
+        </p>
 
         <div className="bg-card rounded-xl p-6 border border-border/60 shadow-sm">
           <ul className="space-y-3">
@@ -29,12 +33,12 @@ export const WhatIsNotSection = () => {
           </ul>
         </div>
 
-        <div className="text-center mt-6 space-y-1.5">
-          <p className="text-foreground/80 text-sm">
-            Você não muda sua prática pedagógica.
-          </p>
+        <div className="text-center mt-6 space-y-2">
           <p className="text-foreground font-medium">
-            Você organiza o que já faz.
+            Você não precisa escrever tudo de uma vez.
+          </p>
+          <p className="text-foreground/70 text-sm">
+            O relatório final passa a ser consequência natural dos registros realizados ao longo do período.
           </p>
         </div>
       </div>
