@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
+import { WorkloadSection } from "@/components/landing/WorkloadSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
 import { MethodSection } from "@/components/landing/MethodSection";
 import { BeforeAfterSection } from "@/components/landing/BeforeAfterSection";
@@ -31,6 +32,8 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <HeroSection onCtaClick={scrollToPrice} />
       <MirrorSection />
+      <div className="h-px bg-border" />
+      <WorkloadSection />
       <div className="h-px bg-border" />
       <GuiltBreakSection />
       <div className="h-px bg-border" />
