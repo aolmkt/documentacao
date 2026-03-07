@@ -21,10 +21,16 @@ const Index = () => {
   const hotmartUrl = "https://pay.hotmart.com/L104708967T";
 
   const openHotmart = () => {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('InitiateCheckout');
+    }
     window.open(hotmartUrl, "_self");
   };
 
   const scrollToPrice = () => {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('AddToWishlist');
+    }
     priceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
