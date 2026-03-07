@@ -89,8 +89,8 @@
     window.trackEvent = function(n, data) { send(n, cachedIp, data); };
 
     fetch('https://api64.ipify.org?format=json')
-        .then(r=>r.json()).then(d => { cachedIp = d.ip; send('PageView', d.ip); })
-        .catch(() => send('PageView', null));
+        .then(r=>r.json()).then(d => { cachedIp = d.ip; send('PageView', d.ip); send('ViewContent', d.ip); })
+        .catch(() => { send('PageView', null); send('ViewContent', null); });
 
     function al() {
         setTimeout(()=>{
