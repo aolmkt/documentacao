@@ -1,22 +1,24 @@
 
 
-## Alteracao do Topo da Pagina (HeroSection)
+## Plano: Corrigir SEO das meta tags
 
-Reescrever o conteudo do `HeroSection.tsx` com a nova hierarquia de texto:
+Atualizar apenas o `index.html` com as meta tags corretas para o domínio `metodo.rotinapedagogica.com`.
 
-1. **Headline emocional (H1):** "CHEGA DE VIRAR A NOITE ESCREVENDO RELATÓRIO." — uppercase, bold, grande
-2. **Nome do produto (H2):** "Método Relatório Evolutivo com IA" — destaque com cor primaria, tamanho medio-grande
-3. **Subtitulo tecnico (H3):** "Sistema de Documentação Pedagógica Contínua para Educação Infantil" — texto mais discreto, tom de autoridade
-4. **Explicacao curta (paragrafo):** texto descritivo sobre o metodo
-5. **Botao CTA:** "Quero aplicar o método na minha rotina" — mantendo estilo coral atual
+### Alterações no `index.html`
 
-### Arquivo alterado
-- `src/components/landing/HeroSection.tsx` — substituir o conteudo atual pela nova estrutura hierarquica
+- `lang="en"` → `lang="pt-BR"`
+- Remover comentários TODO
+- **Title**: "Método Relatório Evolutivo com IA | Documentação Pedagógica para Educação Infantil"
+- **Description**: "Organize seus registros de forma contínua e transforme observações semanais em relatórios evolutivos estruturados. Método prático para professoras de Educação Infantil."
+- **Author**: remover ou atualizar (ex: "Rotina Pedagógica")
+- **Canonical**: `https://metodo.rotinapedagogica.com/`
+- **og:title**: mesmo do title
+- **og:description**: mesmo da description
+- **og:url**: `https://metodo.rotinapedagogica.com/`
+- **og:image**: remover a imagem do Lovable (ou substituir se tiver uma própria)
+- **twitter:site**: remover referência ao @Lovable
+- **twitter:image**: remover a imagem do Lovable
+- Adicionar `<meta name="keywords">` com termos relevantes: relatório evolutivo, educação infantil, documentação pedagógica, IA para professoras
 
-### Detalhes tecnicos
-- H1 mantem `uppercase`, tamanhos responsivos `text-3xl md:text-4xl lg:text-5xl`
-- H2 com `text-primary` para destaque, tamanho `text-2xl md:text-3xl`
-- H3 com `text-muted-foreground`, tamanho `text-base md:text-lg`
-- Paragrafo descritivo com `text-foreground/80`
-- Botao CTA inalterado (classes coral, rounded-full, mobile-first)
+Nenhum sitemap ou alteração no robots.txt.
 
