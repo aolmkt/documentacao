@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
@@ -33,6 +33,23 @@ const Index = () => {
     }
     priceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const el = priceRef.current;
+    if (!el) return;
+    let fired = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !fired) {
+        fired = true;
+        if (typeof (window as any).trackEvent === 'function') {
+          (window as any).trackEvent('AddToCart');
+        }
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <main className="min-h-screen bg-background">
