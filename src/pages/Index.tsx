@@ -24,7 +24,12 @@ const Index = () => {
     if (typeof (window as any).trackEvent === 'function') {
       (window as any).trackEvent('InitiateCheckout');
     }
-    window.open(hotmartUrl, "_self");
+    const currentParams = new URLSearchParams(window.location.search);
+    const hotmartLink = new URL(hotmartUrl);
+    currentParams.forEach((value, key) => {
+      hotmartLink.searchParams.set(key, value);
+    });
+    window.open(hotmartLink.toString(), "_self");
   };
 
   const scrollToPrice = () => {
