@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
 import { WorkloadSection } from "@/components/landing/WorkloadSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
+import { BigIdeaSection } from "@/components/landing/BigIdeaSection";
 import { MethodSection } from "@/components/landing/MethodSection";
 import { BeforeAfterSection } from "@/components/landing/BeforeAfterSection";
 import { WhatIsNotSection } from "@/components/landing/WhatIsNotSection";
@@ -64,6 +65,8 @@ const Index = () => {
       <WorkloadSection />
       <div className="h-px bg-border" />
       <GuiltBreakSection />
+      <div className="h-px bg-border" />
+      <BigIdeaSection />
       <div className="h-px bg-border" />
       <MethodSection />
       <div className="h-px bg-border" />
