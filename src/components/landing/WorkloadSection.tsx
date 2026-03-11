@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+
 
 export const WorkloadSection = () => {
   return (
