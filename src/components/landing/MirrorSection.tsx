@@ -4,34 +4,52 @@ export const MirrorSection = () => {
       <div className="container max-w-3xl">
         <div className="bg-card rounded-xl p-6 md:p-10 shadow-sm border border-border/60">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Você conhece essa cena.
+            Você já registra o que acontece na rotina da turma.
           </h2>
 
           <div className="space-y-3 text-base md:text-lg text-foreground/80 leading-relaxed">
-            <p>Prazo se aproximando.</p>
-            <p>Relatórios acumulados.</p>
-            <p>Várias crianças para escrever.</p>
+            <p>Ao longo da semana você observa muitas situações importantes:</p>
 
             <div className="pt-3">
-              <p>Você lembra de muita coisa.</p>
-              <p>Mas não de tudo.</p>
+              <p>• interações nas brincadeiras</p>
+              <p>• participação nas atividades</p>
+              <p>• avanços na linguagem</p>
+              <p>• descobertas nas propostas pedagógicas</p>
             </div>
 
-            <p className="pt-3">
-              E precisa transformar semanas inteiras de vivências em um único texto coerente.
+            <p className="pt-3">Essas observações normalmente viram:</p>
+
+            <div className="pt-1">
+              <p>anotações</p>
+              <p>registros da rotina</p>
+              <p>ou pequenos relatos sobre cada criança.</p>
+            </div>
+
+            <p className="pt-3 font-medium text-foreground">O desafio aparece depois.</p>
+
+            <p className="pt-1">
+              Quando é preciso transformar esses registros em um relatório pedagógico claro, organizado e bem escrito.
             </p>
           </div>
 
           <div className="mt-6 pt-6 border-t border-border/50 space-y-2">
             <p className="text-foreground/80 leading-relaxed">
-              O problema não é sua dedicação.
-            </p>
-            <p className="text-foreground/80 leading-relaxed">
-              Não é sua competência.
+              O problema não é observar.
             </p>
             <p className="text-foreground font-medium text-lg mt-3">
-              É tentar fazer tudo de uma vez.
+              O problema é organizar e escrever o relatório.
             </p>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-border/50 space-y-3 text-base md:text-lg text-foreground/80 leading-relaxed">
+            <p>
+              O <span className="text-primary font-bold">Método Relatório Evolutivo com IA</span> foi criado exatamente para isso.
+            </p>
+            <p>
+              Transformar seus registros da rotina em relatórios pedagógicos estruturados, prontos para revisar e usar.
+            </p>
+            <p className="pt-2 font-medium text-foreground">Você continua registrando o que acontece.</p>
+            <p>O método apenas organiza e estrutura o texto.</p>
           </div>
         </div>
       </div>
