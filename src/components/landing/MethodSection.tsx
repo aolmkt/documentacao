@@ -1,28 +1,38 @@
 import { User, PenLine, Wand2, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
     icon: User,
     number: "1",
     title: "Organização Individual",
-    highlight: "Uma conversa exclusiva para cada criança.",
-    details: ["Sem misturar informações.", "Sem improviso."],
+    highlight: "Cada criança possui sua própria conversa dentro do assistente.",
+    details: [
+      "Assim você mantém os registros organizados",
+      "sem misturar observações entre alunos.",
+    ],
   },
   {
     icon: PenLine,
     number: "2",
     title: "Registro Contínuo",
-    highlight: "Pequenas observações semanais, simples e factuais.",
-    details: ["Sem escrever relatório.", "Sem formalidade excessiva."],
+    highlight: "Você escreve observações simples da rotina:",
+    details: [
+      "participação nas atividades",
+      "interações com colegas",
+      "descobertas nas propostas pedagógicas",
+      "Sem precisar montar o relatório naquele momento.",
+    ],
   },
   {
     icon: Wand2,
     number: "3",
     title: "Estruturação Assistida",
-    highlight: "Você solicita a organização do texto.",
+    highlight:
+      "O assistente organiza suas observações em linguagem pedagógica adequada à Educação Infantil.",
     details: [
-      "O Assistente estrutura suas observações em linguagem pedagógica adequada à Educação Infantil.",
-      "Você continua sendo autora.",
+      "Transformando registros simples",
+      "em texto estruturado de relatório.",
     ],
   },
   {
@@ -30,21 +40,28 @@ const steps = [
     number: "4",
     title: "Síntese Evolutiva",
     highlight:
-      "No final do período, o sistema transforma todos os registros acumulados em um relatório final coerente e evolutivo.",
-    details: ["Não é repetição.", "É desenvolvimento ao longo do tempo."],
+      "Ao final do período, o histórico acumulado facilita a geração do relatório final.",
+    details: [
+      "O assistente analisa os registros já feitos",
+      "e organiza a evolução da criança ao longo do tempo.",
+    ],
   },
 ];
 
-export const MethodSection = () => {
+interface MethodSectionProps {
+  onCtaClick?: () => void;
+}
+
+export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
   return (
     <section className="py-10 md:py-14 px-4">
       <div className="container max-w-4xl">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-[1.75rem] lg:text-[2rem] font-bold text-foreground mb-2 uppercase tracking-tight leading-tight">
-            A Arquitetura do Método Relatório Evolutivo com IA
+            Arquitetura do Método Relatório Evolutivo com IA
           </h2>
           <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
-            Um processo estruturado em 4 etapas que organiza seus registros e transforma o relatório em consequência natural do acompanhamento.
+            Um processo simples que transforma registros da rotina em relatórios pedagógicos estruturados.
           </p>
         </div>
 
@@ -111,6 +128,18 @@ export const MethodSection = () => {
             </div>
           ))}
         </div>
+
+        {onCtaClick && (
+          <div className="text-center mt-8">
+            <Button
+              onClick={onCtaClick}
+              size="lg"
+              className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-base px-6 sm:px-8 py-5 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+            >
+              Quero organizar meus relatórios
+            </Button>
+          </div>
+        )}
 
         <p className="text-center text-xs text-muted-foreground mt-6 italic">
           Esse é o mesmo método que será automatizado na futura plataforma dedicada.

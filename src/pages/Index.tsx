@@ -66,7 +66,7 @@ const Index = () => {
       <div className="h-px bg-border" />
       <BigIdeaSection />
       <div className="h-px bg-border" />
-      <MethodSection />
+      <MethodSection onCtaClick={scrollToPrice} />
       <div className="h-px bg-border" />
       <div className="py-10 md:py-14 px-4 text-center bg-lavanda">
         <div className="max-w-2xl mx-auto space-y-2">
