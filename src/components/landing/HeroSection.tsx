@@ -17,7 +17,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
             Você já observa e registra o que acontece com as crianças na rotina da turma.
             <br /><br />
-            O <strong>Método Relatório Evolutivo com IA</strong> organiza essas observações e transforma seus registros em relatórios pedagógicos bem estruturados.
+            O <span className="text-primary font-bold">Método Relatório Evolutivo com IA</span> organiza essas observações e transforma seus registros em relatórios pedagógicos bem estruturados.
             <br /><br />
             Sem reescrever tudo.<br />
             Sem perder horas procurando palavras.
