@@ -23,11 +23,6 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             Sem perder horas procurando palavras.
           </p>
 
-          <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary">
-              Método Relatório Evolutivo com IA
-            </h2>
-          </div>
 
           <div className="bg-card rounded-xl shadow-md border border-border/60 p-5 md:p-6 max-w-md mx-auto mb-6">
             <ul className="text-left space-y-3 text-sm md:text-base text-foreground/90">
