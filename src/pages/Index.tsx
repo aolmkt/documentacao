@@ -66,6 +66,8 @@ const Index = () => {
       <div className="h-px bg-border" />
       <GuiltBreakSection />
       <div className="h-px bg-border" />
+      <BigIdeaSection />
+      <div className="h-px bg-border" />
       <MethodSection />
       <div className="h-px bg-border" />
       <div className="py-10 md:py-14 px-4 text-center bg-lavanda">
