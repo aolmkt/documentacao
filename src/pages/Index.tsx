@@ -68,17 +68,6 @@ const Index = () => {
       <div className="h-px bg-border" />
       <MethodSection onCtaClick={scrollToPrice} />
       <div className="h-px bg-border" />
-      <div className="py-10 md:py-14 px-4 text-center bg-lavanda">
-        <div className="max-w-2xl mx-auto space-y-2">
-          <p className="text-lg md:text-xl text-foreground/80">
-            O problema não é a sua escrita.
-          </p>
-          <p className="text-xl md:text-2xl font-bold text-foreground">
-            O problema é tentar escrever tudo no final.
-          </p>
-        </div>
-      </div>
-      <div className="h-px bg-border" />
       <BeforeAfterSection />
       <div className="h-px bg-border" />
       <div className="py-8 md:py-10 px-4 text-center bg-lavanda">
