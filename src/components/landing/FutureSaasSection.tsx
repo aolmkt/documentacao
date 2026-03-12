@@ -9,29 +9,20 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
     <section className="py-12 md:py-16 px-4 bg-lavanda">
       <div className="container max-w-2xl text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 uppercase">
-          Não é sobre IA.
+          Você não precisa mudar sua prática pedagógica.
         </h2>
-        <p className="text-xl md:text-2xl text-primary font-medium mb-6">
-          É sobre trabalhar com método.
-        </p>
 
         <div className="text-foreground/80 leading-relaxed space-y-3 mb-8 text-sm md:text-base">
-          <p>Relatórios consistentes não nascem da pressa.</p>
-          <p>Nascem de organização contínua.</p>
-          <p>Você continua sendo a observadora, a mediadora e a autora.</p>
-          <p>A tecnologia apenas estrutura o que você já constrói diariamente.</p>
-          <p className="font-medium text-foreground">
-            Organização não substitui o olhar pedagógico.<br />
-            Ela fortalece.
-          </p>
+          <p>Você já observa.<br />Você já registra a rotina da turma.</p>
+          <p>O método apenas organiza essas observações<br />e transforma o registro da semana em um relatório pedagógico estruturado.</p>
+          <p>Você continua sendo autora do relatório.</p>
+          <p>A tecnologia apenas ajuda a organizar o texto<br />de forma clara, pedagógica e segura.</p>
         </div>
 
         <div className="mb-10 space-y-3">
-          <p className="text-lg md:text-xl text-foreground/80">
-            Você não precisa mudar sua prática pedagógica.
-          </p>
           <p className="text-lg md:text-xl font-bold text-foreground">
-            Você só precisa organizar o que já observa todos os dias.
+            Menos esforço na escrita.<br />
+            Mais clareza na documentação pedagógica.
           </p>
         </div>
 
@@ -44,7 +35,7 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
         </Button>
 
         <p className="mt-6 text-xs text-muted-foreground italic">
-          Estrutura atual organizada como método completo, com evolução futura para plataforma dedicada.
+          Acesso imediato após a compra.
         </p>
       </div>
     </section>
