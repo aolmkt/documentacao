@@ -71,6 +71,9 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             <p className="text-xs text-muted-foreground">
               ✓ Acesso imediato após a compra &nbsp;•&nbsp; ✓ Pagamento 100% seguro
             </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Valor de lançamento válido por tempo limitado.
+            </p>
           </div>
         </div>
       </div>
