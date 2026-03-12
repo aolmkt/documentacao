@@ -16,17 +16,17 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             <div>
               <p className="font-semibold text-muted-foreground mb-2 uppercase text-xs tracking-wide">De:</p>
               <ul className="space-y-1.5 text-muted-foreground">
-                <li>Organização improvisada</li>
-                <li>Escrita concentrada no final</li>
-                <li>Horas acumuladas</li>
+                <li>Textos desorganizados a partir das observações da semana</li>
+                <li>Dificuldade para transformar registros em relatório</li>
+                <li>Horas tentando estruturar o texto pedagógico</li>
               </ul>
             </div>
             <div>
               <p className="font-semibold text-primary mb-2 uppercase text-xs tracking-wide">Para:</p>
               <ul className="space-y-1.5 text-foreground/90">
-                <li>Sistema estruturado</li>
-                <li>Registro contínuo</li>
-                <li>Relatório como consequência natural</li>
+                <li>Registro da semana claro e organizado</li>
+                <li>Relatório pedagógico estruturado em minutos</li>
+                <li>Escrita mais fácil e segura para toda a turma</li>
               </ul>
             </div>
           </div>
