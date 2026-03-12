@@ -1,11 +1,11 @@
 import { Check } from "lucide-react";
 
 const items = [
-  "Reduzir o esforço concentrado no final do bimestre ou semestre",
-  "Organizar observações ao longo do período",
-  "Produzir relatórios com evidências reais da rotina da criança",
-  "Manter linguagem pedagógica adequada à Educação Infantil",
-  "Visualizar com mais clareza a evolução de cada criança",
+  "Transformar o registro da semana em um relatório pedagógico claro",
+  "Organizar melhor as informações observadas na rotina",
+  "Produzir textos com linguagem adequada à Educação Infantil",
+  "Ganhar tempo na escrita dos relatórios da turma",
+  "Manter um histórico organizado para facilitar o relatório final",
 ];
 
 export const WhatIsNotSection = () => {
@@ -13,7 +13,7 @@ export const WhatIsNotSection = () => {
     <section className="py-12 md:py-16 px-4 bg-lavanda">
       <div className="container max-w-3xl">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase">
-          O resultado de um processo organizado
+          O resultado de um registro bem estruturado
         </h2>
 
         <p className="text-center text-foreground/80 text-base md:text-lg mb-6">
@@ -35,10 +35,11 @@ export const WhatIsNotSection = () => {
 
         <div className="text-center mt-6 space-y-2">
           <p className="text-foreground font-medium">
-            Você não precisa escrever tudo de uma vez.
+            Você continua registrando o que observa na rotina.
           </p>
           <p className="text-foreground/70 text-sm">
-            O relatório final passa a ser consequência natural dos registros realizados ao longo do período.
+            O método apenas organiza e estrutura o texto,<br />
+            transformando seu registro da semana em um relatório pedagógico pronto para revisar e utilizar.
           </p>
         </div>
       </div>
