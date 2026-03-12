@@ -28,7 +28,7 @@ export const BeforeAfterSection = () => {
             Antes e depois do método
           </h2>
           <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Veja como registros simples da rotina se transformam em um relatório evolutivo estruturado.
+            Veja como um registro simples da semana se transforma em um relatório evolutivo pedagógico estruturado.
           </p>
         </div>
 
