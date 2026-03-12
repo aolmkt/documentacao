@@ -13,7 +13,7 @@ export const WhatIsNotSection = () => {
     <section className="py-12 md:py-16 px-4 bg-lavanda">
       <div className="container max-w-3xl">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase">
-          O resultado de um processo organizado
+          O resultado de um registro bem estruturado
         </h2>
 
         <p className="text-center text-foreground/80 text-base md:text-lg mb-6">
