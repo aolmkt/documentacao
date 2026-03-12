@@ -46,10 +46,10 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
 
           <ul className="text-left text-sm space-y-2 max-w-sm mx-auto mb-6">
             {[
-              "116 páginas estruturadas",
-              "Método aplicado na prática",
-              "Biblioteca com prompts pedagógicos prontos",
-              "Exemplo completo do início ao relatório final",
+              "Manual completo do Método Relatório Evolutivo com IA",
+              "Biblioteca de prompts pedagógicos prontos",
+              "Modelo de registro semanal padronizado",
+              "Exemplo completo: do registro da semana ao relatório final",
               "Passo a passo real de uso pelo navegador e celular",
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
