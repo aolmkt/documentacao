@@ -88,8 +88,6 @@ const Index = () => {
       <div className="h-px bg-border" />
       <SecuritySection />
       <div className="h-px bg-border" />
-      <TimeSection onCtaClick={scrollToPrice} />
-      <div className="h-px bg-border" />
       <div className="py-8 md:py-10 px-4 text-center bg-lavanda">
         <p className="text-lg md:text-xl font-bold text-foreground max-w-3xl mx-auto leading-snug">
           Método aplicado na prática com estrutura real de relatório evolutivo.
