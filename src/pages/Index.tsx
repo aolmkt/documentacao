@@ -66,6 +66,8 @@ const Index = () => {
       <div className="h-px bg-border" />
       <BigIdeaSection />
       <div className="h-px bg-border" />
+      <TimeSection />
+      <div className="h-px bg-border" />
       <MethodSection onCtaClick={scrollToPrice} />
       <div className="h-px bg-border" />
       <BeforeAfterSection />
