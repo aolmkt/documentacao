@@ -37,7 +37,7 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
           </div>
 
           <p className="text-base md:text-lg font-medium text-foreground/80 mb-3">
-            Menos de R$70 para organizar os relatórios de todo o seu próximo período letivo.
+            Menos de R$70 para transformar seus registros da semana em relatórios pedagógicos estruturados durante todo o próximo período letivo.
           </p>
           
           <p className="text-sm text-primary font-medium mb-6">
