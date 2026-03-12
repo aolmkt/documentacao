@@ -35,10 +35,11 @@ export const WhatIsNotSection = () => {
 
         <div className="text-center mt-6 space-y-2">
           <p className="text-foreground font-medium">
-            Você não precisa escrever tudo de uma vez.
+            Você continua registrando o que observa na rotina.
           </p>
           <p className="text-foreground/70 text-sm">
-            O relatório final passa a ser consequência natural dos registros realizados ao longo do período.
+            O método apenas organiza e estrutura o texto,<br />
+            transformando seu registro da semana em um relatório pedagógico pronto para revisar e utilizar.
           </p>
         </div>
       </div>
