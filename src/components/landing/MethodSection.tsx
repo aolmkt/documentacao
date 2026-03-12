@@ -64,7 +64,7 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
             Arquitetura do Método Relatório Evolutivo com IA
           </h2>
           <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
-            Um processo simples que transforma registros da rotina em relatórios pedagógicos estruturados.
+            Um processo simples que transforma registros semanais em relatórios pedagógicos claros e organizados.
           </p>
         </div>
 
