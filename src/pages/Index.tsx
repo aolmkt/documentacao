@@ -97,11 +97,6 @@ const Index = () => {
       <div ref={priceRef}>
         <PriceSection onCtaClick={openHotmart} />
       </div>
-      <div className="py-4 px-4 text-center">
-        <p className="text-xs text-muted-foreground">
-          Valor de lançamento válido por tempo limitado.
-        </p>
-      </div>
       <div className="h-px bg-border" />
       <FaqSection />
       <div className="h-px bg-border" />

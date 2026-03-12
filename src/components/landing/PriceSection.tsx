@@ -16,17 +16,17 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             <div>
               <p className="font-semibold text-muted-foreground mb-2 uppercase text-xs tracking-wide">De:</p>
               <ul className="space-y-1.5 text-muted-foreground">
-                <li>Organização improvisada</li>
-                <li>Escrita concentrada no final</li>
-                <li>Horas acumuladas</li>
+                <li>Textos desorganizados a partir das observações da semana</li>
+                <li>Dificuldade para transformar registros em relatório</li>
+                <li>Horas tentando estruturar o texto pedagógico</li>
               </ul>
             </div>
             <div>
               <p className="font-semibold text-primary mb-2 uppercase text-xs tracking-wide">Para:</p>
               <ul className="space-y-1.5 text-foreground/90">
-                <li>Sistema estruturado</li>
-                <li>Registro contínuo</li>
-                <li>Relatório como consequência natural</li>
+                <li>Registro da semana claro e organizado</li>
+                <li>Relatório pedagógico estruturado em minutos</li>
+                <li>Escrita mais fácil e segura para toda a turma</li>
               </ul>
             </div>
           </div>
@@ -37,7 +37,7 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
           </div>
 
           <p className="text-base md:text-lg font-medium text-foreground/80 mb-3">
-            Menos de R$70 para organizar os relatórios de todo o seu próximo período letivo.
+            Menos de R$70 para transformar seus registros da semana em relatórios pedagógicos estruturados durante todo o próximo período letivo.
           </p>
           
           <p className="text-sm text-primary font-medium mb-6">
@@ -46,10 +46,10 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
 
           <ul className="text-left text-sm space-y-2 max-w-sm mx-auto mb-6">
             {[
-              "116 páginas estruturadas",
-              "Método aplicado na prática",
-              "Biblioteca com prompts pedagógicos prontos",
-              "Exemplo completo do início ao relatório final",
+              "Manual completo do Método Relatório Evolutivo com IA",
+              "Biblioteca de prompts pedagógicos prontos",
+              "Modelo de registro semanal padronizado",
+              "Exemplo completo: do registro da semana ao relatório final",
               "Passo a passo real de uso pelo navegador e celular",
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
@@ -70,6 +70,9 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
           <div className="mt-6 pt-5 border-t border-border/50">
             <p className="text-xs text-muted-foreground">
               ✓ Acesso imediato após a compra &nbsp;•&nbsp; ✓ Pagamento 100% seguro
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Valor de lançamento válido por tempo limitado.
             </p>
           </div>
         </div>
