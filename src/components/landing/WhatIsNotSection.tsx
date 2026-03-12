@@ -1,11 +1,11 @@
 import { Check } from "lucide-react";
 
 const items = [
-  "Reduzir o esforço concentrado no final do bimestre ou semestre",
-  "Organizar observações ao longo do período",
-  "Produzir relatórios com evidências reais da rotina da criança",
-  "Manter linguagem pedagógica adequada à Educação Infantil",
-  "Visualizar com mais clareza a evolução de cada criança",
+  "Transformar o registro da semana em um relatório pedagógico claro",
+  "Organizar melhor as informações observadas na rotina",
+  "Produzir textos com linguagem adequada à Educação Infantil",
+  "Ganhar tempo na escrita dos relatórios da turma",
+  "Manter um histórico organizado para facilitar o relatório final",
 ];
 
 export const WhatIsNotSection = () => {
