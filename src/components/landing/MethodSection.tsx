@@ -5,45 +5,48 @@ const steps = [
   {
     icon: User,
     number: "1",
-    title: "Organização Individual",
-    highlight: "Cada criança possui sua própria conversa dentro do assistente.",
+    title: "Organização por criança",
+    highlight: "Cada criança possui seu próprio registro dentro do assistente.",
     details: [
-      "Assim você mantém os registros organizados",
+      "Assim você mantém os registros organizados ao longo do período,",
       "sem misturar observações entre alunos.",
     ],
   },
   {
     icon: PenLine,
     number: "2",
-    title: "Registro Contínuo",
-    highlight: "Você escreve observações simples da rotina:",
+    title: "Registro da semana",
+    highlight: "Você escreve o registro da semana da criança de forma simples.",
     details: [
-      "participação nas atividades",
-      "interações com colegas",
-      "descobertas nas propostas pedagógicas",
-      "Sem precisar montar o relatório naquele momento.",
+      "Descrevendo situações observadas na rotina, como:",
+      "• participação nas atividades",
+      "• interações com colegas",
+      "• avanços na linguagem",
+      "• descobertas nas propostas pedagógicas",
+      "Não é necessário escrever em formato de relatório.",
     ],
   },
   {
     icon: Wand2,
     number: "3",
-    title: "Estruturação Assistida",
+    title: "Comando para geração do relatório",
     highlight:
-      "O assistente organiza suas observações em linguagem pedagógica adequada à Educação Infantil.",
+      "Após escrever o registro, você envia o comando indicado no método.",
     details: [
-      "Transformando registros simples",
-      "em texto estruturado de relatório.",
+      "O assistente utiliza apenas aquele registro informado",
+      "para gerar um relatório pedagógico estruturado,",
+      "com linguagem adequada à Educação Infantil.",
     ],
   },
   {
     icon: FileText,
     number: "4",
-    title: "Síntese Evolutiva",
+    title: "Relatórios organizados ao longo do período",
     highlight:
-      "Ao final do período, o histórico acumulado facilita a geração do relatório final.",
+      "Cada semana gera um relatório claro e bem estruturado.",
     details: [
-      "O assistente analisa os registros já feitos",
-      "e organiza a evolução da criança ao longo do tempo.",
+      "Como tudo permanece registrado no registro da criança,",
+      "o histórico acumulado facilita a construção do relatório final do período.",
     ],
   },
 ];
@@ -61,7 +64,7 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
             Arquitetura do Método Relatório Evolutivo com IA
           </h2>
           <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
-            Um processo simples que transforma registros da rotina em relatórios pedagógicos estruturados.
+            Um processo simples que transforma registros semanais em relatórios pedagógicos claros e organizados.
           </p>
         </div>
 
