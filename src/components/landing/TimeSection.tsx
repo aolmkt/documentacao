@@ -16,9 +16,9 @@ export const TimeSection = () => {
           </p>
 
           <div>
-            <p>Organizar ideias.</p>
-            <p>Estruturar o texto.</p>
-            <p>Escolher a linguagem pedagógica adequada.</p>
+            <p>• Organizar ideias.</p>
+            <p>• Estruturar o texto.</p>
+            <p>• Escolher a linguagem pedagógica adequada.</p>
           </div>
 
           <p>
