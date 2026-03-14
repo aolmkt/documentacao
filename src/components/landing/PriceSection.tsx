@@ -7,12 +7,12 @@ interface PriceSectionProps {
 
 export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
   return (
-    <section className="py-12 md:py-16 px-4">
+    <section className="py-[72px] md:py-20 px-6">
       <div className="container max-w-2xl">
-        <div className="bg-card rounded-xl p-6 md:p-10 border-2 border-primary/20 shadow-md text-center">
+        <div className="bg-card rounded-2xl p-8 md:p-10 border-2 border-primary/20 shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.12)] text-center">
           <p className="text-muted-foreground mb-6 uppercase tracking-widest text-xs font-medium">Investimento</p>
 
-          <div className="grid grid-cols-2 gap-4 mb-6 text-left text-sm max-w-md mx-auto">
+          <div className="grid grid-cols-2 gap-4 mb-8 text-left text-sm max-w-md mx-auto">
             <div>
               <p className="font-semibold text-muted-foreground mb-2 uppercase text-xs tracking-wide">De:</p>
               <ul className="space-y-1.5 text-muted-foreground">
@@ -31,20 +31,20 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             </div>
           </div>
 
-          <div className="mb-3">
-            <span className="text-5xl md:text-6xl font-bold text-foreground">R$ 67</span>
-            <span className="text-muted-foreground">,00</span>
+          <div className="mb-4">
+            <span className="text-6xl md:text-7xl font-bold text-foreground">R$ 67</span>
+            <span className="text-lg text-muted-foreground">,00</span>
           </div>
 
-          <p className="text-base md:text-lg font-medium text-foreground/80 mb-3">
+          <p className="text-base md:text-lg font-medium text-foreground/80 mb-3 leading-[1.6]">
             Menos de R$70 para transformar seus registros da semana em relatórios pedagógicos estruturados durante todo o próximo período letivo.
           </p>
           
-          <p className="text-sm text-primary font-medium mb-6">
+          <p className="text-sm text-primary font-medium mb-8">
             Pagamento único. Sem mensalidade.
           </p>
 
-          <ul className="text-left text-sm space-y-2 max-w-sm mx-auto mb-6">
+          <ul className="text-left text-sm space-y-2.5 max-w-sm mx-auto mb-8">
             {[
               "Manual completo do Método Relatório Evolutivo com IA",
               "Biblioteca de prompts pedagógicos prontos",

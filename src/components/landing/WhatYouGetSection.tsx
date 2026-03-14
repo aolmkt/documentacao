@@ -10,24 +10,24 @@ const items = [
 
 export const WhatYouGetSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4">
+    <section className="py-16 md:py-20 px-6">
       <div className="container max-w-3xl">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-3 uppercase">
           Você recebe acesso ao método completo
         </h2>
-        <p className="text-center text-muted-foreground mb-8 text-sm md:text-base">
+        <p className="text-center text-muted-foreground mb-10 text-sm md:text-base">
           Tudo o que você precisa para transformar registros da semana em relatórios pedagógicos estruturados.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="grid sm:grid-cols-2 gap-6">
           {items.map((item, index) => (
-            <div key={index} className="flex items-start gap-3 bg-card rounded-xl p-4 border border-border/60 shadow-sm">
+            <div key={index} className="flex items-start gap-3 bg-card rounded-xl p-5 md:p-6 border border-border/60 shadow-sm">
               <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <item.icon className="w-4.5 h-4.5 text-primary" />
               </div>
               <div>
-                <span className="text-foreground font-medium text-sm">{item.label}</span>
-                <p className="text-muted-foreground text-xs mt-0.5">{item.description}</p>
+                <span className="text-foreground font-medium text-sm leading-[1.6]">{item.label}</span>
+                <p className="text-muted-foreground text-xs mt-1 leading-[1.6]">{item.description}</p>
               </div>
             </div>
           ))}

@@ -1,13 +1,13 @@
 export const MirrorSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4">
+    <section className="py-16 md:py-20 px-6">
       <div className="container max-w-3xl">
-        <div className="bg-card rounded-xl p-6 md:p-10 shadow-sm border border-border/60">
+        <div className="rounded-xl p-8 md:p-10 shadow-sm border border-border/60" style={{ backgroundColor: "#F7F8F9" }}>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
             Você já registra o que acontece na rotina da turma.
           </h2>
 
-          <div className="space-y-3 text-base md:text-lg text-foreground/80 leading-relaxed">
+          <div className="space-y-3 text-base md:text-lg text-foreground/80 leading-[1.6]">
             <p>Ao longo da semana você observa muitas situações importantes:</p>
 
             <div className="pt-3">
@@ -33,7 +33,7 @@ export const MirrorSection = () => {
           </div>
 
           <div className="mt-6 pt-6 border-t border-border/50 space-y-2">
-            <p className="text-foreground/80 leading-relaxed">
+            <p className="text-foreground/80 leading-[1.6]">
               O problema não é observar.
             </p>
             <p className="text-foreground font-medium text-lg mt-3">
@@ -41,7 +41,7 @@ export const MirrorSection = () => {
             </p>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-border/50 space-y-3 text-base md:text-lg text-foreground/80 leading-relaxed">
+          <div className="mt-6 pt-6 border-t border-border/50 space-y-3 text-base md:text-lg text-foreground/80 leading-[1.6]">
             <p>
               O <span className="text-primary font-bold">Método Relatório Evolutivo com IA</span> foi criado exatamente para isso.
             </p>

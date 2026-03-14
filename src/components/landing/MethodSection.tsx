@@ -57,22 +57,22 @@ interface MethodSectionProps {
 
 export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
   return (
-    <section className="py-10 md:py-14 px-4">
+    <section className="py-16 md:py-20 px-6">
       <div className="container max-w-4xl">
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <h2 className="text-2xl md:text-[1.75rem] lg:text-[2rem] font-bold text-foreground mb-2 uppercase tracking-tight leading-tight">
             Arquitetura do Método Relatório Evolutivo com IA
           </h2>
-          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-[1.6] font-light">
             Um processo simples que transforma registros semanais em relatórios pedagógicos claros e organizados.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-3">
+        <div className="grid md:grid-cols-2 gap-6">
           {steps.slice(0, 2).map((step) => (
             <div
               key={step.number}
-              className="bg-card rounded-lg p-5 border border-border shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.08)] hover:border-primary/30 transition-colors duration-300"
+              className="bg-card rounded-xl p-7 border border-border shadow-[0_2px_12px_-3px_hsl(var(--foreground)/0.08)] hover:border-primary/30 transition-colors duration-300"
             >
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-lavanda flex items-center justify-center font-bold text-lg text-primary border border-primary/15">
@@ -87,7 +87,7 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
                   </p>
                   <div className="space-y-0.5">
                     {step.details.map((d, i) => (
-                      <p key={i} className="text-muted-foreground text-sm">
+                      <p key={i} className="text-muted-foreground text-sm leading-[1.6]">
                         {d}
                       </p>
                     ))}
@@ -98,15 +98,15 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
           ))}
         </div>
 
-        <div className="flex justify-center my-2">
+        <div className="flex justify-center my-3">
           <div className="w-px h-5 bg-border" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-3">
+        <div className="grid md:grid-cols-2 gap-6">
           {steps.slice(2, 4).map((step) => (
             <div
               key={step.number}
-              className="bg-card rounded-lg p-5 border border-border shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.08)] hover:border-primary/30 transition-colors duration-300"
+              className="bg-card rounded-xl p-7 border border-border shadow-[0_2px_12px_-3px_hsl(var(--foreground)/0.08)] hover:border-primary/30 transition-colors duration-300"
             >
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-lavanda flex items-center justify-center font-bold text-lg text-primary border border-primary/15">
@@ -121,7 +121,7 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
                   </p>
                   <div className="space-y-0.5">
                     {step.details.map((d, i) => (
-                      <p key={i} className="text-muted-foreground text-sm">
+                      <p key={i} className="text-muted-foreground text-sm leading-[1.6]">
                         {d}
                       </p>
                     ))}

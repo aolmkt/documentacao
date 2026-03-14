@@ -8,7 +8,7 @@ export const GuiltBreakSection = () => {
   ];
 
   return (
-    <section className="py-12 md:py-16 px-4 bg-lavanda">
+    <section className="py-16 md:py-20 px-6 bg-lavanda">
       <div className="container max-w-3xl text-center">
         <div className="bg-card rounded-xl p-6 md:p-10 border border-border/60 shadow-sm">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 uppercase">
@@ -18,7 +18,7 @@ export const GuiltBreakSection = () => {
             Está no modelo.
           </p>
 
-          <p className="text-left text-foreground/80 leading-relaxed mb-4">
+          <p className="text-left text-foreground/80 leading-[1.6] mb-4">
             O modelo tradicional concentra toda a escrita no final do bimestre.
           </p>
 

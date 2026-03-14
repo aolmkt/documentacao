@@ -10,7 +10,7 @@ const items = [
 
 export const SecuritySection = () => {
   return (
-    <section className="py-12 md:py-16 px-4 bg-lavanda-light">
+    <section className="py-16 md:py-20 px-6 bg-lavanda-light">
       <div className="container max-w-3xl">
         <div className="bg-card rounded-xl p-6 md:p-8 border border-border/60 shadow-sm">
           <div className="flex items-center gap-3 mb-4">
@@ -30,7 +30,7 @@ export const SecuritySection = () => {
             {items.map((item, index) => (
               <li
                 key={index}
-                className="flex items-start gap-3 text-foreground/80 text-sm"
+                className="flex items-start gap-3 text-foreground/80 text-sm leading-[1.6]"
               >
                 <span className="text-muted-foreground mt-0.5">–</span>
                 <span>{item}</span>
@@ -39,7 +39,7 @@ export const SecuritySection = () => {
           </ul>
 
           <div className="bg-lavanda rounded-lg p-4">
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-[1.6]">
               O Assistente não substitui avaliação diagnóstica ou parecer técnico.
             </p>
             <p className="text-sm text-foreground font-medium mt-1.5">
