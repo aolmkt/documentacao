@@ -52,10 +52,10 @@ export const FaqSection = () => {
   return (
     <section className="py-16 md:py-20 px-6" style={{ backgroundColor: "#F3F1FA" }}>
       <div className="container max-w-2xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-2 uppercase">
+        <h2 className="text-2xl md:text-[2rem] font-bold text-foreground text-center mb-2 uppercase leading-[1.2]">
           Perguntas Frequentes
         </h2>
-        <p className="text-center text-muted-foreground mb-10 text-sm md:text-base">
+        <p className="text-center text-muted-foreground mb-10 text-base md:text-lg leading-[1.6]">
           Esclareça suas dúvidas antes de começar.
         </p>
 
@@ -66,10 +66,10 @@ export const FaqSection = () => {
               value={`faq-${index}`}
               className="bg-background/80 border border-border/60 rounded-xl px-5 md:px-6 data-[state=open]:shadow-sm transition-shadow"
             >
-              <AccordionTrigger className="text-left text-sm md:text-base font-medium hover:no-underline py-5">
+              <AccordionTrigger className="text-left text-base md:text-lg font-medium hover:no-underline py-5">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-foreground/75 text-sm leading-[1.6] whitespace-pre-line pb-5">
+              <AccordionContent className="text-foreground/75 text-base leading-[1.7] whitespace-pre-line pb-5">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

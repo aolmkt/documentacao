@@ -8,11 +8,11 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
   return (
     <section className="py-16 md:py-20 px-6 bg-lavanda">
       <div className="container max-w-2xl text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 uppercase">
+        <h2 className="text-2xl md:text-[2rem] font-bold text-foreground mb-3 uppercase leading-[1.2]">
           Você não precisa mudar sua prática pedagógica.
         </h2>
 
-        <div className="text-foreground/80 leading-[1.6] space-y-3 mb-10 text-sm md:text-base">
+        <div className="text-foreground/80 leading-[1.7] space-y-3 mb-10 text-base md:text-lg">
           <p>Você já observa.<br />Você já registra a rotina da turma.</p>
           <p>O método apenas organiza essas observações<br />e transforma o registro da semana em um relatório pedagógico estruturado.</p>
           <p>Você continua sendo autora do relatório.</p>
