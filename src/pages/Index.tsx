@@ -72,7 +72,7 @@ const Index = () => {
       <div className="h-px bg-border" />
       <BeforeAfterSection />
       <div className="h-px bg-border" />
-      <div className="py-10 md:py-12 px-6 text-center bg-lavanda">
+      <div className="py-10 md:py-12 px-6 text-center bg-background">
         <Button 
           onClick={scrollToPrice}
           size="lg"
