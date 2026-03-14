@@ -1,12 +1,12 @@
 export const TimeSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4">
+    <section className="py-16 md:py-20 px-6">
       <div className="container max-w-3xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-6 uppercase">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase">
           Quanto tempo isso pode representar?
         </h2>
 
-        <div className="space-y-4 text-foreground/80 leading-relaxed text-sm md:text-base">
+        <div className="space-y-4 text-foreground/80 leading-[1.6] text-sm md:text-base">
           <p>
             Na rotina da Educação Infantil, registrar observações faz parte do trabalho pedagógico.
           </p>
@@ -30,7 +30,7 @@ export const TimeSection = () => {
           <p className="text-foreground font-medium">
             O método não substitui suas observações.
           </p>
-          <p className="text-foreground/70 text-sm">
+          <p className="text-foreground/70 text-sm leading-[1.6]">
             Ele apenas organiza o texto e facilita a escrita do relatório,<br />
             transformando o registro da semana em um relatório pedagógico estruturado.
           </p>

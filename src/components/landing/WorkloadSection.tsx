@@ -1,16 +1,14 @@
-
-
 export const WorkloadSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4 bg-lavanda">
+    <section className="py-16 md:py-20 px-6" style={{ backgroundColor: "#F4F5F6" }}>
       <div className="container max-w-3xl">
         <div className="bg-card rounded-xl p-6 md:p-10 shadow-sm border border-border/60">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 uppercase">
             O problema não é observar.<br />
             É organizar e escrever.
           </h2>
 
-          <div className="space-y-4 text-base md:text-lg text-foreground/80 leading-relaxed">
+          <div className="space-y-4 text-base md:text-lg text-foreground/80 leading-[1.6]">
             <p>
               A maioria das professoras já faz registros ao longo do período.
             </p>

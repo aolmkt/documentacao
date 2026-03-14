@@ -10,7 +10,7 @@ const items = [
 
 export const WhatIsNotSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4 bg-lavanda">
+    <section className="py-16 md:py-20 px-6 bg-lavanda">
       <div className="container max-w-3xl">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase">
           O resultado de um registro bem estruturado
@@ -20,14 +20,14 @@ export const WhatIsNotSection = () => {
           Com o método você consegue:
         </p>
 
-        <div className="bg-card rounded-xl p-6 border border-border/60 shadow-sm">
-          <ul className="space-y-3">
+        <div className="bg-card rounded-xl p-6 md:p-8 border border-border/60 shadow-sm">
+          <ul className="space-y-4">
             {items.map((item, index) => (
               <li key={index} className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
-                  <Check className="w-4 h-4 text-success" />
+                <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-success/15 flex items-center justify-center">
+                  <Check className="w-5 h-5 text-success" strokeWidth={2.5} />
                 </div>
-                <span className="text-foreground font-medium text-sm md:text-base">{item}</span>
+                <span className="text-foreground font-medium text-sm md:text-base leading-[1.6]">{item}</span>
               </li>
             ))}
           </ul>
@@ -37,7 +37,7 @@ export const WhatIsNotSection = () => {
           <p className="text-foreground font-medium">
             Você continua registrando o que observa na rotina.
           </p>
-          <p className="text-foreground/70 text-sm">
+          <p className="text-foreground/70 text-sm leading-[1.6]">
             O método apenas organiza e estrutura o texto,<br />
             transformando seu registro da semana em um relatório pedagógico pronto para revisar e utilizar.
           </p>

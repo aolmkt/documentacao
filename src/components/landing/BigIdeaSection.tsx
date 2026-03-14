@@ -1,6 +1,6 @@
 export const BigIdeaSection = () => {
   return (
-    <section className="py-12 md:py-16 px-4">
+    <section className="py-16 md:py-20 px-6">
       <div className="container max-w-3xl">
         <div className="bg-card rounded-xl p-6 md:p-10 shadow-sm border border-border/60">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 uppercase">
@@ -8,7 +8,7 @@ export const BigIdeaSection = () => {
             <span className="text-primary">quem organiza o texto.</span>
           </h2>
 
-          <div className="space-y-4 text-base md:text-lg text-foreground/80 leading-relaxed">
+          <div className="space-y-4 text-base md:text-lg text-foreground/80 leading-[1.6]">
             <p>Você continua fazendo o que já faz na rotina:</p>
 
             <div>

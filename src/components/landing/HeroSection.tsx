@@ -8,13 +8,13 @@ interface HeroSectionProps {
 export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   return (
     <>
-      <section className="flex items-center justify-center px-4 pt-10 pb-12 md:pt-14 md:pb-16 bg-lavanda">
+      <section className="flex items-center justify-center px-6 pt-12 pb-14 md:pt-16 md:pb-20 bg-lavanda">
         <div className="container max-w-3xl text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] text-foreground mb-4 text-balance uppercase tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] text-foreground mb-6 text-balance uppercase tracking-tight">
             Transforme seus registros da rotina em relatórios pedagógicos claros em minutos.
           </h1>
 
-          <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-6 leading-relaxed font-light">
+          <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-8 leading-[1.6] font-light">
             Você já observa e registra o que acontece com as crianças na rotina da turma.
             <br /><br />
             O <span className="text-primary font-bold">Método Relatório Evolutivo com IA</span> organiza essas observações e transforma seus registros em relatórios pedagógicos bem estruturados.
@@ -23,8 +23,7 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             Sem perder horas procurando palavras.
           </p>
 
-
-          <div className="bg-card rounded-xl shadow-md border border-border/60 p-5 md:p-6 max-w-md mx-auto mb-6">
+          <div className="bg-card rounded-xl shadow-md border border-border/60 p-5 md:p-6 max-w-md mx-auto mb-8">
             <ul className="text-left space-y-3 text-sm md:text-base text-foreground/90">
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
@@ -63,6 +62,10 @@ export const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
 
           <p className="mt-4 text-xs md:text-sm text-muted-foreground">
             Pagamento único • Sem mensalidade • Aplicação imediata
+          </p>
+
+          <p className="mt-6 text-xs text-muted-foreground/60">
+            ↓ Veja como o método funciona na prática
           </p>
         </div>
       </section>
