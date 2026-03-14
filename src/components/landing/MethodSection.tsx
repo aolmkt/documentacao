@@ -60,10 +60,10 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
     <section className="py-16 md:py-20 px-6">
       <div className="container max-w-4xl">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-[1.75rem] lg:text-[2rem] font-bold text-foreground mb-2 uppercase tracking-tight leading-tight">
+          <h2 className="text-2xl md:text-[2rem] font-bold text-foreground mb-2 uppercase tracking-tight leading-[1.2]">
             Arquitetura do Método Relatório Evolutivo com IA
           </h2>
-          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-[1.6] font-light">
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-[1.6] font-light">
             Um processo simples que transforma registros semanais em relatórios pedagógicos claros e organizados.
           </p>
         </div>
@@ -79,15 +79,15 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
                   {step.number}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1.5">
+                  <h3 className="font-semibold text-foreground mb-1.5 text-base md:text-lg">
                     {step.title}
                   </h3>
-                  <p className="text-foreground/80 text-sm mb-1.5">
+                  <p className="text-foreground/80 text-base mb-1.5 leading-[1.7]">
                     {step.highlight}
                   </p>
                   <div className="space-y-0.5">
                     {step.details.map((d, i) => (
-                      <p key={i} className="text-muted-foreground text-sm leading-[1.6]">
+                      <p key={i} className="text-muted-foreground text-base leading-[1.7]">
                         {d}
                       </p>
                     ))}
@@ -113,15 +113,15 @@ export const MethodSection = ({ onCtaClick }: MethodSectionProps) => {
                   {step.number}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1.5">
+                  <h3 className="font-semibold text-foreground mb-1.5 text-base md:text-lg">
                     {step.title}
                   </h3>
-                  <p className="text-foreground/80 text-sm mb-1.5">
+                  <p className="text-foreground/80 text-base mb-1.5 leading-[1.7]">
                     {step.highlight}
                   </p>
                   <div className="space-y-0.5">
                     {step.details.map((d, i) => (
-                      <p key={i} className="text-muted-foreground text-sm leading-[1.6]">
+                      <p key={i} className="text-muted-foreground text-base leading-[1.7]">
                         {d}
                       </p>
                     ))}
