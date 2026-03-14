@@ -13,11 +13,11 @@ export const WorkloadSection = () => {
               A maioria das professoras já faz registros ao longo do período.
             </p>
 
-            <p>
-              Observações da rotina.<br />
-              Situações das atividades.<br />
-              Interações entre as crianças.
-            </p>
+            <div className="pt-1">
+              <p>• Observações da rotina.</p>
+              <p>• Situações das atividades.</p>
+              <p>• Interações entre as crianças.</p>
+            </div>
 
             <p>
               Mas quando chega a hora de transformar essas observações em relatório, é preciso:
