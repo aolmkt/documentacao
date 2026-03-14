@@ -31,17 +31,25 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             </div>
           </div>
 
-          <div className="mb-4">
-            <span className="text-6xl md:text-7xl font-bold text-foreground">R$ 67</span>
+          <p className="text-muted-foreground text-lg line-through mb-2">
+            R$97,00
+          </p>
+
+          <div className="mb-2">
+            <span className="text-6xl md:text-7xl font-bold text-foreground">R$ 47</span>
             <span className="text-lg text-muted-foreground">,00</span>
           </div>
 
-          <p className="text-base md:text-lg font-medium text-foreground/80 mb-3 leading-[1.7]">
-            Menos de R$70 para transformar seus registros da semana em relatórios pedagógicos estruturados durante todo o próximo período letivo.
+          <p className="text-sm text-foreground/60 mb-1">
+            Valor especial de lançamento.
           </p>
-          
-          <p className="text-base text-primary font-medium mb-8">
+
+          <p className="text-base text-primary font-medium mb-4">
             Pagamento único. Sem mensalidade.
+          </p>
+
+          <p className="text-base md:text-lg font-medium text-foreground/80 mb-8 leading-[1.7]">
+            Menos de R$50 para organizar os relatórios de todo o seu próximo período letivo.
           </p>
 
           <ul className="text-left space-y-2.5 max-w-sm mx-auto mb-8">
