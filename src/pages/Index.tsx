@@ -6,6 +6,7 @@ import { WorkloadSection } from "@/components/landing/WorkloadSection";
 import { GuiltBreakSection } from "@/components/landing/GuiltBreakSection";
 import { BigIdeaSection } from "@/components/landing/BigIdeaSection";
 import { MethodSection } from "@/components/landing/MethodSection";
+import { DemoSection } from "@/components/landing/DemoSection";
 import { BeforeAfterSection } from "@/components/landing/BeforeAfterSection";
 import { WhatIsNotSection } from "@/components/landing/WhatIsNotSection";
 import { WhatYouGetSection } from "@/components/landing/WhatYouGetSection";
