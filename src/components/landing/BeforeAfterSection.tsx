@@ -1,48 +1,32 @@
-import { X, Check, ChevronRight, ChevronDown } from "lucide-react";
-
-const ArrowConnector = ({ label }: { label: string }) => (
-  <>
-    {/* Desktop: horizontal arrow */}
-    <div className="hidden md:flex flex-col items-center justify-center gap-1.5 px-2">
-      <p className="text-[10px] text-muted-foreground text-center leading-tight max-w-[100px]">
-        {label}
-      </p>
-      <ChevronRight className="w-6 h-6 text-primary" strokeWidth={2} />
-    </div>
-    {/* Mobile: vertical arrow */}
-    <div className="flex md:hidden flex-col items-center gap-1 py-3">
-      <p className="text-[10px] text-muted-foreground text-center leading-tight max-w-[200px]">
-        {label}
-      </p>
-      <ChevronDown className="w-6 h-6 text-primary" strokeWidth={2} />
-    </div>
-  </>
-);
+import { X, Check, ChevronDown } from "lucide-react";
 
 export const BeforeAfterSection = () => {
   return (
     <section className="py-16 md:py-20 px-6 bg-background">
-      <div className="container max-w-6xl">
+      <div className="container max-w-4xl">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground uppercase mb-3">
+          <h2 className="text-2xl md:text-[2rem] font-bold text-foreground uppercase mb-3 leading-[1.2]">
             Antes e depois do método
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-[1.6]">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-[1.6]">
             Veja como um registro simples da semana se transforma em um relatório evolutivo pedagógico estruturado.
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-stretch gap-2 md:gap-0">
+        {/* Linha 1: dois cards */}
+        <div className="grid md:grid-cols-2 gap-8">
           {/* ANTES */}
-          <div className="flex-1 rounded-xl border border-border/60 bg-card shadow-sm p-5 flex flex-col">
+          <div className="bg-card rounded-xl border border-border/60 shadow-sm p-7 flex flex-col">
             <div className="mb-4">
-              <h3 className="text-lg font-bold text-foreground uppercase">Antes</h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                Relatório escrito no final do período, baseado apenas na memória.
+              <p className="text-[14px] font-semibold text-foreground/60 uppercase tracking-wide mb-1">
+                Antes
+              </p>
+              <p className="text-[15px] text-muted-foreground leading-[1.6]">
+                Como muitas professoras acabam escrevendo
               </p>
             </div>
 
-            <div className="text-sm text-foreground/80 leading-[1.7] space-y-2.5 mb-5 flex-1">
+            <div className="text-[15px] text-foreground/80 leading-[1.6] space-y-2.5 mb-5 flex-1">
               <p>Maria participou das atividades propostas ao longo do período.</p>
               <p>Interagiu com os colegas e demonstrou interesse nas brincadeiras.</p>
               <p>Realizou as propostas de recorte, colagem e contação de histórias.</p>
@@ -53,7 +37,7 @@ export const BeforeAfterSection = () => {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 Problemas comuns
               </p>
-              <ul className="space-y-1.5 text-xs text-muted-foreground">
+              <ul className="space-y-1.5 text-[14px] text-muted-foreground">
                 {["Texto genérico", "Pouca evidência concreta", "Não demonstra evolução"].map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <X className="w-3.5 h-3.5 text-destructive flex-shrink-0" strokeWidth={2.5} />
@@ -64,61 +48,65 @@ export const BeforeAfterSection = () => {
             </div>
           </div>
 
-          <ArrowConnector label="pequenos registros feitos ao longo das semanas" />
-
           {/* REGISTRO SEMANAL */}
-          <div className="flex-1 rounded-xl border border-border/60 shadow-sm p-5 flex flex-col bg-muted/50">
+          <div className="bg-card rounded-xl border border-border/60 shadow-sm p-7 flex flex-col">
             <div className="mb-4">
-              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+              <p className="text-[14px] font-semibold text-foreground/60 uppercase tracking-wide mb-1">
                 Registro da semana
               </p>
-              <h3 className="text-lg font-bold text-foreground uppercase">Registro Semanal</h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                Exemplo de anotação simples feita durante a semana.
+              <p className="text-[15px] text-muted-foreground leading-[1.6]">
+                Exemplo de registro simples da rotina
               </p>
             </div>
 
-            <div className="text-sm text-foreground/80 leading-[1.7] space-y-3 flex-1">
-              <p className="text-xs font-semibold text-muted-foreground">Registro da semana 12/03 a 16/03</p>
+            <div className="text-[15px] text-foreground/80 leading-[1.6] space-y-3 flex-1">
+              <p className="text-[13px] font-semibold text-muted-foreground">Registro da semana 12/03 a 16/03</p>
 
               <div>
-                <p className="text-xs font-semibold text-foreground/70 mb-0.5">Participação na rotina:</p>
-                <p className="text-xs">Maria participou das atividades coletivas com interesse, especialmente durante os momentos de contação de histórias.</p>
+                <p className="text-[13px] font-semibold text-foreground/70 mb-0.5">Participação na rotina:</p>
+                <p className="text-[15px] leading-[1.6]">Maria participou das atividades coletivas com interesse, especialmente durante os momentos de contação de histórias.</p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-foreground/70 mb-0.5">Interações:</p>
-                <p className="text-xs">Demonstrou boa interação com as colegas, participando de brincadeiras de pega-pega e jogos com bola.</p>
+                <p className="text-[13px] font-semibold text-foreground/70 mb-0.5">Interações:</p>
+                <p className="text-[15px] leading-[1.6]">Demonstrou boa interação com as colegas, participando de brincadeiras de pega-pega e jogos com bola.</p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-foreground/70 mb-0.5">Linguagem:</p>
-                <p className="text-xs">Durante a história de Chapeuzinho Vermelho, fez perguntas sobre os personagens e comentou sobre o que poderia acontecer na narrativa.</p>
+                <p className="text-[13px] font-semibold text-foreground/70 mb-0.5">Linguagem:</p>
+                <p className="text-[15px] leading-[1.6]">Durante a história de Chapeuzinho Vermelho, fez perguntas sobre os personagens e comentou sobre o que poderia acontecer na narrativa.</p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-foreground/70 mb-0.5">Exploração e atividades:</p>
-                <p className="text-xs">Participou da atividade de recorte e colagem de formas geométricas, demonstrando maior segurança no uso da tesoura.</p>
+                <p className="text-[13px] font-semibold text-foreground/70 mb-0.5">Exploração e atividades:</p>
+                <p className="text-[15px] leading-[1.6]">Participou da atividade de recorte e colagem de formas geométricas, demonstrando maior segurança no uso da tesoura.</p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-foreground/70 mb-0.5">Desenvolvimento motor:</p>
-                <p className="text-xs">Nas brincadeiras de movimento mostrou boa coordenação ao correr e jogar bola.</p>
+                <p className="text-[13px] font-semibold text-foreground/70 mb-0.5">Desenvolvimento motor:</p>
+                <p className="text-[15px] leading-[1.6]">Nas brincadeiras de movimento mostrou boa coordenação ao correr e jogar bola.</p>
               </div>
             </div>
           </div>
+        </div>
 
-          <ArrowConnector label="organização e estruturação do conteúdo" />
+        {/* Seta de conexão */}
+        <div className="flex flex-col items-center gap-1 py-4">
+          <p className="text-xs text-muted-foreground text-center leading-tight">
+            organização e estruturação do conteúdo
+          </p>
+          <ChevronDown className="w-6 h-6 text-primary" strokeWidth={2} />
+        </div>
 
-          {/* DEPOIS */}
-          <div className="flex-1 rounded-xl border border-border/60 shadow-sm p-5 flex flex-col" style={{ backgroundColor: "#F3F1FA" }}>
+        {/* Linha 2: card único centralizado */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-[700px] rounded-xl border border-border/60 shadow-sm p-7 flex flex-col" style={{ backgroundColor: "#F3F1FA" }}>
             <div className="mb-4">
-              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+              <p className="text-[14px] font-semibold text-foreground/60 uppercase tracking-wide mb-1">
                 Relatório pedagógico gerado
               </p>
-              <h3 className="text-lg font-bold text-foreground uppercase">Depois</h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                Relatório evolutivo estruturado.
+              <p className="text-[15px] text-muted-foreground leading-[1.6]">
+                Como o método organiza o texto
               </p>
             </div>
 
-            <div className="text-sm text-foreground/80 leading-[1.7] space-y-3 mb-5 flex-1">
+            <div className="text-[15px] text-foreground/80 leading-[1.6] space-y-3 mb-5">
               <p>
                 Durante o período observado, Maria ampliou sua participação nas atividades coletivas, especialmente nas propostas de contação de histórias. Na semana dedicada à narrativa de "Chapeuzinho Vermelho", demonstrou curiosidade ao formular perguntas sobre os personagens e os desfechos da história, evidenciando maior envolvimento na escuta e na construção de sentido.
               </p>
@@ -131,7 +119,7 @@ export const BeforeAfterSection = () => {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 O que muda com o método
               </p>
-              <ul className="space-y-1.5 text-xs text-foreground/70">
+              <ul className="space-y-1.5 text-[14px] text-foreground/70">
                 {["Evidência concreta", "Situações reais da rotina", "Linguagem pedagógica adequada", "Desenvolvimento descrito ao longo do tempo", "Individualidade preservada"].map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" strokeWidth={2.5} />
