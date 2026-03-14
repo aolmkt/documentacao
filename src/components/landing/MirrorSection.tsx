@@ -32,15 +32,6 @@ export const MirrorSection = () => {
             </p>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-border/50 space-y-2">
-            <p className="text-foreground/80 leading-[1.6]">
-              O problema não é observar.
-            </p>
-            <p className="text-foreground font-medium text-lg mt-3">
-              O problema é organizar e escrever o relatório.
-            </p>
-          </div>
-
           <div className="mt-6 pt-6 border-t border-border/50 space-y-3 text-base md:text-lg text-foreground/80 leading-[1.6]">
             <p>
               O <span className="text-primary font-bold">Método Relatório Evolutivo com IA</span> foi criado exatamente para isso.
