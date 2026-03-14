@@ -20,9 +20,9 @@ export const MirrorSection = () => {
             <p className="pt-3">Essas observações normalmente viram:</p>
 
             <div className="pt-1">
-              <p>anotações</p>
-              <p>registros da rotina</p>
-              <p>ou pequenos relatos sobre cada criança.</p>
+              <p>• anotações</p>
+              <p>• registros da rotina</p>
+              <p>• ou pequenos relatos sobre cada criança.</p>
             </div>
 
             <p className="pt-3 font-medium text-foreground">O desafio aparece depois.</p>
