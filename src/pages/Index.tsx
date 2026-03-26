@@ -31,6 +31,15 @@ const Index = () => {
     currentParams.forEach((value, key) => {
       hotmartLink.searchParams.set(key, value);
     });
+
+    // Garantir que o sck sempre seja enviado
+    if (!hotmartLink.searchParams.get('sck')) {
+      const extId = (window as any).trackingData?.external_id;
+      if (extId) {
+        hotmartLink.searchParams.set('sck', extId);
+      }
+    }
+
     window.open(hotmartLink.toString(), "_self");
   };
 
