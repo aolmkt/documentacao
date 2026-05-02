@@ -20,7 +20,7 @@ import { Footer } from "@/components/landing/Footer";
 const Index = () => {
   const priceRef = useRef<HTMLDivElement>(null);
 
-  const hotmartUrl = "https://pay.hotmart.com/L104708967T";
+  const hotmartUrl = "https://pay.hotmart.com/L104708967T?checkoutMode=10";
 
   const openHotmart = () => {
     if (typeof (window as any).trackEvent === 'function') {
