@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts loaded via <link> in index.html for better performance */
+
+/* === Landing V2 (Caderno) tokens === */
+:root {
+  --paper-bg: 40 33% 96%;          /* #faf6ec creme caderno */
+  --paper-cream: 45 55% 90%;       /* fundo cremoso de seções de destaque */
+  --paper-line: 35 25% 82%;        /* linhas horizontais do caderno */
+  --paper-margin: 8 65% 55%;       /* margem vertical vermelha */
+  --terracotta: 14 55% 51%;        /* #c45a3e */
+  --terracotta-dark: 14 55% 42%;
+  --ink: 30 10% 12%;               /* quase preto, levemente quente */
+  --ink-soft: 30 8% 30%;
+  --ink-muted: 30 6% 45%;
+  --highlight-yellow: 50 100% 70%; /* marca-texto */
+  --post-it: 48 80% 86%;           /* caixa amarelo-pálido (post-it) */
+  --post-it-border: 45 60% 70%;
+  --topbar-bg: 0 0% 8%;
+  --topbar-fg: 50 100% 70%;
+  --rule-green: 145 35% 40%;
+}
 
 /* Design System for Professional Sales Page */
 
@@ -122,4 +141,37 @@
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
   }
+
+  /* === Landing V2 utilities === */
+  .paper-bg {
+    background-color: hsl(var(--paper-bg));
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 31px,
+        hsl(var(--paper-line) / 0.7) 31px,
+        hsl(var(--paper-line) / 0.7) 32px
+      );
+  }
+  .paper-margin::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: max(2rem, calc(50% - 22rem));
+    width: 1px;
+    background: hsl(var(--paper-margin) / 0.55);
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    .paper-margin::before { left: 1.5rem; }
+  }
+  .highlight-yellow {
+    background: linear-gradient(transparent 55%, hsl(var(--highlight-yellow) / 0.65) 55%);
+    padding: 0 0.1em;
+  }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
+  .font-hand { font-family: 'Caveat', cursive; }
+  .font-mono-paper { font-family: 'Courier Prime', 'Courier New', monospace; }
 }
