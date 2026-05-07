@@ -16,6 +16,9 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        hand: ['Caveat', 'cursive'],
+        'mono-paper': ['"Courier Prime"', '"Courier New"', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -68,6 +71,26 @@ export default {
           DEFAULT: "hsl(var(--lavanda))",
           light: "hsl(var(--lavanda-light))",
         },
+        terracotta: {
+          DEFAULT: "hsl(var(--terracotta))",
+          dark: "hsl(var(--terracotta-dark))",
+        },
+        paper: {
+          DEFAULT: "hsl(var(--paper-bg))",
+          cream: "hsl(var(--paper-cream))",
+          line: "hsl(var(--paper-line))",
+          margin: "hsl(var(--paper-margin))",
+        },
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          soft: "hsl(var(--ink-soft))",
+          muted: "hsl(var(--ink-muted))",
+        },
+        'post-it': {
+          DEFAULT: "hsl(var(--post-it))",
+          border: "hsl(var(--post-it-border))",
+        },
+        'rule-green': "hsl(var(--rule-green))",
       },
       borderRadius: {
         lg: "var(--radius)",
