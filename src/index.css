@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts loaded via <link> in index.html for better performance */
+
+/* === Landing V2 (Caderno) tokens === */
+:root {
+  --paper-bg: 40 33% 96%;          /* #faf6ec creme caderno */
+  --paper-cream: 45 55% 90%;       /* fundo cremoso de seções de destaque */
+  --paper-line: 35 25% 82%;        /* linhas horizontais do caderno */
+  --paper-margin: 8 65% 55%;       /* margem vertical vermelha */
+  --terracotta: 14 55% 51%;        /* #c45a3e */
+  --terracotta-dark: 14 55% 42%;
+  --ink: 30 10% 12%;               /* quase preto, levemente quente */
+  --ink-soft: 30 8% 30%;
+  --ink-muted: 30 6% 45%;
+  --highlight-yellow: 50 100% 70%; /* marca-texto */
+  --post-it: 48 80% 86%;           /* caixa amarelo-pálido (post-it) */
+  --post-it-border: 45 60% 70%;
+  --topbar-bg: 0 0% 8%;
+  --topbar-fg: 50 100% 70%;
+  --rule-green: 145 35% 40%;
+}
 
 /* Design System for Professional Sales Page */
 
