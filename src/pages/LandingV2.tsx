@@ -1,806 +1,861 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
 
 const HOTMART_URL = "https://pay.hotmart.com/L104708967T?checkoutMode=10";
 
-function track(name: string, data?: Record<string, unknown>) {
-  if (typeof window !== "undefined" && typeof window.trackEvent === "function") {
-    window.trackEvent(name, data);
-  }
-}
-
 function buildHotmartUrl() {
-  try {
-    const current = new URLSearchParams(window.location.search);
-    const link = new URL(HOTMART_URL);
-    current.forEach((v, k) => link.searchParams.set(k, v));
-    if (!link.searchParams.get("sck")) {
-      const extId = window.trackingData?.external_id;
-      if (extId) link.searchParams.set("sck", extId);
-    }
-    return link.toString();
-  } catch {
-    return HOTMART_URL;
+  const current = new URLSearchParams(window.location.search);
+  const link = new URL(HOTMART_URL);
+  current.forEach((v, k) => link.searchParams.set(k, v));
+  if (!link.searchParams.get("sck")) {
+    const extId = (window as any).trackingData?.external_id;
+    if (extId) link.searchParams.set("sck", extId);
   }
+  return link.toString();
 }
 
-function openHotmart() {
-  track("InitiateCheckout");
-  window.open(buildHotmartUrl(), "_self");
-}
+const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
+const fontMono: CSSProperties = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace' };
 
-function scrollToOffer() {
-  track("AddToWishlist");
-  document.getElementById("comprar")?.scrollIntoView({ behavior: "smooth" });
-}
+const pageStyle: CSSProperties = {
+  width: "100%",
+  maxWidth: 480,
+  margin: "0 auto",
+  background: "#f5efe4",
+  fontFamily: '"Source Serif 4", Georgia, serif',
+  color: "#2a2520",
+  overflow: "hidden",
+};
 
-/* ---------- Tiny building blocks ---------- */
+const ctaPrimary: CSSProperties = {
+  display: "block",
+  textDecoration: "none",
+  textAlign: "center",
+  width: "100%",
+  padding: "18px 20px",
+  border: "none",
+  background: "#c45a3e",
+  color: "#fff",
+  borderRadius: 10,
+  fontSize: 18,
+  fontWeight: 700,
+  fontFamily: "inherit",
+  boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.4)",
+  letterSpacing: "-0.01em",
+  boxSizing: "border-box",
+  cursor: "pointer",
+};
 
-const Hand = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-  <span className={`font-hand text-terracotta ${className}`}>{children}</span>
-);
+const LandingV2 = () => {
+  const offerRef = useRef<HTMLDivElement>(null);
 
-const Mono = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-  <span className={`font-mono-paper text-ink-muted ${className}`}>{children}</span>
-);
+  const openHotmart = (e?: MouseEvent) => {
+    if (e) e.preventDefault();
+    if (typeof (window as any).trackEvent === "function") {
+      (window as any).trackEvent("InitiateCheckout");
+    }
+    window.open(buildHotmartUrl(), "_self");
+  };
 
-const HL = ({ children }: { children: React.ReactNode }) => (
-  <span className="highlight-yellow">{children}</span>
-);
+  const scrollToOffer = (e?: MouseEvent) => {
+    if (e) e.preventDefault();
+    if (typeof (window as any).trackEvent === "function") {
+      (window as any).trackEvent("AddToWishlist");
+    }
+    offerRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-const CtaButton = ({
-  children,
-  onClick,
-  size = "lg",
-  className = "",
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  size?: "lg" | "md";
-  className?: string;
-}) => (
-  <button
-    onClick={onClick}
-    className={`group relative w-full bg-terracotta hover:bg-terracotta-dark text-white font-display font-semibold rounded-md shadow-[0_6px_0_hsl(var(--terracotta-dark))] hover:shadow-[0_3px_0_hsl(var(--terracotta-dark))] active:translate-y-1 active:shadow-[0_1px_0_hsl(var(--terracotta-dark))] transition-all ${
-      size === "lg" ? "px-8 py-5 text-lg md:text-xl" : "px-6 py-3 text-base"
-    } ${className}`}
-  >
-    {children}
-  </button>
-);
+  useEffect(() => {
+    const el = offerRef.current;
+    if (!el) return;
+    let fired = false;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !fired) {
+          fired = true;
+          if (typeof (window as any).trackEvent === "function") {
+            (window as any).trackEvent("AddToCart");
+          }
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
-const SectionLabel = ({ children }: { children: React.ReactNode }) => (
-  <p className="font-mono-paper text-xs uppercase tracking-[0.2em] text-ink-muted mb-3">{children}</p>
-);
+  const thoughts = [
+    "Você olha o relógio. 22h47.",
+    "Faltam 19. Amanhã entrega.",
+    "Você apaga a frase. Escreve de novo. Apaga.",
+    "A coordenação já mandou três voltarem.",
+    'Você pensa: "vou escrever qualquer coisa, só pra entregar."',
+    "E sente culpa. Porque você sabe o que aconteceu com cada uma.",
+  ];
 
-/* ---------- Sections ---------- */
+  const whatItems = [
+    { t: "Estrutura pronta de relatórios", d: "Você abre. Escolhe a faixa. E o esqueleto que travava na primeira frase já tá montado." },
+    { t: "Caminho passo a passo", d: "Você solta o que já tá na sua cabeça. O método devolve em relatório aprovado. Você não escreve." },
+    { t: "Exemplos reais de relatórios", d: "Você lê o antes e o depois. E entende, em 30 segundos, o que vai acontecer com os seus." },
+    { t: "Guia simples (celular ou pc)", d: "Você não instala nada. Não aprende nada novo. Abre, solta, entrega." },
+  ];
 
-const TopBar = () => (
-  <div className="bg-[hsl(var(--topbar-bg))] text-[hsl(var(--topbar-fg))] py-2.5 text-center">
-    <p className="font-mono-paper text-[11px] md:text-xs uppercase tracking-[0.2em]">
-      acesso imediato · pagamento único · R$ 47
-    </p>
-  </div>
-);
+  const translationLines = [
+    { wrong: "agitada", right: "comportamento ativo e exploratório no espaço de sala" },
+    { wrong: "briguenta", right: "em processo de construção de habilidades de convivência" },
+    { wrong: "morde os colegas", right: "expressa frustração por meio de reações corporais quando contrariada" },
+    { wrong: "não presta atenção", right: "demonstra dificuldade de manter foco em atividades dirigidas, prefere exploração livre" },
+    { wrong: "chora por tudo", right: "em processo de regulação emocional, busca acolhimento como forma de organização" },
+  ];
 
-const Header = () => (
-  <header className="paper-bg">
-    <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
-      <div className="flex items-center gap-2.5">
-        <div className="w-9 h-9 rounded-full bg-terracotta text-white font-display italic font-bold flex items-center justify-center text-lg shadow-md">
-          r
+  const steps = [
+    { n: "01", t: "Você abre a estrutura", d: "Em 10 segundos, aquele branco da tela some. O esqueleto já tá ali." },
+    { n: "02", t: "Você solta o que viu", d: "Aquilo que tava espalhado no caderno, no celular, na cabeça, sai de uma vez. Antes que você deixe passar." },
+    { n: "03", t: "O método devolve aprovado", d: "O que você soltou volta no formato que coordenação aprova. Você não escreveu uma linha." },
+    { n: "04", t: "Confere e entrega", d: "Você lê, ajusta uma palavra se quiser. E aquilo que ia tomar 2 horas, acabou." },
+  ];
+
+  const testimonials = [
+    { n: "Letícia M.", r: "Berçário II", t: "Tava acumulando 23 relatórios. Comprei numa quarta, na sexta tinha entregado tudo. Sem exagero." },
+    { n: "Andreia S.", r: "Pré I", t: "O texto sai com a minha cara. Cada criança ficou única. Não é texto pronto, é o meu olhar organizado." },
+    { n: "Patrícia R.", r: "Maternal", t: "Eu travava muito na escrita. Agora colo minhas anotações e o relatório vem estruturado. Mudou meu domingo." },
+  ];
+
+  const faq = [
+    { q: "Funciona se eu não sou boa com tecnologia?", a: "Funciona. O método tira o que já tá na sua cabeça e devolve em relatório aprovado. Você não escreve uma linha. Zero conhecimento técnico necessário." },
+    { q: "Vou ter que escrever do zero?", a: "Não. Você já tentou escrever do jeito certo sozinha. E travou. O método tira o que já tá na sua cabeça e devolve em relatório aprovado. Você não escreve uma linha." },
+    { q: "O texto não vai sair genérico?", a: "Não. O método só funciona com o que VOCÊ viu. Sem suas observações, ele não tem matéria-prima. Cada criança sai única porque o que você soltou era único." },
+    { q: "A coordenação aceita?", a: "Sim. Você é quem observou e quem assina. O método só organiza em linguagem pedagógica adequada. O olhar e a autoria continuam seus." },
+    { q: "Funciona no celular?", a: "Sim. O guia é pensado pra rodar no celular, no tablet ou no computador. Onde você já trabalha." },
+    { q: "É curso? Tem aula?", a: "Não é curso longo. É ferramenta de execução: você abre, aplica, entrega. Sem turma, sem cronograma, sem prazo." },
+    { q: "Como recebo?", a: "Após o pagamento, acesso liberado na hora por e-mail. Sem espera." },
+  ];
+
+  return (
+    <main style={pageStyle}>
+      {/* 1. Notice */}
+      <div style={{
+        background: "#2a2520", color: "#f5c850",
+        padding: "8px 20px", textAlign: "center",
+        ...fontMono, fontSize: 10.5, fontWeight: 600,
+        letterSpacing: "0.06em", textTransform: "uppercase",
+      }}>
+        acesso imediato · pagamento único · R$ 47
+      </div>
+
+      {/* 2. Nav */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "14px 20px", borderBottom: "1px solid rgba(42,37,32,0.1)",
+        background: "#f5efe4",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{
+            width: 26, height: 26, borderRadius: "50%",
+            background: "#c45a3e", display: "flex", alignItems: "center",
+            justifyContent: "center", color: "#fff", fontSize: 16,
+            fontFamily: '"Caveat", cursive', fontWeight: 700,
+          }}>r</div>
+          <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: "-0.01em" }}>
+            Rotina Pedagógica
+          </span>
         </div>
-        <span className="font-display font-semibold text-ink">Rotina Pedagógica</span>
+        <a href="#comprar" onClick={scrollToOffer} style={{
+          ...fontMono, fontSize: 11, color: "#c45a3e",
+          textDecoration: "none", fontWeight: 600,
+          textTransform: "uppercase", letterSpacing: "0.06em",
+          border: "1px solid #c45a3e", padding: "6px 10px", borderRadius: 999,
+        }}>
+          Quero por R$ 47
+        </a>
       </div>
-      <button
-        onClick={scrollToOffer}
-        className="font-mono-paper text-[11px] md:text-xs uppercase tracking-[0.18em] border border-terracotta text-terracotta px-4 py-2 rounded-full hover:bg-terracotta hover:text-white transition-colors"
-      >
-        quero por R$ 47
-      </button>
-    </div>
-  </header>
-);
 
-const Hero = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-16">
-      <Hand className="text-base md:text-lg italic">professora,</Hand>
-      <h1 className="font-display text-5xl md:text-7xl font-bold leading-[1.05] text-ink mt-3 mb-8">
-        Você viu.
-        <br />
-        E deixou <HL>passar.</HL>
-      </h1>
-
-      <p className="font-display text-xl md:text-2xl text-ink leading-snug">
-        Tem coisa acontecendo na sua sala…
-      </p>
-      <p className="font-hand text-2xl md:text-3xl text-terracotta italic mt-2 mb-6">
-        que você ainda não conseguiu colocar no papel.
-      </p>
-
-      <div className="bg-post-it border-l-4 border-post-it-border px-5 py-5 my-8 max-w-xl shadow-sm">
-        <p className="font-display text-lg md:text-xl text-ink leading-snug">
-          O método tira o que já tá na sua cabeça — antes que você deixe passar — e devolve em
-          relatório aprovado.
+      {/* 3. Hero */}
+      <div style={{
+        position: "relative",
+        padding: "32px 24px 36px",
+        background: `repeating-linear-gradient(to bottom, transparent 0 31px, rgba(42,37,32,0.08) 31px 32px), #f5efe4`,
+      }}>
+        <div style={{
+          position: "absolute", left: 56, top: 0, bottom: 0, width: 1,
+          background: "rgba(196,90,62,0.35)",
+        }} />
+        <div style={{ ...fontHand, fontSize: 18, color: "#c45a3e", marginBottom: 8, transform: "rotate(-1.5deg)" }}>
+          professora,
+        </div>
+        <h1 style={{ fontSize: 48, lineHeight: 1.02, margin: "0 0 18px", fontWeight: 600, letterSpacing: "-0.035em" }}>
+          Você viu.<br />
+          <span style={{ position: "relative", display: "inline-block" }}>
+            <span style={{ position: "relative", zIndex: 1 }}>E deixou passar.</span>
+            <span style={{
+              position: "absolute", left: -2, right: -2, bottom: 4, height: 14,
+              background: "rgba(245,200,80,0.55)", zIndex: 0, transform: "rotate(-0.5deg)",
+            }} />
+          </span>
+        </h1>
+        <p style={{ fontSize: 17, lineHeight: 1.45, color: "#2a2520", margin: "20px 0 22px", maxWidth: 380, fontWeight: 500 }}>
+          Tem coisa acontecendo na sua sala…<br />
+          <span style={{ color: "#c45a3e", fontStyle: "italic", fontWeight: 600 }}>
+            que você ainda não conseguiu colocar no papel.
+          </span>
         </p>
-        <p className="font-hand text-2xl text-terracotta italic mt-3">
-          Sem você escrever uma linha.
+        <p style={{ fontSize: 16, lineHeight: 1.45, color: "#2a2520", margin: "0 0 24px", maxWidth: 380, fontWeight: 600, padding: "12px 14px", background: "rgba(245,200,80,0.35)", borderLeft: "3px solid #c45a3e" }}>
+          O método tira o que já tá na sua cabeça, antes que você deixe passar, e devolve em relatório aprovado.
+          <br />
+          <span style={{ color: "#c45a3e", fontStyle: "italic" }}>Sem você escrever uma linha.</span>
         </p>
-      </div>
-
-      <div className="relative mt-10">
-        <Hand className="absolute -top-7 right-2 text-lg italic transform -rotate-6">
-          acesso imediato ↓
-        </Hand>
-        <CtaButton onClick={openHotmart}>
-          Ok. eu não vou perder isso de novo →
-        </CtaButton>
-      </div>
-
-      <p className="text-center mt-3">
-        <Mono>(R$47 · acesso imediato)</Mono>
-      </p>
-
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6 text-sm text-ink-soft font-mono-paper">
-        <span className="flex items-center gap-2"><Dot /> pagamento único</span>
-        <span className="flex items-center gap-2"><Dot /> sem mensalidade</span>
-        <span className="flex items-center gap-2"><Dot /> aplicação imediata</span>
-      </div>
-    </div>
-  </section>
-);
-
-const Dot = () => <span className="w-1.5 h-1.5 rounded-full bg-rule-green inline-block" />;
-
-const MIND_PAIRS = [
-  ["agitada", "comportamento ativo e exploratório no espaço de sala"],
-  ["briguenta", "em processo de construção de habilidades de convivência"],
-  ["morde os colegas", "expressa frustração por meio de reações corporais quando contrariada"],
-  ["não presta atenção", "demonstra dificuldade de manter foco em atividades dirigidas, prefere exploração livre"],
-  ["chora por tudo", "em processo de regulação emocional, busca acolhimento como forma de organização"],
-];
-
-const MindToReport = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <SectionLabel>o problema que ninguém fala</SectionLabel>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Você sabe o que viu.
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">
-        Só não pode escrever assim.
-      </p>
-
-      <p className="text-ink-soft text-base md:text-lg leading-relaxed mb-10 max-w-2xl">
-        Toda sala tem aquela criança que não para. Já é de lei. Mas você não pode escrever que ela é
-        "agitada". Tem que escrever… outra coisa.
-      </p>
-
-      <div className="space-y-4">
-        {MIND_PAIRS.map(([think, write]) => (
-          <div key={think} className="bg-paper border border-paper-line/60 rounded-md p-5 shadow-sm">
-            <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-1">
-              o que você pensa
-            </Mono>
-            <p className="font-hand text-2xl text-ink-soft italic line-through decoration-terracotta/60 mb-3">
-              "{think}"
-            </p>
-            <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-1 text-rule-green">
-              → o que você tem que escrever
-            </Mono>
-            <p className="font-display text-base md:text-lg text-ink italic">"{write}"</p>
+        <div style={{ position: "relative", marginBottom: 10 }}>
+          <a href={HOTMART_URL} onClick={openHotmart} style={ctaPrimary}>
+            Ok. eu não vou perder isso de novo →
+          </a>
+          <div style={{
+            ...fontHand, position: "absolute", right: -4, top: -28,
+            fontSize: 18, color: "#c45a3e", transform: "rotate(8deg)",
+          }}>
+            acesso imediato ↓
           </div>
-        ))}
-      </div>
-
-      <div className="mt-12 space-y-4 text-ink leading-relaxed text-lg max-w-2xl">
-        <p>
-          E você ainda tem que explicar:{" "}
-          <strong className="font-display">quando aconteceu, por quê, em que contexto.</strong>
-        </p>
-        <p>Não é falta de conteúdo. É excesso de responsabilidade na forma de escrever.</p>
-        <p>Pra uma criança, fica lindo.</p>
-        <p className="font-display text-2xl">Pra 20, você enlouquece.</p>
-      </div>
-    </div>
-  </section>
-);
-
-const EmotionalBreak = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-2xl mx-auto px-6 md:px-12 py-14 md:py-20 space-y-6 text-ink leading-relaxed">
-      <p className="text-lg">E o pior nem é o tempo.</p>
-      <p className="text-lg">É que você sabe que deveria ser simples.</p>
-      <p className="font-display text-2xl">Mas não é.</p>
-      <p className="text-lg">E isso começa a pesar.</p>
-      <p className="text-lg">Porque enquanto você trava…</p>
-      <p className="font-display text-2xl text-terracotta">os relatórios acumulam.</p>
-      <p className="text-lg">E você já entra no próximo dia</p>
-      <p className="font-hand text-4xl text-terracotta italic">devendo.</p>
-
-      <div className="pt-10">
-        <Hand className="block text-2xl italic mb-4">espera. lê isso devagar.</Hand>
-        <p className="text-lg">Não é falta de esforço.</p>
-        <p className="text-lg">Você está tentando escrever do jeito que te ensinaram.</p>
-        <p className="font-display text-xl italic">e esse jeito não funciona na vida real.</p>
-        <p className="text-lg mt-4">E enquanto você continuar insistindo nesse jeito,</p>
-        <p className="text-lg">nada muda.</p>
-        <p className="font-display text-5xl mt-6 text-ink">Para.</p>
-      </div>
-
-      <div className="pt-10 space-y-4">
-        <Hand className="block text-xl italic">…agora você percebeu.</Hand>
-        <p className="text-lg">não foi algo que você pensou.</p>
-        <p className="text-lg">Você não explicou isso.</p>
-        <p className="font-display text-2xl">só bateu.</p>
-        <p className="text-lg mt-4">isso não aconteceu por acaso.</p>
-        <p className="font-display text-2xl text-terracotta">tem estrutura.</p>
-      </div>
-    </div>
-  </section>
-);
-
-const BeforeAfterLara = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <p className="text-ink leading-relaxed text-lg mb-3">E é aqui que quase todo mundo erra.</p>
-      <p className="text-ink leading-relaxed text-lg mb-3">O erro não está no que você faz.</p>
-      <p className="font-display text-2xl text-ink mb-8">
-        Está no que você não vê… <em className="font-hand text-terracotta not-italic">enquanto faz.</em>
-      </p>
-
-      <div className="space-y-2.5 max-w-xl mb-12">
-        {[
-          "Você não começa do zero.",
-          "Você não fica escolhendo palavra.",
-          "Você não tenta \"escrever bonito\".",
-        ].map((t) => (
-          <p key={t} className="flex gap-3 text-ink">
-            <span className="text-rule-green font-bold">✓</span>
-            <span>{t}</span>
-          </p>
-        ))}
-      </div>
-
-      <p className="text-ink mb-3">Você pega o que já observou.</p>
-      <p className="text-ink mb-4">E aquilo que antes virava:</p>
-      <ul className="space-y-2 mb-8 text-ink-soft">
-        {[
-          "tela parada por 20 minutos",
-          "frase reescrita 5 vezes seguidas",
-          "dúvida se \"tá certo ou não\"",
-        ].map((t) => (
-          <li key={t} className="flex gap-3">
-            <span className="text-terracotta font-bold">✕</span>
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="font-display text-2xl text-ink italic mb-2">Agora vira texto pronto.</p>
-      <p className="text-ink-soft mb-10">Sem travar. Sem apagar. Sem recomeçar.</p>
-
-      <div className="grid md:grid-cols-2 gap-6 mb-10">
-        <div className="bg-paper border border-paper-line p-5 rounded-md shadow-sm">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-2">antes</Mono>
-          <p className="font-hand text-xl text-ink-soft italic leading-snug">
-            "Lara empilhou bloco. Caiu. Tentou de novo. Falou 'olha eu fiz'."
-          </p>
         </div>
-        <div className="bg-post-it border border-post-it-border p-5 rounded-md shadow-sm">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-2 text-terracotta">depois</Mono>
-          <p className="font-display text-sm md:text-base text-ink leading-relaxed italic">
-            "Lara demonstrou avanços na coordenação motora fina e na persistência diante do desafio.
-            Ao empilhar blocos, manteve a tentativa mesmo após a queda, evidenciando regulação
-            emocional. O movimento de compartilhar a conquista com a colega indica desenvolvimento
-            da interação social…"
-          </p>
+        <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginBottom: 18, letterSpacing: "0.06em" }}>
+          (R$47 · acesso imediato)
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 12, color: "#7a6e5f", flexWrap: "wrap" }}>
+          {["pagamento único", "sem mensalidade", "aplicação imediata"].map((t) => (
+            <span key={t} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#7aa05c" }} />
+              {t}
+            </span>
+          ))}
         </div>
       </div>
 
-      <p className="text-center text-ink-muted text-sm mb-8">
-        → escrito a partir da anotação simples acima.
-      </p>
-
-      <div className="max-w-md mx-auto">
-        <CtaButton onClick={openHotmart}>Ok. mostra isso. →</CtaButton>
-        <p className="text-center mt-3"><Mono>(R$47 · acesso na hora)</Mono></p>
-      </div>
-    </div>
-  </section>
-);
-
-const MidnightScene = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <SectionLabel>e não, não é só com você</SectionLabel>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Toda semana,
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">
-        milhares tão nessa cena.
-      </p>
-      <p className="text-ink-soft text-base md:text-lg mb-8 max-w-2xl">
-        Isso virou rotina pra quem escreve relatório. Você não é a única que trava. Só que ninguém
-        fala sobre.
-      </p>
-
-      <div className="bg-paper border border-paper-line/60 rounded-md p-6 space-y-3 max-w-xl shadow-sm">
-        {[
-          "Você olha o relógio. 22h47.",
-          "Faltam 19. Amanhã entrega.",
-          "Você apaga a frase. Escreve de novo. Apaga.",
-          "A coordenação já mandou três voltarem.",
-          "Você pensa: \"vou escrever qualquer coisa, só pra entregar.\"",
-          "E sente culpa. Porque você sabe o que aconteceu com cada uma.",
-        ].map((t) => (
-          <p key={t} className="flex gap-3 text-ink">
-            <span className="text-rule-green font-bold">✓</span>
-            <span>{t}</span>
-          </p>
-        ))}
-      </div>
-
-      <p className="font-display text-xl text-ink mt-8 max-w-2xl">
-        Não é falta de competência. É falta de uma estrutura que tire você do branco e te entregue o
-        texto pronto.
-      </p>
-    </div>
-  </section>
-);
-
-const WHAT_YOU_GET = [
-  ["Estrutura pronta de relatórios", "Você abre. Escolhe a faixa. E o esqueleto que travava na primeira frase já tá montado."],
-  ["Caminho passo a passo", "Você solta o que já tá na sua cabeça. O método devolve em relatório aprovado. Você não escreve."],
-  ["Exemplos reais de relatórios", "Você lê o antes e o depois. E entende, em 30 segundos, o que vai acontecer com os seus."],
-  ["Guia simples (celular ou pc)", "Você não instala nada. Não aprende nada novo. Abre, solta, entrega."],
-];
-
-const WhatYouGet = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <SectionLabel>o que você recebe</SectionLabel>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Não é curso longo.
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">
-        é ferramenta de execução.
-      </p>
-      <p className="text-ink-soft text-base md:text-lg mb-10 max-w-2xl">
-        Você abre. Copia. E o relatório que antes travava… sai.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        {WHAT_YOU_GET.map(([title, desc]) => (
-          <div key={title} className="bg-paper border border-paper-line p-5 rounded-md shadow-sm">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-terracotta text-white font-bold mb-3">✓</span>
-            <h3 className="font-display text-lg font-semibold text-ink mb-1.5">{title}</h3>
-            <p className="text-ink-soft text-sm leading-relaxed">{desc}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const BeforeAfterMiguel = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <Hand className="block text-xl italic mb-3">para. não pula isso.</Hand>
-      <p className="font-display text-2xl text-ink mb-2">A Lara não foi exceção.</p>
-      <p className="font-hand text-3xl text-terracotta italic mb-8">
-        Foi só a primeira que você conseguiu ver.
-      </p>
-
-      <p className="text-ink-soft mb-3">e aquilo que você viu…</p>
-      <p className="font-display text-xl text-ink italic mb-8">nunca mais volta.</p>
-
-      <p className="text-ink mb-6 max-w-2xl leading-relaxed">
-        Foi aquela aluna… na terça… segurando o lápis vermelho pela primeira vez. E você só lembrou
-        quando já era tarde.
-      </p>
-
-      <p className="text-ink mb-3 max-w-2xl leading-relaxed">
-        Não é "mais um relatório" que você perdeu. É a evolução daquela criança. O argumento que
-        você não teve na reunião. A segurança que você precisava no fechamento do bimestre.
-      </p>
-
-      <p className="font-hand text-3xl text-terracotta italic my-8">e você deixou passar.</p>
-
-      <div className="border-t border-paper-line/60 pt-12">
-        <SectionLabel>até que fica impossível ignorar</SectionLabel>
-        <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-          Outra criança, outra anotação.
+      {/* 4. Translation */}
+      <div style={{ padding: "52px 24px 48px", background: "#f0e6d2" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          o problema que ninguém fala
+        </div>
+        <h2 style={{ fontSize: 30, margin: "0 0 16px", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
+          Você sabe o que viu.<br />
+          <span style={{ ...fontHand, fontSize: 38, color: "#c45a3e" }}>Só não pode escrever assim.</span>
         </h2>
-        <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">
-          mesmo resultado.
+        <p style={{ fontSize: 15.5, lineHeight: 1.55, color: "#4a4238", margin: "0 0 22px", maxWidth: 380 }}>
+          Toda sala tem aquela criança que não para. Já é de lei. Mas você não pode escrever que ela é "agitada". Tem que escrever… outra coisa.
         </p>
-        <p className="text-ink-soft mb-8 max-w-2xl">
-          Funciona com qualquer faixa, qualquer cena, qualquer criança.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-paper border border-paper-line p-5 rounded-md shadow-sm">
-            <div className="flex items-baseline justify-between mb-2">
-              <Mono className="text-[10px] uppercase tracking-[0.18em]">sua anotação</Mono>
-              <Mono className="text-[10px] text-terracotta">8s no celular</Mono>
+        <div style={{ background: "#f5efe4", borderRadius: 8, padding: "4px 0", border: "1px solid rgba(42,37,32,0.08)", marginBottom: 22 }}>
+          {translationLines.map((l, i) => (
+            <div key={i} style={{ padding: "14px 16px", borderBottom: i < translationLines.length - 1 ? "1px dashed rgba(42,37,32,0.12)" : "none" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, fontSize: 11, ...fontMono, color: "#7a6e5f", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                <span>o que você pensa</span>
+              </div>
+              <div style={{ ...fontHand, fontSize: 22, color: "#2a2520", textDecoration: "line-through", textDecorationColor: "rgba(196,90,62,0.6)", textDecorationThickness: 2, marginBottom: 12, lineHeight: 1.1 }}>
+                "{l.wrong}"
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, fontSize: 11, ...fontMono, color: "#7a6e5f", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                <span style={{ color: "#7aa05c" }}>→ o que você tem que escrever</span>
+              </div>
+              <div style={{ fontSize: 14.5, lineHeight: 1.45, color: "#2a2520", fontStyle: "italic" }}>"{l.right}"</div>
             </div>
-            <p className="font-hand text-xl text-ink-soft italic leading-snug">
-              "Miguel pegou o livro sozinho. Sentou. Apontou pro cão e falou 'au au, tá ali'. Ficou
-              4 minutos folheando. (a primeira vez que ele senta sem chamar ninguém.)"
-            </p>
-          </div>
-          <div className="bg-post-it border border-post-it-border p-5 rounded-md shadow-sm">
-            <div className="flex items-baseline justify-between mb-2">
-              <Mono className="text-[10px] uppercase tracking-[0.18em] text-terracotta">relatório pronto</Mono>
-              <Mono className="text-[10px] text-terracotta">em 90 segundos</Mono>
-            </div>
-            <p className="font-display text-sm text-ink leading-relaxed italic">
-              "Miguel demonstrou autonomia ao escolher o livro de forma espontânea e iniciativa no
-              contato com a leitura. Trata-se de um marco no desenvolvimento de sua autorregulação,
-              dado que, neste momento, sustentou a ação sem demandar a mediação do adulto. A
-              permanência de quatro minutos de folhear a obra evidencia capacidade de atenção
-              concentrada para a faixa etária, e a verbalização ao reconhecer elementos da imagem
-              indica avanços no campo da Escuta, Fala, Pensamento e Imaginação…"
-            </p>
-          </div>
+          ))}
         </div>
+        <p style={{ fontSize: 15.5, lineHeight: 1.55, color: "#4a4238", margin: "0 0 14px", maxWidth: 380, fontWeight: 500 }}>
+          E você ainda tem que explicar:
+          <strong style={{ fontWeight: 600 }}> quando aconteceu, por quê, em que contexto.</strong>
+        </p>
+        <p style={{ fontSize: 15.5, lineHeight: 1.55, color: "#4a4238", margin: "0 0 18px", maxWidth: 380 }}>
+          Não é falta de conteúdo. É excesso de responsabilidade na forma de escrever.
+        </p>
+        <div style={{ padding: "18px", background: "#2a2520", color: "#f5efe4", borderRadius: 8, marginBottom: 4 }}>
+          <p style={{ fontSize: 15.5, lineHeight: 1.5, margin: 0, fontWeight: 500 }}>Pra uma criança, fica lindo.</p>
+          <p style={{ ...fontHand, fontSize: 26, color: "#f5c850", margin: "6px 0 0", lineHeight: 1.05 }}>Pra 20, você enlouquece.</p>
+        </div>
+      </div>
 
-        <div className="mt-10 space-y-2 text-ink">
-          <p>Você já viu acontecer com a Lara.</p>
-          <p>Você já viu acontecer com o Miguel.</p>
-          <p className="font-display text-xl italic mt-4">
-            a diferença agora é que você não pode mais
+      {/* 5. Sinking */}
+      <div style={{ padding: "44px 24px 48px", background: "#1a1612", color: "#e8dfd0" }}>
+        <p style={{ fontSize: 19, lineHeight: 1.45, margin: "0 0 14px", color: "#f5efe4", fontWeight: 500 }}>E o pior nem é o tempo.</p>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 14px", color: "#d4c8b3" }}>É que você sabe que deveria ser simples.</p>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 14px", color: "#d4c8b3" }}>Mas não é.</p>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 22px", color: "#d4c8b3" }}>E isso começa a pesar.</p>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 14px", color: "#d4c8b3" }}>Porque enquanto você trava…</p>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 14px", color: "#d4c8b3" }}>os relatórios acumulam.</p>
+        <p style={{ ...fontHand, fontSize: 28, color: "#c45a3e", margin: "8px 0 0", lineHeight: 1.1 }}>
+          E você já entra no próximo dia<br />
+          <span style={{ color: "#f5c850" }}>devendo.</span>
+        </p>
+      </div>
+
+      {/* 6. Relief */}
+      <div style={{ padding: "52px 24px 56px", background: "linear-gradient(180deg, #f5efe4 0%, #ebe2d2 100%)", position: "relative" }}>
+        <div style={{ padding: "24px 22px 26px", background: "#2a2520", color: "#f5efe4", marginBottom: 28, borderLeft: "3px solid #c45a3e" }}>
+          <div style={{ ...fontMono, fontSize: 9, letterSpacing: "0.14em", color: "#f5c850", textTransform: "uppercase", marginBottom: 12 }}>
+            espera. lê isso devagar.
+          </div>
+          <p style={{ fontSize: 18, lineHeight: 1.4, margin: "0 0 10px", fontWeight: 600, color: "#f5efe4" }}>Não é falta de esforço.</p>
+          <p style={{ fontSize: 16.5, lineHeight: 1.5, margin: 0, color: "#d4c8b3" }}>
+            Você está tentando escrever do jeito que te ensinaram.<br />
+            <span style={{ ...fontHand, fontSize: 26, color: "#c45a3e" }}>e esse jeito não funciona na vida real.</span>
           </p>
-          <p className="font-hand text-3xl text-terracotta italic">dizer que não viu.</p>
         </div>
-      </div>
-    </div>
-  </section>
-);
+        <p style={{ fontSize: 17, lineHeight: 1.4, margin: "0 0 28px", color: "#2a2520", fontWeight: 600, letterSpacing: "-0.01em" }}>
+          E enquanto você continuar insistindo nesse jeito,<br />
+          <span style={{ color: "#c45a3e" }}>nada muda.</span>
+        </p>
 
-const STEPS = [
-  ["01", "Você abre a estrutura", "Em 10 segundos, aquele branco da tela some. O esqueleto já tá ali."],
-  ["02", "Você solta o que viu", "Aquilo que tava espalhado no caderno, no celular, na cabeça, sai de uma vez. Antes que você deixe passar."],
-  ["03", "O método devolve aprovado", "O que você soltou volta no formato que coordenação aprova. Você não escreveu uma linha."],
-  ["04", "Confere e entrega", "Você lê, ajusta uma palavra se quiser. E aquilo que ia tomar 2 horas, acabou."],
-];
+        <div style={{ margin: "64px -24px", padding: "72px 24px", background: "#f5efe4", textAlign: "center", borderTop: "1px solid rgba(42,37,32,0.08)", borderBottom: "1px solid rgba(42,37,32,0.08)" }}>
+          <p style={{ ...fontHand, fontSize: 38, lineHeight: 1, margin: 0, color: "#2a2520", letterSpacing: "-0.005em" }}>Para.</p>
+        </div>
 
-const FourSteps = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <SectionLabel>como funciona</SectionLabel>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Quatro passos.
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">zero do zero.</p>
-      <p className="text-ink-soft mb-10 max-w-2xl">
-        O método tira o que já tá na sua cabeça, antes que você deixe passar, e devolve em relatório
-        aprovado. Sem você escrever uma linha.
-      </p>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 8 }}>…agora você percebeu.</div>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 22 }}>não foi algo que você pensou.</div>
 
-      <div className="space-y-5">
-        {STEPS.map(([num, title, desc]) => (
-          <div key={num} className="bg-paper border border-paper-line p-5 rounded-md shadow-sm flex gap-5">
-            <div className="font-display text-4xl md:text-5xl text-terracotta font-bold leading-none">
-              {num}
+        <p style={{ fontSize: 19, lineHeight: 1.35, margin: "0 0 8px", color: "#2a2520", fontWeight: 600 }}>Você não explicou isso.</p>
+        <p style={{ ...fontHand, fontSize: 32, lineHeight: 1.05, margin: "0 0 32px", color: "#c45a3e" }}>só bateu.</p>
+
+        <div style={{ margin: "0 0 32px" }}>
+          <p style={{ ...fontMono, fontSize: 10, letterSpacing: "0.04em", color: "#9c8e7a", margin: "0 0 22px", lineHeight: 1.4, fontStyle: "italic", fontWeight: 300 }}>
+            isso não aconteceu por acaso.
+          </p>
+          <p style={{ ...fontHand, fontSize: 48, lineHeight: 0.95, margin: 0, color: "#2a2520", fontWeight: 700, letterSpacing: "-0.01em" }}>
+            tem estrutura.
+          </p>
+        </div>
+
+        <p style={{ fontSize: 17, lineHeight: 1.4, margin: "0 0 22px", color: "#2a2520", fontWeight: 600 }}>E é aqui que quase todo mundo erra.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 6px", color: "#2a2520" }}>O erro não está no que você faz.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 6px", color: "#2a2520" }}>Está no que você não vê…</p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.1, margin: "0 0 28px", color: "#c45a3e" }}>enquanto faz.</p>
+
+        <p style={{ fontSize: 17, lineHeight: 1.45, margin: "0 0 32px", color: "#2a2520", fontWeight: 500 }}>
+          E quando você começa a ver…<br />
+          <span style={{ ...fontHand, fontSize: 28, color: "#c45a3e" }}>não dá mais pra desver.</span>
+        </p>
+
+        <p style={{ fontSize: 17, lineHeight: 1.45, margin: "0 0 28px", color: "#2a2520", fontWeight: 500 }}>
+          E é aqui que tudo começa<br />
+          <span style={{ ...fontHand, fontSize: 28, color: "#c45a3e" }}>a ficar desconfortável…</span>
+        </p>
+
+        <p style={{ fontSize: 15.5, lineHeight: 1.4, margin: "0 0 28px", color: "#7a6e5f", fontStyle: "italic" }}>
+          Não do jeito que você imagina.
+        </p>
+
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 18px", color: "#5a5246" }}>
+          Porque você não vai mais conseguir encarar aquilo de novo…<br />e fingir que ainda não viu.
+        </p>
+
+        <p style={{ ...fontHand, fontSize: 36, lineHeight: 1, margin: "0 0 24px", color: "#2a2520" }}>É.</p>
+
+        <p style={{ fontSize: 17, lineHeight: 1.45, margin: "0 0 36px", color: "#2a2520", fontWeight: 500 }}>
+          E é exatamente por isso<br />
+          <span style={{ ...fontHand, fontSize: 28, color: "#c45a3e" }}>que isso funciona.</span>
+        </p>
+
+        <p style={{ fontSize: 19, lineHeight: 1.35, margin: "0 0 8px", color: "#2a2520", fontWeight: 600 }}>Você já viu isso.</p>
+        <p style={{ ...fontHand, fontSize: 32, lineHeight: 1.05, margin: "0 0 32px", color: "#c45a3e" }}>só nunca separou.</p>
+
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 4px", color: "#2a2520" }}>Isso começa a aparecer.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 16px", color: "#2a2520" }}>E quando aparece…</p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.1, margin: "0 0 24px", color: "#c45a3e" }}>
+          você não consegue mais operar do mesmo jeito.
+        </p>
+        <p style={{ ...fontMono, fontSize: 11, letterSpacing: "0.06em", color: "#7a6e5f", margin: "0 0 36px" }}>(quando você separa.)</p>
+
+        <div style={{ display: "grid", gap: 14, marginBottom: 26 }}>
+          {["Você não começa do zero.", "Você não fica escolhendo palavra.", 'Você não tenta "escrever bonito".'].map((t, i) => (
+            <div key={i} style={{
+              display: "flex", gap: 12, alignItems: "center",
+              padding: "14px 16px", background: "#f5efe4",
+              borderLeft: "3px solid #7aa05c", borderRadius: 4,
+              fontSize: 16, lineHeight: 1.35, fontWeight: 500, color: "#2a2520",
+              boxShadow: "0 1px 0 rgba(42,37,32,0.04)",
+            }}>
+              <span style={{ color: "#7aa05c", fontFamily: '"Caveat", cursive', fontSize: 26, lineHeight: 1, flexShrink: 0 }}>✓</span>
+              <span>{t}</span>
             </div>
-            <div>
-              <h3 className="font-display text-lg font-semibold text-ink mb-1">{title}</h3>
-              <p className="text-ink-soft text-sm leading-relaxed">{desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const OldVsNew = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <Hand className="block text-xl italic mb-3">e você sabe disso há anos.</Hand>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Você não trava por preguiça.
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-8">
-        você trava porque começa do branco.
-      </p>
-      <p className="text-ink-soft mb-10 max-w-2xl">
-        E mesmo assim… você abriu o mesmo documento. Tentou de novo. Do mesmo jeito. Domingo
-        passado. E o anterior. E o de antes.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-paper border border-paper-line p-5 rounded-md">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-3">do jeito antigo</Mono>
-          <ul className="space-y-2.5 text-ink-soft">
-            {[
-              "você trava na primeira frase",
-              "texto sai igual pra todo mundo",
-              "duas horas por relatório",
-              "coordenação pede pra refazer",
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
-                <span className="text-terracotta font-bold">✗</span>
-                <span>{t}</span>
-              </li>
-            ))}
-          </ul>
+          ))}
         </div>
-        <div className="bg-post-it border border-post-it-border p-5 rounded-md">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-3 text-terracotta">
-            Método Rotina
-          </Mono>
-          <ul className="space-y-2.5 text-ink">
-            {[
-              "estrutura pedagógica pronta",
-              "cada criança fica única",
-              "minutos por relatório",
-              "linguagem que coordenação aprova",
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
-                <span className="text-rule-green font-bold">✓</span>
-                <span>{t}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-);
 
-const TESTIMONIALS = [
-  ["Tava acumulando 23 relatórios. Comprei numa quarta, na sexta tinha entregado tudo. Sem exagero.", "Letícia M.", "Berçário II"],
-  ["O texto sai com a minha cara. Cada criança ficou única. Não é texto pronto, é o meu olhar organizado.", "Andreia S.", "Pré I"],
-  ["Eu travava muito na escrita. Agora colo minhas anotações e o relatório vem estruturado. Mudou meu domingo.", "Patrícia R.", "Maternal"],
-];
-
-const Testimonials = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <Hand className="block text-xl italic mb-3">e quando isso começa a acontecer…</Hand>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Professora pra
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-10">professora.</p>
-
-      <div className="grid md:grid-cols-3 gap-5">
-        {TESTIMONIALS.map(([quote, name, role]) => (
-          <div key={name} className="bg-paper border border-paper-line p-5 rounded-md shadow-sm">
-            <p className="text-terracotta tracking-wider mb-3">★ ★ ★ ★ ★</p>
-            <p className="font-display italic text-ink leading-snug mb-4">"{quote}"</p>
-            <p className="font-display font-semibold text-ink">{name}</p>
-            <Mono className="text-xs">{role}</Mono>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const EmotionalClose = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-2xl mx-auto px-6 md:px-12 py-14 md:py-20 space-y-5 text-ink">
-      <p>e não é só você.</p>
-      <p>Se você já percebeu isso acontecendo…</p>
-      <p className="font-display text-xl italic">então isso aqui vai te incomodar.</p>
-
-      <blockquote className="font-hand text-2xl md:text-3xl text-terracotta italic border-l-4 border-terracotta pl-5 my-8">
-        "Eu achei que era coisa da minha cabeça… até começar a ver isso em tudo."
-      </blockquote>
-
-      <blockquote className="font-hand text-2xl md:text-3xl text-terracotta italic border-l-4 border-terracotta pl-5 my-8">
-        "Depois que você vê uma vez… não dá mais pra fingir que não viu."
-      </blockquote>
-
-      <p className="font-display text-2xl mt-10">Você não está comprando uma ferramenta.</p>
-      <p className="font-display text-2xl text-terracotta italic">
-        Você está parando de perder coisa que já aconteceu.
-      </p>
-
-      <p className="mt-6">Cada observação que você deixa passar…</p>
-      <p className="font-hand text-3xl text-terracotta italic">não volta.</p>
-
-      <p className="mt-6">Isso aqui não é sobre escrever melhor.</p>
-      <p className="font-display text-xl italic">É sobre não deixar escapar de novo.</p>
-    </div>
-  </section>
-);
-
-const OfferCard = () => (
-  <section id="comprar" className="bg-paper-cream scroll-mt-8">
-    <div className="max-w-xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <div className="bg-paper border-2 border-terracotta rounded-lg p-7 md:p-9 shadow-lg">
-        <Mono className="text-[10px] uppercase tracking-[0.2em] text-terracotta block mb-4">
-          oferta
-        </Mono>
-        <ul className="space-y-3 mb-6 text-ink">
-          {[
-            "Estrutura pronta de relatórios (BNCC)",
-            "Caminho passo a passo do método",
-            "Exemplos reais de relatórios completos",
-            "Guia simples (celular ou computador)",
-          ].map((t) => (
-            <li key={t} className="flex gap-3">
-              <span className="text-rule-green font-bold">✓</span>
+        <p style={{ fontSize: 16.5, lineHeight: 1.5, color: "#2a2520", margin: "0 0 14px", maxWidth: 380, fontWeight: 500 }}>
+          Você pega o que já observou.
+        </p>
+        <p style={{ fontSize: 16.5, lineHeight: 1.5, color: "#4a4238", margin: "0 0 6px", maxWidth: 380 }}>E aquilo que antes virava:</p>
+        <ul style={{ margin: "0 0 16px", padding: "0 0 0 4px", listStyle: "none" }}>
+          {["tela parada por 20 minutos", "frase reescrita 5 vezes seguidas", 'dúvida se "tá certo ou não"'].map((t, i) => (
+            <li key={i} style={{ fontSize: 15.5, lineHeight: 1.5, color: "#5a5246", display: "flex", alignItems: "center", gap: 10, padding: "4px 0" }}>
+              <span style={{ color: "#c45a3e", fontFamily: '"Caveat", cursive', fontSize: 22, lineHeight: 1 }}>✕</span>
               <span>{t}</span>
             </li>
           ))}
         </ul>
 
-        <p className="font-display text-5xl md:text-6xl font-bold text-ink text-center mb-6">
-          R$47.
+        <p style={{ fontSize: 17, lineHeight: 1.4, color: "#2a2520", margin: "0 0 14px", maxWidth: 380, fontWeight: 700 }}>Agora vira texto pronto.</p>
+        <p style={{ fontSize: 16.5, lineHeight: 1.5, color: "#4a4238", margin: "0 0 22px", maxWidth: 380, fontStyle: "italic" }}>
+          Sem travar. Sem apagar. Sem recomeçar.
         </p>
 
-        <CtaButton onClick={openHotmart}>Ok. mostra isso. →</CtaButton>
-        <p className="text-center mt-3"><Mono>(Pix ou cartão · acesso imediato)</Mono></p>
-      </div>
-    </div>
-  </section>
-);
-
-const FAQ_ITEMS = [
-  ["Funciona se eu não sou boa com tecnologia?", "Funciona. O método tira o que já tá na sua cabeça e devolve em relatório aprovado. Você não escreve uma linha. Zero conhecimento técnico necessário."],
-  ["Vou ter que escrever do zero?", "Não. Você já tentou escrever do jeito certo sozinha. E travou. O método tira o que já tá na sua cabeça e devolve em relatório aprovado. Você não escreve uma linha."],
-  ["O texto não vai sair genérico?", "Não. O método só funciona com o que VOCÊ viu. Sem suas observações, ele não tem matéria-prima. Cada criança sai única porque o que você soltou era único."],
-  ["A coordenação aceita?", "Sim. Você é quem observou e quem assina. O método só organiza em linguagem pedagógica adequada. O olhar e a autoria continuam seus."],
-  ["Funciona no celular?", "Sim. O guia é pensado pra rodar no celular, no tablet ou no computador. Onde você já trabalha."],
-  ["É curso? Tem aula?", "Não é curso longo. É ferramenta de execução: você abre, aplica, entrega. Sem turma, sem cronograma, sem prazo."],
-  ["Como recebo?", "Após o pagamento, acesso liberado na hora por e-mail. Sem espera."],
-];
-
-const FaqV2 = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <SectionLabel>antes de comprar</SectionLabel>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-2">
-        Perguntas
-      </h2>
-      <p className="font-hand text-3xl md:text-4xl text-terracotta italic mb-10">
-        que toda professora faz.
-      </p>
-
-      <div className="space-y-3">
-        {FAQ_ITEMS.map(([q, a]) => (
-          <details key={q} className="group bg-paper border border-paper-line rounded-md p-5 shadow-sm">
-            <summary className="cursor-pointer font-display text-base md:text-lg text-ink flex items-center justify-between gap-4 list-none">
-              <span>{q}</span>
-              <span className="text-terracotta text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p className="text-ink-soft mt-3 leading-relaxed">{a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const TwoOptions = () => (
-  <section className="bg-paper-cream">
-    <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-20">
-      <Hand className="block text-xl italic mb-3">é aqui que vira.</Hand>
-      <h2 className="font-display text-3xl md:text-5xl text-ink leading-tight mb-10">
-        Você fecha essa página e escolhe uma:
-      </h2>
-
-      <div className="grid md:grid-cols-2 gap-5 mb-10">
-        <div className="bg-paper border border-paper-line p-6 rounded-md opacity-80">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-3">opção 1</Mono>
-          <h3 className="font-display text-2xl text-ink mb-3">Continuar igual.</h3>
-          <p className="text-ink-soft text-sm leading-relaxed">
-            Domingo escrevendo. Travar na primeira frase. Apagar e começar de novo. Entregar texto
-            que sai igual pra todo mundo. Coordenação pedindo pra refazer.
+        <div style={{ padding: "20px", background: "#2a2520", color: "#f5efe4", borderRadius: 10, marginBottom: 22 }}>
+          <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 8px", color: "#e8dfd0" }}>
+            É como se alguém pegasse tudo que está na sua cabeça
+          </p>
+          <p style={{ ...fontHand, fontSize: 30, color: "#f5c850", margin: 0, lineHeight: 1.05 }}>
+            e colocasse no formato certo.
           </p>
         </div>
-        <div className="bg-post-it border-2 border-terracotta p-6 rounded-md shadow-md">
-          <Mono className="text-[10px] uppercase tracking-[0.18em] block mb-3 text-terracotta">
+
+        <p style={{ fontSize: 18, lineHeight: 1.4, color: "#2a2520", margin: "0 0 22px", maxWidth: 380, fontWeight: 600 }}>
+          E aquilo que levava horas…<br />
+          <span style={{ color: "#c45a3e" }}>começa a levar minutos.</span>
+        </p>
+
+        <p style={{ fontSize: 14.5, lineHeight: 1.45, color: "#7a6e5f", margin: "0 0 10px", maxWidth: 380, fontStyle: "italic", textAlign: "center" }}>
+          Ou continuar gastando horas nisso amanhã.
+        </p>
+
+        <a href={HOTMART_URL} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
+          Ok. mostra isso. →
+        </a>
+        <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
+          (R$47 · acesso na hora)
+        </div>
+      </div>
+
+      {/* 7. Proof (Lara antes/depois) */}
+      <div style={{ padding: "40px 24px 48px", background: "#2a2520", color: "#f5efe4" }}>
+        <div style={{ display: "grid", gap: 14 }}>
+          <div style={{ padding: "14px 16px", background: "rgba(245,239,228,0.06)", borderRadius: 6, borderLeft: "3px solid rgba(245,239,228,0.3)" }}>
+            <div style={{ ...fontMono, fontSize: 9, color: "#c8a878", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>antes</div>
+            <p style={{ ...fontHand, fontSize: 19, lineHeight: 1.25, margin: 0, color: "#e8dfd0" }}>
+              "Lara empilhou bloco. Caiu. Tentou de novo. Falou 'olha eu fiz'."
+            </p>
+          </div>
+          <div style={{ padding: "16px", background: "#f5efe4", color: "#2a2520", borderRadius: 6 }}>
+            <div style={{ ...fontMono, fontSize: 9, color: "#7a6e5f", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>depois</div>
+            <p style={{ fontSize: 13.5, lineHeight: 1.6, margin: "0 0 10px", color: "#2a2520" }}>
+              "Lara demonstrou avanços na coordenação motora fina e na persistência diante do desafio. Ao empilhar blocos, manteve a tentativa mesmo após a queda, evidenciando regulação emocional. O movimento de compartilhar a conquista com a colega indica desenvolvimento da interação social…"
+            </p>
+            <div style={{ ...fontMono, fontSize: 10, color: "#7a6e5f", letterSpacing: "0.06em", borderTop: "1px dashed rgba(42,37,32,0.18)", paddingTop: 8, marginTop: 4 }}>
+              → escrito a partir da anotação simples acima.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 8. Voice */}
+      <div style={{ padding: "48px 24px", background: "#2a2520", color: "#f5efe4", textAlign: "left" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#c8a878", textTransform: "uppercase", marginBottom: 14 }}>
+          e não, não é só com você
+        </div>
+        <h2 style={{ fontSize: 28, margin: "0 0 16px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+          Toda semana,<br />
+          <span style={{ ...fontHand, fontSize: 36, color: "#f5c850" }}>milhares tão nessa cena.</span>
+        </h2>
+        <p style={{ fontSize: 14.5, lineHeight: 1.5, color: "#d4c8b3", margin: "0 0 22px", maxWidth: 380 }}>
+          Isso virou rotina pra quem escreve relatório. Você não é a única que trava. Só que ninguém fala sobre.
+        </p>
+        <div style={{ display: "grid", gap: 10, marginBottom: 22 }}>
+          {thoughts.map((t, i) => (
+            <div key={i} style={{
+              display: "flex", gap: 12, alignItems: "flex-start",
+              padding: "14px 16px", background: "rgba(245,239,228,0.05)",
+              borderLeft: "3px solid #c45a3e", borderRadius: 4,
+              fontSize: 15, lineHeight: 1.4, color: "#f5efe4",
+            }}>
+              <span style={{ color: "#c45a3e", flexShrink: 0, fontFamily: '"Caveat", cursive', fontSize: 22, lineHeight: 1, marginTop: -2 }}>✓</span>
+              <span>{t}</span>
+            </div>
+          ))}
+        </div>
+        <p style={{ fontSize: 15, lineHeight: 1.55, color: "#e8dfd0", margin: 0, fontWeight: 500 }}>
+          Não é falta de competência. É falta de uma estrutura<br />
+          <span style={{ color: "#f5c850", fontStyle: "italic" }}>que tire você do branco e te entregue o texto pronto.</span>
+        </p>
+      </div>
+
+      {/* 9. WhatYouGet */}
+      <div style={{ padding: "48px 24px", borderTop: "1px dashed rgba(42,37,32,0.2)" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          o que você recebe
+        </div>
+        <h2 style={{ fontSize: 26, margin: "0 0 6px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+          Não é curso longo.<br />
+          <span style={{ ...fontHand, fontSize: 32, color: "#c45a3e" }}>é ferramenta de execução.</span>
+        </h2>
+        <p style={{ fontSize: 14, color: "#5a5246", margin: "12px 0 28px", lineHeight: 1.5 }}>
+          Você abre. Copia. E o relatório que antes travava… sai.
+        </p>
+        <div style={{ display: "grid", gap: 0 }}>
+          {whatItems.map((s, i) => (
+            <div key={i} style={{
+              display: "grid", gridTemplateColumns: "32px 1fr", gap: 14,
+              padding: "18px 0", borderTop: "1px solid rgba(42,37,32,0.12)",
+              borderBottom: i === whatItems.length - 1 ? "1px solid rgba(42,37,32,0.12)" : "none",
+            }}>
+              <div style={{ ...fontHand, fontSize: 22, color: "#c45a3e", lineHeight: 1.3, fontWeight: 700 }}>✓</div>
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, letterSpacing: "-0.01em" }}>{s.t}</div>
+                <div style={{ fontSize: 13.5, color: "#5a5246", lineHeight: 1.5 }}>{s.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 10. Accumulation */}
+      <div style={{ padding: "40px 24px", background: "#1a1612", color: "#d4c8b3" }}>
+        <p style={{ ...fontMono, fontSize: 11, letterSpacing: "0.18em", color: "#c45a3e", textTransform: "uppercase", margin: "0 0 18px", fontWeight: 700 }}>
+          para. não pula isso.
+        </p>
+        <p style={{ fontSize: 18, lineHeight: 1.45, margin: "0 0 14px", color: "#f5efe4", fontWeight: 500 }}>A Lara não foi exceção.</p>
+        <p style={{ fontSize: 18, lineHeight: 1.45, margin: "0 0 22px", color: "#f5efe4" }}>Foi só a primeira que você conseguiu ver.</p>
+        <p style={{ ...fontHand, fontSize: 26, color: "#f5c850", margin: "0 0 14px", lineHeight: 1.15 }}>
+          e aquilo que você viu…<br />
+          <span style={{ color: "#c45a3e" }}>nunca mais volta.</span>
+        </p>
+        <p style={{ fontSize: 14.5, lineHeight: 1.5, margin: "0 0 14px", color: "#b8a890" }}>
+          Foi aquela aluna… na terça… segurando o lápis vermelho pela primeira vez. E você só lembrou quando já era tarde.
+        </p>
+        <p style={{ fontSize: 14.5, lineHeight: 1.5, margin: "0 0 14px", color: "#b8a890" }}>
+          Não é "mais um relatório" que você perdeu. É a evolução daquela criança. O argumento que você não teve na reunião. A segurança que você precisava no fechamento do bimestre.
+        </p>
+        <p style={{ fontSize: 17, lineHeight: 1.4, margin: 0, color: "#c45a3e", fontWeight: 700, fontStyle: "italic" }}>
+          e você deixou passar.
+        </p>
+      </div>
+
+      {/* 11. BeforeAfter (Miguel) */}
+      <div style={{ padding: "48px 24px", background: "#ebe2d2" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          até que fica impossível ignorar.
+        </div>
+        <h2 style={{ fontSize: 30, margin: "0 0 8px", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
+          Outra criança, outra anotação.<br />
+          <span style={{ ...fontHand, fontSize: 38, color: "#c45a3e" }}>mesmo resultado.</span>
+        </h2>
+        <p style={{ fontSize: 14, color: "#5a5246", margin: "8px 0 24px", lineHeight: 1.5, fontStyle: "italic" }}>
+          Funciona com qualquer faixa, qualquer cena, qualquer criança.
+        </p>
+        <div style={{ display: "grid", gap: 14 }}>
+          <div style={{ padding: 18, background: "#fff", borderRadius: 8, border: "1px solid rgba(42,37,32,0.1)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <div style={{ ...fontHand, fontSize: 22, color: "#c45a3e" }}>Sua anotação</div>
+              <span style={{ ...fontMono, fontSize: 9, color: "#7a6e5f", letterSpacing: "0.08em", textTransform: "uppercase" }}>8s no celular</span>
+            </div>
+            <p style={{ fontSize: 14, lineHeight: 1.55, margin: 0, color: "#4a4238", fontStyle: "italic" }}>
+              "Miguel pegou o livro sozinho. Sentou. Apontou pro cão e falou 'au au, tá ali'. Ficou 4 minutos folheando.
+              <span style={{ background: "#fff3a8", padding: "0 3px", fontStyle: "normal", fontWeight: 600, color: "#2a2520" }}>  (a primeira vez que ele senta sem chamar ninguém.)  </span>"
+            </p>
+          </div>
+          <div style={{ ...fontHand, fontSize: 32, color: "#c45a3e", textAlign: "center", lineHeight: 1, transform: "rotate(-2deg)", fontWeight: 700 }}>
+            relatório pronto ↓
+          </div>
+          <div style={{ padding: 18, background: "#2a2520", color: "#f5efe4", borderRadius: 8, boxShadow: "0 8px 24px rgba(42,37,32,0.18)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <div style={{ ...fontHand, fontSize: 22, color: "#f5c850" }}>Relatório pronto</div>
+              <span style={{ ...fontMono, fontSize: 9, color: "#c8a878", letterSpacing: "0.08em", textTransform: "uppercase" }}>em 90 segundos</span>
+            </div>
+            <p style={{ fontSize: 13.5, lineHeight: 1.6, margin: 0, color: "#e8dfd0" }}>
+              "Miguel demonstrou autonomia ao escolher o livro de forma espontânea e iniciativa no contato com a leitura.
+              <span style={{ background: "rgba(245,200,80,0.22)", padding: "0 4px", color: "#f5efe4", fontWeight: 600 }}> Trata-se de um marco no desenvolvimento de sua autorregulação, dado que, neste momento, sustentou a ação sem demandar a mediação do adulto. </span>
+              A permanência de quatro minutos de folhear a obra evidencia capacidade de atenção concentrada para a faixa etária, e a verbalização ao reconhecer elementos da imagem indica avanços no campo da Escuta, Fala, Pensamento e Imaginação…"
+            </p>
+          </div>
+        </div>
+        <p style={{ fontSize: 14, color: "#2a2520", margin: "20px 0 0", textAlign: "center", fontWeight: 600 }}>
+          Você já viu acontecer com a Lara.<br />
+          Você já viu acontecer com o Miguel.<br />
+          <span style={{ ...fontHand, fontSize: 24, color: "#c45a3e", fontWeight: 700, lineHeight: 1.15, display: "inline-block", marginTop: 8 }}>
+            a diferença agora é que você não pode mais<br />dizer que não viu.
+          </span>
+        </p>
+      </div>
+
+      {/* 12. Method */}
+      <div style={{ padding: "48px 24px" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          como funciona
+        </div>
+        <h2 style={{ fontSize: 26, margin: "0 0 6px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+          Quatro passos.<br />
+          <span style={{ ...fontHand, fontSize: 32, color: "#c45a3e" }}>zero do zero.</span>
+        </h2>
+        <p style={{ fontSize: 14, color: "#5a5246", margin: "12px 0 28px", lineHeight: 1.5 }}>
+          O método tira o que já tá na sua cabeça, antes que você deixe passar, e devolve em relatório aprovado. Sem você escrever uma linha.
+        </p>
+        <div style={{ display: "grid", gap: 14 }}>
+          {steps.map((s, i) => (
+            <div key={i} style={{
+              display: "grid", gridTemplateColumns: "44px 1fr", gap: 14,
+              padding: "14px 0", borderTop: i ? "1px solid rgba(42,37,32,0.12)" : "none",
+            }}>
+              <div style={{ ...fontHand, fontSize: 32, color: "#c45a3e", lineHeight: 1, fontWeight: 700 }}>{s.n}</div>
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, letterSpacing: "-0.01em" }}>{s.t}</div>
+                <div style={{ fontSize: 13.5, color: "#5a5246", lineHeight: 1.5 }}>{s.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 13. Differential */}
+      <div style={{ padding: "48px 24px", background: "#ebe2d2" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          e você sabe disso há anos.
+        </div>
+        <h2 style={{ fontSize: 26, margin: "0 0 14px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+          Você não trava por preguiça.<br />
+          <span style={{ ...fontHand, fontSize: 32, color: "#c45a3e" }}>você trava porque começa do branco.</span>
+        </h2>
+        <p style={{ fontSize: 15, lineHeight: 1.5, margin: "0 0 22px", color: "#5a5246", fontStyle: "italic" }}>
+          E mesmo assim… você abriu o mesmo documento. Tentou de novo. Do mesmo jeito.<br />
+          <span style={{ color: "#c45a3e" }}>Domingo passado. E o anterior. E o de antes.</span>
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(42,37,32,0.15)", borderRadius: 8, overflow: "hidden" }}>
+          <div style={{ padding: 16, background: "#f5efe4" }}>
+            <div style={{ ...fontMono, fontSize: 10, color: "#7a6e5f", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>
+              do jeito antigo
+            </div>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", fontSize: 13, lineHeight: 1.6, color: "#5a5246" }}>
+              <li style={{ marginBottom: 6 }}>✗ você trava na primeira frase</li>
+              <li style={{ marginBottom: 6 }}>✗ texto sai igual pra todo mundo</li>
+              <li style={{ marginBottom: 6 }}>✗ duas horas por relatório</li>
+              <li>✗ coordenação pede pra refazer</li>
+            </ul>
+          </div>
+          <div style={{ padding: 16, background: "#2a2520", color: "#f5efe4" }}>
+            <div style={{ ...fontMono, fontSize: 10, color: "#c8a878", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>
+              Método Rotina
+            </div>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", fontSize: 13, lineHeight: 1.6, color: "#e8dfd0" }}>
+              <li style={{ marginBottom: 6 }}>✓ estrutura pedagógica pronta</li>
+              <li style={{ marginBottom: 6 }}>✓ cada criança fica única</li>
+              <li style={{ marginBottom: 6 }}>✓ minutos por relatório</li>
+              <li>✓ linguagem que coordenação aprova</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* 14. Testimonials */}
+      <div style={{ padding: "48px 24px" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          e quando isso começa a acontecer…
+        </div>
+        <h2 style={{ fontSize: 24, margin: "0 0 22px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+          Professora pra<br />professora.
+        </h2>
+        <div style={{ display: "grid", gap: 14 }}>
+          {testimonials.map((t, i) => (
+            <div key={i} style={{
+              padding: 18, background: "#fff", borderRadius: 10,
+              border: "1px solid rgba(42,37,32,0.1)",
+              transform: i % 2 ? "rotate(0.4deg)" : "rotate(-0.3deg)",
+              boxShadow: "0 2px 0 rgba(42,37,32,0.04)",
+            }}>
+              <div style={{ color: "#f5a524", fontSize: 12, marginBottom: 8 }}>★ ★ ★ ★ ★</div>
+              <p style={{ fontSize: 14, lineHeight: 1.55, margin: "0 0 12px", color: "#2a2520" }}>"{t.t}"</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: ["#c8a878", "#8b7355", "#a78a6f"][i] }} />
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600 }}>{t.n}</div>
+                  <div style={{ ...fontMono, fontSize: 10, color: "#7a6e5f", textTransform: "uppercase", letterSpacing: "0.04em" }}>{t.r}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 15. Inevitability */}
+      <div style={{ padding: "40px 24px", background: "#1a1612", color: "#f5efe4", borderTop: "1px solid rgba(245,200,80,0.15)", borderBottom: "1px solid rgba(245,200,80,0.15)" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.14em", color: "#c8a878", textTransform: "uppercase", marginBottom: 18 }}>
+          e não é só você.
+        </div>
+        <p style={{ fontSize: 17, lineHeight: 1.45, margin: "0 0 28px", color: "#f5efe4", fontWeight: 500 }}>
+          Se você já percebeu isso acontecendo…<br />
+          <span style={{ color: "#c45a3e", fontStyle: "italic" }}>então isso aqui vai te incomodar.</span>
+        </p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.2, margin: "0 0 6px", color: "#f5c850" }}>
+          "Eu achei que era coisa<br />da minha cabeça…
+        </p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.2, margin: "0 0 26px", color: "#f5c850" }}>
+          até começar a ver<br />isso em tudo."
+        </p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.2, margin: "0 0 6px", color: "#f5c850" }}>
+          "Depois que você vê uma vez…
+        </p>
+        <p style={{ ...fontHand, fontSize: 26, lineHeight: 1.2, margin: 0, color: "#f5c850" }}>
+          não dá mais pra fingir<br />que não viu."
+        </p>
+      </div>
+
+      {/* 16. Offer */}
+      <div ref={offerRef} id="comprar" style={{ padding: "52px 24px", background: "#2a2520", color: "#f5efe4", scrollMarginTop: 60 }}>
+        <p style={{ fontSize: 22, lineHeight: 1.3, margin: "0 0 22px", color: "#f5efe4", fontWeight: 600, letterSpacing: "-0.02em" }}>
+          Você não está comprando<br />uma ferramenta.
+        </p>
+        <p style={{ fontSize: 17, lineHeight: 1.45, margin: "0 0 22px", color: "#d4c8b3" }}>
+          Você está parando de perder<br />
+          <span style={{ ...fontHand, fontSize: 28, color: "#f5c850" }}>coisa que já aconteceu.</span>
+        </p>
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 6px", color: "#d4c8b3" }}>
+          Cada observação que você deixa passar…
+        </p>
+        <p style={{ ...fontHand, fontSize: 28, lineHeight: 1.1, margin: "0 0 30px", color: "#c45a3e" }}>não volta.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.5, margin: "0 0 4px", color: "#d4c8b3" }}>Isso aqui não é sobre escrever melhor.</p>
+        <p style={{ fontSize: 18, lineHeight: 1.4, margin: "0 0 36px", color: "#f5efe4", fontWeight: 600 }}>
+          É sobre não deixar escapar de novo.
+        </p>
+        <div style={{ background: "#3a332b", borderRadius: 12, padding: "20px 22px", marginBottom: 22, border: "1px solid rgba(245,200,80,0.18)" }}>
+          {[
+            "Estrutura pronta de relatórios (BNCC)",
+            "Caminho passo a passo do método",
+            "Exemplos reais de relatórios completos",
+            "Guia simples (celular ou computador)",
+          ].map((b, i) => (
+            <div key={i} style={{
+              display: "flex", gap: 10, padding: "9px 0",
+              borderTop: i ? "1px solid rgba(245,239,228,0.08)" : "none",
+              fontSize: 14, color: "#e8dfd0",
+            }}>
+              <span style={{ color: "#f5c850" }}>✓</span>
+              <span>{b}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ ...fontHand, fontSize: 56, color: "#f5c850", lineHeight: 1, marginBottom: 22, letterSpacing: "-0.02em" }}>
+          R$47.
+        </div>
+        <a href={HOTMART_URL} onClick={openHotmart} style={{ ...ctaPrimary, boxShadow: "0 2px 0 #8d3d28, 0 8px 24px rgba(196,90,62,0.4)" }}>
+          Ok. mostra isso. →
+        </a>
+        <div style={{ ...fontMono, fontSize: 11, color: "#b8a890", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
+          (Pix ou cartão · acesso imediato)
+        </div>
+      </div>
+
+      {/* 17. FAQ */}
+      <div style={{ padding: "48px 24px" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.12em", color: "#7a6e5f", textTransform: "uppercase", marginBottom: 14 }}>
+          antes de comprar
+        </div>
+        <h2 style={{ fontSize: 26, margin: "0 0 22px", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+          Perguntas<br />
+          <span style={{ ...fontHand, fontSize: 32, color: "#c45a3e" }}>que toda professora faz.</span>
+        </h2>
+        <div>
+          {faq.map((it, i) => (
+            <details key={i} style={{
+              padding: "16px 0", borderBottom: "1px solid rgba(42,37,32,0.12)",
+              borderTop: i === 0 ? "1px solid rgba(42,37,32,0.12)" : "none",
+            }}>
+              <summary style={{
+                fontSize: 15, fontWeight: 600, cursor: "pointer", listStyle: "none",
+                display: "flex", justifyContent: "space-between", gap: 12, letterSpacing: "-0.01em",
+              }}>
+                <span>{it.q}</span>
+                <span style={{ color: "#c45a3e", flexShrink: 0 }}>+</span>
+              </summary>
+              <p style={{ fontSize: 14, color: "#5a5246", margin: "10px 0 0", lineHeight: 1.55 }}>{it.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {/* 18. ForcedChoice */}
+      <div style={{ padding: "52px 24px", background: "#c45a3e", color: "#fff" }}>
+        <div style={{ ...fontMono, fontSize: 10, letterSpacing: "0.14em", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", marginBottom: 18 }}>
+          é aqui que vira.
+        </div>
+        <h2 style={{ fontSize: 30, margin: "0 0 26px", fontWeight: 700, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
+          Você fecha essa página e
+          <span style={{ ...fontHand, color: "#f5c850", fontSize: 38, fontWeight: 700 }}> escolhe uma:</span>
+        </h2>
+        <div style={{ background: "rgba(0,0,0,0.18)", borderRadius: 10, padding: 20, marginBottom: 14, border: "1px solid rgba(255,255,255,0.1)" }}>
+          <div style={{ ...fontMono, fontSize: 10, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+            opção 1
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 8 }}>Continuar igual.</div>
+          <p style={{ fontSize: 13.5, lineHeight: 1.55, margin: 0, color: "rgba(255,255,255,0.85)" }}>
+            Domingo escrevendo. Travar na primeira frase. Apagar e começar de novo. Entregar texto que sai igual pra todo mundo. Coordenação pedindo pra refazer.
+          </p>
+        </div>
+        <div style={{ background: "#2a2520", color: "#f5efe4", borderRadius: 10, padding: 20, marginBottom: 24, border: "2px solid #f5c850" }}>
+          <div style={{ ...fontMono, fontSize: 10, color: "#f5c850", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
             opção 2 · R$ 47
-          </Mono>
-          <h3 className="font-display text-2xl text-ink mb-3">Acabar com isso hoje.</h3>
-          <p className="text-ink-soft text-sm leading-relaxed">
-            Você descreve a criança em linguagem simples. O relatório sai estruturado, na linguagem
-            certa. Domingo livre. Coordenação elogiando. R$ 47 uma única vez.
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 8 }}>Acabar com isso hoje.</div>
+          <p style={{ fontSize: 13.5, lineHeight: 1.55, margin: 0, color: "#e8dfd0" }}>
+            Você descreve a criança em linguagem simples. O relatório sai estruturado, na linguagem certa. Domingo livre. Coordenação elogiando. R$ 47 uma única vez.
           </p>
+        </div>
+        <a href={HOTMART_URL} onClick={openHotmart} style={{
+          display: "block", textDecoration: "none", textAlign: "center",
+          width: "100%", padding: "20px", border: "none",
+          background: "#f5c850", color: "#2a2520", borderRadius: 10,
+          fontSize: 17, fontWeight: 700, fontFamily: "inherit",
+          boxShadow: "0 2px 0 #c4a23f, 0 12px 28px rgba(0,0,0,0.25)",
+          letterSpacing: "-0.01em", boxSizing: "border-box", cursor: "pointer",
+        }}>
+          Escolho a opção 2 →
+        </a>
+        <div style={{ ...fontMono, fontSize: 10, color: "rgba(255,255,255,0.7)", textAlign: "center", marginTop: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          acesso imediato · pagamento único
         </div>
       </div>
 
-      <div className="max-w-md mx-auto">
-        <CtaButton onClick={openHotmart}>Escolho a opção 2 →</CtaButton>
-        <p className="text-center mt-3"><Mono>acesso imediato · pagamento único</Mono></p>
-      </div>
-    </div>
-  </section>
-);
-
-const FinalClose = () => (
-  <section className="paper-bg paper-margin relative">
-    <div className="max-w-2xl mx-auto px-6 md:px-12 py-14 md:py-20 space-y-5 text-ink">
-      <p className="font-display text-2xl">Você já viu.</p>
-      <p className="font-display text-2xl">E a diferença agora…</p>
-      <p className="font-display text-2xl">é que você não pode mais dizer</p>
-      <p className="font-hand text-4xl text-terracotta italic">que não sabia.</p>
-
-      <p className="mt-8">Se continuar fazendo do mesmo jeito…</p>
-      <p>não é falta de tempo.</p>
-      <p className="font-display text-2xl text-terracotta">é escolha.</p>
-      <p className="font-hand text-2xl italic">e você sabe disso.</p>
-
-      <div className="max-w-md mt-10">
-        <CtaButton onClick={openHotmart}>Eu preciso ver isso. →</CtaButton>
-        <p className="text-center mt-3"><Mono>(R$47 · acesso imediato)</Mono></p>
+      {/* 19. FinalCTA */}
+      <div style={{ padding: "52px 24px", background: "#ebe2d2", textAlign: "left" }}>
+        <p style={{ fontSize: 22, lineHeight: 1.3, margin: "0 0 22px", color: "#2a2520", fontWeight: 700, letterSpacing: "-0.02em" }}>
+          Você já viu.
+        </p>
+        <p style={{ fontSize: 17, lineHeight: 1.5, margin: "0 0 8px", color: "#2a2520" }}>E a diferença agora…</p>
+        <p style={{ ...fontHand, fontSize: 30, lineHeight: 1.05, margin: "0 0 28px", color: "#c45a3e" }}>
+          é que você não pode mais dizer<br />que não sabia.
+        </p>
+        <p style={{ fontSize: 17, lineHeight: 1.5, margin: "0 0 6px", color: "#2a2520" }}>Se continuar fazendo do mesmo jeito…</p>
+        <p style={{ fontSize: 17, lineHeight: 1.5, margin: "0 0 6px", color: "#2a2520" }}>não é falta de tempo.</p>
+        <p style={{ ...fontHand, fontSize: 32, lineHeight: 1.05, margin: "0 0 12px", color: "#c45a3e" }}>é escolha.</p>
+        <p style={{ fontSize: 15, lineHeight: 1.4, margin: "0 0 36px", color: "#5a5246", fontStyle: "italic" }}>
+          e você sabe disso.
+        </p>
+        <a href={HOTMART_URL} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 8px 20px rgba(196,90,62,0.3)" }}>
+          Eu preciso ver isso. →
+        </a>
+        <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
+          (R$47 · acesso imediato)
+        </div>
       </div>
 
-      <div className="pt-12 space-y-4 text-ink-soft">
-        <p>Se você fechar essa página agora…</p>
-        <p className="font-display text-xl text-ink">nada muda.</p>
-        <p>Amanhã você senta de novo.</p>
-        <p>Abre o relatório.</p>
-        <p>Olha pra tela.</p>
-        <p>E fica alguns segundos sem saber por onde começar.</p>
-        <p className="font-hand text-2xl text-terracotta italic">e o tempo passando.</p>
-        <p>E você percebendo que tá travada de novo.</p>
-        <p>Só que com mais coisa acumulada.</p>
-        <p>Mais pressão.</p>
-        <p>E menos paciência.</p>
+      {/* 20. Trap */}
+      <div style={{ padding: "40px 24px 44px", background: "#1a1612", color: "#d4c8b3" }}>
+        <p style={{ fontSize: 17, lineHeight: 1.55, margin: "0 0 14px", color: "#f5efe4", fontWeight: 500 }}>
+          Se você fechar essa página agora…
+        </p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 14px" }}>nada muda.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 14px" }}>Amanhã você senta de novo.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 14px" }}>Abre o relatório.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 14px" }}>Olha pra tela.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 8px" }}>E fica alguns segundos sem saber por onde começar.</p>
+        <p style={{ ...fontHand, fontSize: 22, color: "#c45a3e", margin: "0 0 6px", lineHeight: 1.1, fontStyle: "italic" }}>
+          e o tempo passando.
+        </p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "0 0 22px", color: "#d4c8b3", fontStyle: "italic" }}>
+          E você percebendo que tá travada de novo.
+        </p>
+        <p style={{ ...fontHand, fontSize: 26, color: "#c45a3e", margin: "0 0 6px", lineHeight: 1.1 }}>
+          Só que com mais coisa acumulada.
+        </p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: "6px 0 4px", color: "#f5efe4", fontWeight: 500 }}>Mais pressão.</p>
+        <p style={{ fontSize: 16, lineHeight: 1.55, margin: 0, color: "#f5c850" }}>E menos paciência.</p>
       </div>
-    </div>
-  </section>
-);
 
-const FooterV2 = () => (
-  <footer className="bg-[hsl(var(--topbar-bg))] text-[hsl(var(--topbar-fg))] py-10 text-center">
-    <p className="font-display text-2xl font-bold">Rotina Pedagógica</p>
-    <p className="font-mono-paper text-xs mt-2 text-white/50">
-      © {new Date().getFullYear()} · Método Rotina Pedagógica
-    </p>
-  </footer>
-);
-
-/* ---------- Page ---------- */
-
-const LandingV2 = () => {
-  const offerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = document.getElementById("comprar");
-    if (!el) return;
-    let fired = false;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !fired) {
-          fired = true;
-          track("AddToCart");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <main ref={offerRef} className="bg-paper text-ink min-h-screen">
-      <TopBar />
-      <Header />
-      <Hero />
-      <MindToReport />
-      <EmotionalBreak />
-      <BeforeAfterLara />
-      <MidnightScene />
-      <WhatYouGet />
-      <BeforeAfterMiguel />
-      <FourSteps />
-      <OldVsNew />
-      <Testimonials />
-      <EmotionalClose />
-      <OfferCard />
-      <FaqV2 />
-      <TwoOptions />
-      <FinalClose />
-      <FooterV2 />
+      {/* 21. Footer */}
+      <div style={{ padding: "28px 24px 40px", background: "#f5efe4", textAlign: "center", borderTop: "1px solid rgba(42,37,32,0.1)" }}>
+        <div style={{ fontSize: 13, color: "#5a5246", lineHeight: 1.6 }}>
+          <strong style={{ fontWeight: 600 }}>Rotina Pedagógica</strong><br />
+          <span style={{ ...fontMono, fontSize: 10, color: "#7a6e5f" }}>metodo.rotinapedagogica.com</span>
+        </div>
+      </div>
     </main>
   );
 };
