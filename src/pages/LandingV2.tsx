@@ -205,7 +205,7 @@ const LandingV2 = () => {
           <span style={{ color: "#c45a3e", fontStyle: "italic" }}>Sem você escrever uma linha.</span>
         </p>
         <div style={{ position: "relative", marginBottom: 10 }}>
-          <a href={HOTMART_URL} onClick={openHotmart} style={ctaPrimary}>
+          <a href="#comprar" onClick={scrollToOffer} style={ctaPrimary}>
             Ok. eu não vou perder isso de novo →
           </a>
           <div style={{
