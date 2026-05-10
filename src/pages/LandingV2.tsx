@@ -410,7 +410,7 @@ const LandingV2 = () => {
           Ou continuar gastando horas nisso amanhã.
         </p>
 
-        <a href={HOTMART_URL} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
+        <a href="#comprar" onClick={scrollToOffer} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
