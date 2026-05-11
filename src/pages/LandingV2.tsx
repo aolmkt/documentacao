@@ -47,13 +47,6 @@ const LandingV2 = () => {
     window.open(buildHotmartUrl(), "_self");
   };
 
-  const scrollToOffer = (e?: MouseEvent) => {
-    if (e) e.preventDefault();
-    if (typeof (window as any).trackEvent === "function") {
-      (window as any).trackEvent("AddToWishlist");
-    }
-    offerRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   useEffect(() => {
     const el = offerRef.current;
