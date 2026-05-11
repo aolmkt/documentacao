@@ -55,6 +55,7 @@ const Backredirect1 = () => {
 
   return (
     <div style={page}>
+      <FakeBrowserBar onBack={() => window.location.assign(withCurrentParams("/br2"))} />
       {/* Top */}
       <div
         style={{
