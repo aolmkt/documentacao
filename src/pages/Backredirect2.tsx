@@ -71,6 +71,12 @@ const Backredirect2 = () => {
 
   return (
     <div style={page}>
+      <FakeBrowserBar
+        onBack={() => {
+          fireInitiateCheckout();
+          window.location.assign(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" }));
+        }}
+      />
       {/* Top */}
       <div
         style={{
