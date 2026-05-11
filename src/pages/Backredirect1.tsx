@@ -1,5 +1,6 @@
 import { useEffect, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
+import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
 
 const hand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const mono: CSSProperties = { fontFamily: 'ui-monospace, "SF Mono", Menlo, monospace' };
@@ -18,6 +19,8 @@ const page: CSSProperties = {
 };
 
 const Backredirect1 = () => {
+  useBackredirect(() => withCurrentParams("/br2"));
+
   useEffect(() => {
     // SEO: noindex + title/desc per route, restored on unmount
     const prevTitle = document.title;

@@ -1,5 +1,6 @@
 import { useEffect, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
+import { useBackredirect } from "@/lib/backredirect";
 
 const hand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const mono: CSSProperties = { fontFamily: 'ui-monospace, "SF Mono", Menlo, monospace' };
@@ -26,6 +27,11 @@ const lines: Line[] = [
 ];
 
 const Backredirect2 = () => {
+  useBackredirect(() => {
+    fireInitiateCheckout();
+    return buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" });
+  });
+
   useEffect(() => {
     const prevTitle = document.title;
     document.title = "agora assume — Método Rotina Pedagógica";

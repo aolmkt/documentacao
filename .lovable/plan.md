@@ -1,52 +1,70 @@
-# Adicionar 2 páginas de Backredirect (Caderno)
+# Backredirect infalível com pushState trick
 
-## O que vai ser feito
+## Objetivo
 
-Implementar as duas páginas de backredirect do handoff (`relatorio_1.zip` / `relatorio_2.zip`) como rotas React no projeto, mantendo o design exatamente como nos arquivos `direction-backredirect.jsx` e `direction-backredirect-2.jsx` (paleta creme/terracota/preto, fontes Caveat + Source Serif 4, max-width 480px, mobile-first, todos os estilos inline preservados).
+Capturar o botão "voltar" do navegador em 3 pontos do funil:
 
-Substituindo o `CHECKOUT_BASE = 'https://pay.hotmart.com/checkout'` placeholder dos arquivos originais pela mesma lógica já usada em `LandingV2.tsx`: link real do Hotmart + merge de UTMs + `sck` do tracker, tudo plugado no `tracker.js` global (que já carrega no `index.html`).
+```
+/  (LandingV2)        --voltar-->  /br1?<params>
+/br1 (Backredirect1)  --voltar-->  /br2?<params>
+/br2 (Backredirect2)  --voltar-->  checkout Hotmart (com UTMs + sck + br=2 + step=backredirect-2)
+```
 
-## Rotas
+Os parâmetros da URL atual (utm_*, fbclid, src, gclid, etc.) são sempre preservados no destino.
 
-- `/br1` → primeira backredirect ("você já viu / aquilo que você viu não vai parar de acontecer…")
-- `/br2` → segunda backredirect ("agora assume / última vez")
+## Como funciona (técnica)
 
-Ambas com `noindex,nofollow` (mesma técnica do `LegacyLanding` em `App.tsx`) e `<title>` / `<meta description>` próprios (já vêm no handoff).
+O "pushState trick" é o padrão de mercado:
 
-## Tracking e checkout (igual ao `/`)
+1. Ao montar a página, a gente faz `history.pushState(null, '', window.location.href)` — empurra uma entrada falsa no histórico, idêntica à URL atual.
+2. Adiciona um listener `popstate` (disparado quando o usuário clica voltar).
+3. Quando o popstate dispara, em vez de o navegador sair da página, a gente intercepta e chama `window.location.replace(destino)`.
+4. No unmount, remove o listener.
 
-Em cada página:
+Isso prende o usuário no funil sem quebrar refresh, scroll ou navegação normal por links.
 
-1. **Pixel/PageView/ViewContent**: já são disparados pelo `tracker.js` em qualquer rota.
-2. **InitiateCheckout** dispara no clique do CTA, antes do redirect (mesmo padrão do `openHotmart` da `LandingV2`).
-3. **AddToWishlist** dispara no `useEffect` ao montar a página (a pessoa "voltou" — sinal forte de interesse). _Único desvio em relação ao handoff, que não tinha tracking._
-4. **URL do checkout**: `https://pay.hotmart.com/L104708967T?checkoutMode=10` + merge de todos os params da URL atual (UTMs, fbclid, src) + `sck = trackingData.external_id`. Adiciona `br=1` / `br=2` e `step=backredirect` / `step=backredirect-2` para diferenciar a origem no relatório do Hotmart, sem sobrescrever o `src` original (concatena com `|br1` / `|br2` exatamente como o handoff propõe).
+## Arquivo novo
 
-## Arquivos
+**`src/lib/backredirect.ts`** — hook reutilizável `useBackredirect(getDestination)`:
 
-**Criar:**
-- `src/pages/Backredirect1.tsx` — porte fiel do `direction-backredirect.jsx` (componentes `BackTop`, `BackHeadline`, `BackBeforeAfter`, `BackMicroPunch`, `BackPrice`, `BackFooter`).
-- `src/pages/Backredirect2.tsx` — porte fiel do `direction-backredirect-2.jsx` (componentes `Br2Top`, `Br2Body`, `Br2Verdict`, `Br2Door`, `Br2Footer`).
-- `src/lib/checkout.ts` — extrair `buildHotmartUrl` (hoje inline em `LandingV2.tsx`) numa função única reusável, com parâmetro opcional `extra` para injetar `{ br, step, srcAppend }`. `LandingV2.tsx` passa a importar daqui (refactor pequeno, sem mudança de comportamento).
+- Recebe uma função que retorna a URL de destino (pra poder ser dinâmica, ex: o checkout precisa do `sck` mais recente).
+- Faz o `pushState` no mount + listener `popstate`.
+- Cleanup no unmount.
+- Helper `withCurrentParams(path)` que pega `window.location.search` e cola no path (ex: `/br1?utm_source=fb&fbclid=xyz&src=ad01`).
 
-**Editar:**
-- `src/App.tsx` — adicionar rotas `/br1` e `/br2`, cada uma envolvida num wrapper que injeta `<meta name="robots" content="noindex,nofollow">` (mesma técnica do `LegacyLanding`).
-- `src/pages/LandingV2.tsx` — trocar a função `buildHotmartUrl` local pelo import de `src/lib/checkout.ts`. Nada mais muda.
+## Edits
 
-**Não tocar:** `public/tracker.js`, `index.html`, `src/index.css`, `tailwind.config.ts`, `src/pages/Index.tsx`, `src/components/landing/*`.
+### `src/pages/LandingV2.tsx`
+Adicionar `useBackredirect(() => withCurrentParams('/br1'))` no topo do componente.
+
+### `src/pages/Backredirect1.tsx`
+Adicionar `useBackredirect(() => withCurrentParams('/br2'))`.
+
+### `src/pages/Backredirect2.tsx`
+Adicionar `useBackredirect(() => buildHotmartUrl({ br: '2', step: 'backredirect-2', srcAppend: 'br2' }))`.
+
+Antes do redirect pro checkout, dispara `fireInitiateCheckout()` (consistência com os CTAs).
+
+## O que NÃO muda
+
+- Design das páginas.
+- Tracking existente (PageView, ViewContent, AddToWishlist, InitiateCheckout nos CTAs).
+- Rotas.
+- `tracker.js`, `index.html`, `checkout.ts` (já tem tudo que precisa).
+- `/b` (legacy) — fica intacto, sem backredirect.
 
 ## Detalhes técnicos
 
-- **TypeScript**: portar os JSX como `.tsx`, tipar `CSSProperties` nos style objects (mesmo padrão de `LandingV2.tsx`).
-- **Fontes**: Caveat e Source Serif 4 já estão pré-carregadas no `index.html` da Landing principal — reaproveitar. JetBrains Mono também já está; trocar `ui-monospace` do handoff por `JetBrains Mono` para casar visual com o resto do projeto, ou manter `ui-monospace` se o usuário preferir fidelidade absoluta (ver pergunta abaixo, se houver). Por padrão, manter `ui-monospace, "SF Mono", Menlo, monospace` igual ao handoff.
-- **Title/description por rota**: setados via `useEffect` (mesma técnica do `LegacyLanding`), restaurados no unmount.
-- **Backredirect 2**: preserva a lógica `src` concat (`br1|br2`) do handoff dentro da `buildHotmartUrl` via param `srcAppend: 'br2'`.
+- **Replace vs push**: uso `location.replace()` no destino pra não poluir o histórico (o usuário não fica empilhando entradas se ficar martelando voltar).
+- **SSR-safe**: hook só roda dentro de `useEffect`, então `window` sempre existe.
+- **Mobile**: pushState trick funciona em iOS Safari, Chrome Android, Firefox mobile (testado em mercado há anos).
+- **Edge case refresh**: o pushState é re-aplicado a cada mount, então refresh continua funcionando normal.
+- **Edge case link interno**: como só temos `<a href>` externos (Hotmart), não há conflito com navegação SPA.
 
-## Validação pós-implementação
+## Validação
 
-1. Abrir `/br1?utm_source=fb&fbclid=xyz&src=ad01` em viewport 390px:
-   - Console: `PageView`, `ViewContent`, `AddToWishlist` no load.
-   - Clique no CTA: `InitiateCheckout` → redirect para `pay.hotmart.com/L104708967T?checkoutMode=10&utm_source=fb&fbclid=xyz&src=ad01%7Cbr1&sck=...&br=1&step=backredirect`.
-2. Mesma checagem em `/br2` (com `src` virando `ad01|br1|br2`, `br=2`, `step=backredirect-2`).
-3. `/` (LandingV2) continua funcionando igual após o refactor do `buildHotmartUrl`.
-4. `/b` (legacy) intacta.
+1. Abrir `/?utm_source=fb&src=ad01` → apertar voltar → deve ir pra `/br1?utm_source=fb&src=ad01`.
+2. Em `/br1` → voltar → `/br2?utm_source=fb&src=ad01`.
+3. Em `/br2` → voltar → `pay.hotmart.com/L104708967T?...&src=ad01%7Cbr2&br=2&step=backredirect-2&sck=...` + evento `InitiateCheckout` no console.
+4. Refresh em qualquer rota: continua funcionando, params preservados.
+5. CTAs normais: continuam indo direto pro checkout sem interferência.

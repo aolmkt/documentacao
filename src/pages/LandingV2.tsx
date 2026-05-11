@@ -1,5 +1,6 @@
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl } from "@/lib/checkout";
+import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const fontMono: CSSProperties = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace' };
@@ -35,6 +36,7 @@ const ctaPrimary: CSSProperties = {
 
 const LandingV2 = () => {
   const offerRef = useRef<HTMLDivElement>(null);
+  useBackredirect(() => withCurrentParams("/br1"));
 
   const openHotmart = (e?: MouseEvent) => {
     if (e) e.preventDefault();
