@@ -1,6 +1,7 @@
 import { useEffect, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
 import { useBackredirect } from "@/lib/backredirect";
+import FakeBrowserBar from "@/components/FakeBrowserBar";
 
 const hand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const mono: CSSProperties = { fontFamily: 'ui-monospace, "SF Mono", Menlo, monospace' };
@@ -70,6 +71,12 @@ const Backredirect2 = () => {
 
   return (
     <div style={page}>
+      <FakeBrowserBar
+        onBack={() => {
+          fireInitiateCheckout();
+          window.location.assign(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" }));
+        }}
+      />
       {/* Top */}
       <div
         style={{

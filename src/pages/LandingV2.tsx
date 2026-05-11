@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
+import FakeBrowserBar from "@/components/FakeBrowserBar";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const fontMono: CSSProperties = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace' };
@@ -123,6 +124,7 @@ const LandingV2 = () => {
 
   return (
     <main style={pageStyle}>
+      <FakeBrowserBar onBack={() => window.location.assign(withCurrentParams("/br1"))} />
       {/* 1. Notice */}
       <div style={{
         background: "#2a2520", color: "#f5c850",
