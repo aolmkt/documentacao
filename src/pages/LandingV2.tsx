@@ -47,13 +47,6 @@ const LandingV2 = () => {
     window.open(buildHotmartUrl(), "_self");
   };
 
-  const scrollToOffer = (e?: MouseEvent) => {
-    if (e) e.preventDefault();
-    if (typeof (window as any).trackEvent === "function") {
-      (window as any).trackEvent("AddToWishlist");
-    }
-    offerRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   useEffect(() => {
     const el = offerRef.current;
@@ -152,7 +145,7 @@ const LandingV2 = () => {
             Rotina Pedagógica
           </span>
         </div>
-        <a href="#comprar" onClick={scrollToOffer} style={{
+        <a href={HOTMART_URL} onClick={openHotmart} style={{
           ...fontMono, fontSize: 11, color: "#c45a3e",
           textDecoration: "none", fontWeight: 600,
           textTransform: "uppercase", letterSpacing: "0.06em",
@@ -197,7 +190,7 @@ const LandingV2 = () => {
           <span style={{ color: "#c45a3e", fontStyle: "italic" }}>Sem você escrever uma linha.</span>
         </p>
         <div style={{ position: "relative", marginBottom: 10 }}>
-          <a href="#comprar" onClick={scrollToOffer} style={ctaPrimary}>
+          <a href={HOTMART_URL} onClick={openHotmart} style={ctaPrimary}>
             Ok. eu não vou perder isso de novo →
           </a>
           <div style={{
@@ -402,7 +395,7 @@ const LandingV2 = () => {
           Ou continuar gastando horas nisso amanhã.
         </p>
 
-        <a href="#comprar" onClick={scrollToOffer} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
+        <a href={HOTMART_URL} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
