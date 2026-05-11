@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import LandingV2 from "./pages/LandingV2";
 import Index from "./pages/Index";
+import Backredirect1 from "./pages/Backredirect1";
+import Backredirect2 from "./pages/Backredirect2";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,9 +32,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingV2 />} />
-          <Route path="/b" element={<LegacyLanding />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="/" element={<LandingV2 />} />
+        <Route path="/b" element={<LegacyLanding />} />
+        <Route path="/br1" element={<Backredirect1 />} />
+        <Route path="/br2" element={<Backredirect2 />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
