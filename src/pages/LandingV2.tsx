@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
 import { HOTMART_URL, buildHotmartUrl } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
+import FakeBrowserBar from "@/components/FakeBrowserBar";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const fontMono: CSSProperties = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace' };
