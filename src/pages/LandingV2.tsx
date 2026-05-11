@@ -1,17 +1,5 @@
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
-
-const HOTMART_URL = "https://pay.hotmart.com/L104708967T?checkoutMode=10";
-
-function buildHotmartUrl() {
-  const current = new URLSearchParams(window.location.search);
-  const link = new URL(HOTMART_URL);
-  current.forEach((v, k) => link.searchParams.set(k, v));
-  if (!link.searchParams.get("sck")) {
-    const extId = (window as any).trackingData?.external_id;
-    if (extId) link.searchParams.set("sck", extId);
-  }
-  return link.toString();
-}
+import { HOTMART_URL, buildHotmartUrl } from "@/lib/checkout";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
 const fontMono: CSSProperties = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace' };
