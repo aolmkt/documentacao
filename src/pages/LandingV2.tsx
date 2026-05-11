@@ -124,6 +124,7 @@ const LandingV2 = () => {
 
   return (
     <main style={pageStyle}>
+      <FakeBrowserBar onBack={() => window.location.assign(withCurrentParams("/br1"))} />
       {/* 1. Notice */}
       <div style={{
         background: "#2a2520", color: "#f5c850",
