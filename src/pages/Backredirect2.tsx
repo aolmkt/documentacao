@@ -52,24 +52,14 @@ const Backredirect2 = () => {
   const onCheckout = (e: MouseEvent) => {
     e.preventDefault();
     fireInitiateCheckout();
-    // ensure br1 is in the chain even if user landed straight on /br2
+    // ensure br1 is in the src chain even if user landed straight on /br2
     const current = new URLSearchParams(window.location.search);
     const prev = current.get("src") || "";
     const tokens = prev ? prev.split("|") : [];
-    if (tokens.length === 0) tokens.push("br1");
     if (!tokens.includes("br1")) tokens.unshift("br1");
     current.set("src", tokens.join("|"));
-    // mutate URL params for buildHotmartUrl to read — safer to pass via srcAppend instead
-    window.open(
-      buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" })
-        // also inject br1 if missing
-        .replace(/([?&]src=)([^&]*)/, (_m, p, v) => {
-          const t = decodeURIComponent(v).split("|");
-          if (!t.includes("br1")) t.unshift("br1");
-          return p + encodeURIComponent(t.join("|"));
-        }),
-      "_self",
-    );
+    history.replaceState(null, "", `${window.location.pathname}?${current.toString()}`);
+    window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" }), "_self");
   };
 
   return (
