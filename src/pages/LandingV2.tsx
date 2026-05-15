@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, type CSSProperties, type MouseEvent } from "react";
-import { buildHotmartUrl } from "@/lib/checkout";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
+import { useEngagementTracking } from "@/hooks/useEngagementTracking";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
@@ -37,18 +38,30 @@ const ctaPrimary: CSSProperties = {
 
 const LandingV2 = () => {
   const offerRef = useRef<HTMLDivElement>(null);
+  const heroCtaRef = useRef<HTMLAnchorElement>(null);
+  const [showSticky, setShowSticky] = useState(false);
   useBackredirect(() => withCurrentParams("/br1"));
+  useEngagementTracking("landing");
 
   const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "pv" }), []);
 
-  const openHotmart = (e?: MouseEvent) => {
+  const openHotmart = (position: string) => (e?: MouseEvent) => {
     if (e) e.preventDefault();
-    if (typeof (window as any).trackEvent === "function") {
-      (window as any).trackEvent("InitiateCheckout");
-    }
+    fireInitiateCheckout({ position, page: "landing" });
     window.open(checkoutHref, "_self");
   };
 
+  // Sticky CTA: appears after hero CTA leaves viewport
+  useEffect(() => {
+    const el = heroCtaRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowSticky(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = offerRef.current;
