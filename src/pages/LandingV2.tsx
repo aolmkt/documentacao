@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
+import { buildHotmartUrl, fireInitiateCheckout, fireAddToCart } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
 import { useEngagementTracking } from "@/hooks/useEngagementTracking";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
