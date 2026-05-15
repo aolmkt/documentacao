@@ -32,6 +32,10 @@ const Backredirect2 = () => {
     () => buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }),
     [],
   );
+  const escapeHref = useMemo(
+    () => buildHotmartUrl({ br: "2", step: "escape", srcAppend: "fuga" }),
+    [],
+  );
 
   useBackredirect(() => {
     fireInitiateCheckout();
@@ -72,7 +76,7 @@ const Backredirect2 = () => {
       <FakeBrowserBar
         onBack={() => {
           fireInitiateCheckout();
-          window.location.assign(checkoutHref);
+          window.location.assign(escapeHref);
         }}
       />
       {/* Top */}
