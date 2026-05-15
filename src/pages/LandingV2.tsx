@@ -856,6 +856,40 @@ const LandingV2 = () => {
           <span style={{ ...fontMono, fontSize: 10, color: "#7a6e5f" }}>metodo.rotinapedagogica.com</span>
         </div>
       </div>
+
+      {/* Sticky mobile CTA */}
+      <div
+        aria-hidden={!showSticky}
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 50,
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px 12px calc(10px + env(safe-area-inset-bottom))",
+          background: "rgba(245,239,228,0.96)",
+          borderTop: "1px solid rgba(42,37,32,0.12)",
+          backdropFilter: "blur(8px)",
+          transform: showSticky ? "translateY(0)" : "translateY(120%)",
+          transition: "transform 240ms ease",
+          pointerEvents: showSticky ? "auto" : "none",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: 456 }}>
+          <a
+            href={checkoutHref}
+            onClick={openHotmart("sticky")}
+            style={{ ...ctaPrimary, padding: "14px 18px", fontSize: 16 }}
+          >
+            Quero por R$ 47 · acesso imediato →
+          </a>
+          <div style={{ ...fontMono, fontSize: 9.5, color: "#7a6e5f", textAlign: "center", marginTop: 6, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+            7 dias de garantia · pagamento seguro Hotmart
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
