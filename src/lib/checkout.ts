@@ -55,12 +55,20 @@ export function buildHotmartUrl(extras: CheckoutExtras = {}): string {
   return link.toString();
 }
 
+function track(name: string, data?: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+  if (typeof window.trackEvent === "function") window.trackEvent(name, data);
+}
+
 export function fireInitiateCheckout(data?: Record<string, unknown>) {
-  const w = window as unknown as { trackEvent?: (n: string, d?: Record<string, unknown>) => void };
-  if (typeof w.trackEvent === "function") w.trackEvent("InitiateCheckout", data);
+  track("InitiateCheckout", data);
 }
 
 export function fireAddToWishlist(data?: Record<string, unknown>) {
-  const w = window as unknown as { trackEvent?: (n: string, d?: Record<string, unknown>) => void };
-  if (typeof w.trackEvent === "function") w.trackEvent("AddToWishlist", data);
+  track("AddToWishlist", data);
 }
+
+export function fireAddToCart(data?: Record<string, unknown>) {
+  track("AddToCart", data);
+}
+
