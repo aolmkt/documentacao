@@ -731,6 +731,9 @@ const LandingV2 = () => {
         <div style={{ ...fontMono, fontSize: 11, color: "#b8a890", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
           (Pix ou cartão · acesso imediato)
         </div>
+        <div style={{ ...fontMono, fontSize: 10, color: "#7aa05c", textAlign: "center", marginTop: 14, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          ✓ 7 dias de garantia &nbsp;·&nbsp; ✓ Pagamento seguro Hotmart
+        </div>
       </div>
 
       {/* 17. FAQ */}
