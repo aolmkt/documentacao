@@ -16,21 +16,19 @@ import { PriceSection } from "@/components/landing/PriceSection";
 import { FutureSaasSection } from "@/components/landing/FutureSaasSection";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { Footer } from "@/components/landing/Footer";
-import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
+import { buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist, fireAddToCart } from "@/lib/checkout";
 
 const Index = () => {
   const priceRef = useRef<HTMLDivElement>(null);
   const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "b" }), []);
 
   const openHotmart = () => {
-    fireInitiateCheckout();
+    fireInitiateCheckout({ position: "legacy", page: "b" });
     window.open(checkoutHref, "_self");
   };
 
   const scrollToPrice = () => {
-    if (typeof (window as any).trackEvent === 'function') {
-      (window as any).trackEvent('AddToWishlist');
-    }
+    fireAddToWishlist({ page: "b" });
     priceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -41,15 +39,14 @@ const Index = () => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !fired) {
         fired = true;
-        if (typeof (window as any).trackEvent === 'function') {
-          (window as any).trackEvent('AddToCart');
-        }
+        fireAddToCart({ page: "b" });
         observer.disconnect();
       }
     }, { threshold: 0.3 });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
 
   return (
     <main className="min-h-screen bg-background">
