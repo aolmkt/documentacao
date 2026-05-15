@@ -1,45 +1,39 @@
 ## Objetivo
 
-Quando o usuário passa o mouse sobre os botões de checkout, o navegador deve mostrar a URL real e completa que será aberta — incluindo `src=...|pv` (ou `voltar1`/`voltar2`/`b`), UTMs do anúncio e `sck`. Hoje o `href` é o `HOTMART_URL` cru e a URL real só é montada no `onClick`.
+No `/br2`, quando o usuário clica em "voltar" no `FakeBrowserBar` e cai no checkout, marcar com um token próprio (`fuga`) para diferenciar de quem clicou no CTA da página (`voltar2`).
 
-## Solução
-
-Em cada página, calcular o `href` uma vez via `useMemo` usando `buildHotmartUrl(...)` (a mesma função que já roda no clique). O `onClick` passa a só disparar o pixel + `window.open(checkoutHref, "_self")`, sem reconstruir a URL.
-
-Bônus: se o JS falhar, o `<a>` ainda navega corretamente.
-
-## Arquivos
-
-### `src/pages/LandingV2.tsx`
-- Importar `useMemo`.
-- Dentro do componente: `const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "pv" }), []);`
-- Trocar os 6 `href={HOTMART_URL}` por `href={checkoutHref}` (linhas 148, 193, 398, 713, 776, 806).
-- Simplificar `openHotmart` para só fazer pixel + `window.open(checkoutHref, "_self")`.
-
-### `src/pages/Backredirect1.tsx`
-- Importar `useMemo`.
-- `const checkoutHref = useMemo(() => buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "voltar1" }), []);`
-- Trocar `href={HOTMART_URL}` (linha 323) por `href={checkoutHref}`.
-- `onCheckout` usa `checkoutHref` no `window.open`.
-- Mesmo `checkoutHref` no `FakeBrowserBar` `onBack` permanece como está (vai para `/br2`, não para Hotmart).
+## Arquivo
 
 ### `src/pages/Backredirect2.tsx`
-- Importar `useMemo`.
-- `const checkoutHref = useMemo(() => buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), []);`
-- Trocar `href={HOTMART_URL}` (linha 257) por `href={checkoutHref}`.
-- `onCheckout`, `useBackredirect` e `FakeBrowserBar onBack` passam a usar `checkoutHref` (mesmo valor que já era reconstruído 3x — vira uma referência só).
 
-### `src/pages/Index.tsx` (`/b`)
-- Hoje o CTA principal é `<Button onClick>` (sem `href`), então o hover já não mostra URL nenhuma. Para conseguir o preview correto, envolver o `<Button>` num `<a href={checkoutHref}>` ou trocar por `<a>` estilizado.
-- `const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "b" }), []);`
-- `openHotmart` usa `checkoutHref`.
+Adicionar um segundo URL memoizado só pro botão de voltar:
 
-## Detalhes técnicos
+```ts
+const escapeHref = useMemo(
+  () => buildHotmartUrl({ br: "2", step: "escape", srcAppend: "fuga" }),
+  [],
+);
+```
 
-- `buildHotmartUrl` lê `window.location.search`, cookie `original_src` e `window.trackingData.external_id` (setado pelo `tracker.js` antes do bundle React). Tudo já disponível no primeiro render do client.
-- Deps `[]` no `useMemo`: URL atual, cookie e `external_id` não mudam durante a sessão da página.
-- Sem mudanças em `tracker.js`, `checkout.ts`, ou na lógica de atribuição.
+Trocar o `onBack` do `FakeBrowserBar` para usar `escapeHref` no lugar de `checkoutHref`:
+
+```tsx
+<FakeBrowserBar
+  onBack={() => {
+    fireInitiateCheckout();
+    window.location.assign(escapeHref);
+  }}
+/>
+```
+
+O `checkoutHref` (com `voltar2`) continua sendo usado pelo CTA principal e pelo `useBackredirect` (gesto de voltar do navegador). O `onBack` do botão fake desktop passa a usar `escapeHref` (com `fuga`).
+
+## Resultado no relatório Hotmart
+
+- `src=...|pv|voltar2` → clicou no CTA da página `/br2`
+- `src=...|pv|fuga` → clicou no botão de "voltar" desktop e foi empurrado pro checkout
+- `step=escape` ajuda a filtrar esse fluxo separadamente
 
 ## Fora do escopo
 
-Não tocar em pixel, eventos ou merge de `src`/UTMs. Apenas mover o cálculo do `href` do clique para o mount.
+Não tocar em `useBackredirect`, CTA principal, `tracker.js` ou `checkout.ts`.
