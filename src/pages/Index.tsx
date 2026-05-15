@@ -16,31 +16,14 @@ import { PriceSection } from "@/components/landing/PriceSection";
 import { FutureSaasSection } from "@/components/landing/FutureSaasSection";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { Footer } from "@/components/landing/Footer";
+import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
 
 const Index = () => {
   const priceRef = useRef<HTMLDivElement>(null);
 
-  const hotmartUrl = "https://pay.hotmart.com/L104708967T?checkoutMode=10";
-
   const openHotmart = () => {
-    if (typeof (window as any).trackEvent === 'function') {
-      (window as any).trackEvent('InitiateCheckout');
-    }
-    const currentParams = new URLSearchParams(window.location.search);
-    const hotmartLink = new URL(hotmartUrl);
-    currentParams.forEach((value, key) => {
-      hotmartLink.searchParams.set(key, value);
-    });
-
-    // Garantir que o sck sempre seja enviado
-    if (!hotmartLink.searchParams.get('sck')) {
-      const extId = (window as any).trackingData?.external_id;
-      if (extId) {
-        hotmartLink.searchParams.set('sck', extId);
-      }
-    }
-
-    window.open(hotmartLink.toString(), "_self");
+    fireInitiateCheckout();
+    window.open(buildHotmartUrl({ srcAppend: "b" }), "_self");
   };
 
   const scrollToPrice = () => {

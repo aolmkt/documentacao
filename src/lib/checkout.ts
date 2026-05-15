@@ -7,15 +7,40 @@ export type CheckoutExtras = {
   srcAppend?: string;
 };
 
+function readCookie(name: string): string | null {
+  const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (!m) return null;
+  try {
+    return decodeURIComponent(m[2]);
+  } catch {
+    return m[2];
+  }
+}
+
+function buildSrc(srcAppend?: string): string {
+  const original = readCookie("original_src") || "";
+  const current = new URLSearchParams(window.location.search).get("src") || "";
+
+  const tokens: string[] = [];
+  const push = (raw: string) => {
+    raw.split("|").forEach((t) => {
+      const trimmed = t.trim();
+      if (trimmed && !tokens.includes(trimmed)) tokens.push(trimmed);
+    });
+  };
+  push(original);
+  push(current);
+  if (srcAppend) push(srcAppend);
+
+  return tokens.join("|");
+}
+
 export function buildHotmartUrl(extras: CheckoutExtras = {}): string {
   const current = new URLSearchParams(window.location.search);
 
-  if (extras.srcAppend) {
-    const prev = current.get("src") || "";
-    const tokens = prev ? prev.split("|") : [];
-    if (!tokens.includes(extras.srcAppend)) tokens.push(extras.srcAppend);
-    current.set("src", tokens.join("|"));
-  }
+  const finalSrc = buildSrc(extras.srcAppend);
+  if (finalSrc) current.set("src", finalSrc);
+
   if (extras.br) current.set("br", extras.br);
   if (extras.step) current.set("step", extras.step);
 
