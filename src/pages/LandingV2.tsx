@@ -160,7 +160,7 @@ const LandingV2 = () => {
             Rotina Pedagógica
           </span>
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{
+        <a href={checkoutHref} onClick={openHotmart("nav")} style={{
           ...fontMono, fontSize: 11, color: "#c45a3e",
           textDecoration: "none", fontWeight: 600,
           textTransform: "uppercase", letterSpacing: "0.06em",
@@ -205,7 +205,7 @@ const LandingV2 = () => {
           <span style={{ color: "#c45a3e", fontStyle: "italic" }}>Sem você escrever uma linha.</span>
         </p>
         <div style={{ position: "relative", marginBottom: 10 }}>
-          <a href={checkoutHref} onClick={openHotmart} style={ctaPrimary}>
+          <a href={checkoutHref} ref={heroCtaRef} onClick={openHotmart("hero")} style={ctaPrimary}>
             Ok. eu não vou perder isso de novo →
           </a>
           <div style={{
@@ -410,7 +410,7 @@ const LandingV2 = () => {
           Ou continuar gastando horas nisso amanhã.
         </p>
 
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
+        <a href={checkoutHref} onClick={openHotmart("middle")} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
@@ -725,7 +725,7 @@ const LandingV2 = () => {
         <div style={{ ...fontHand, fontSize: 56, color: "#f5c850", lineHeight: 1, marginBottom: 22, letterSpacing: "-0.02em" }}>
           R$47.
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, boxShadow: "0 2px 0 #8d3d28, 0 8px 24px rgba(196,90,62,0.4)" }}>
+        <a href={checkoutHref} onClick={openHotmart("offer")} style={{ ...ctaPrimary, boxShadow: "0 2px 0 #8d3d28, 0 8px 24px rgba(196,90,62,0.4)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#b8a890", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
@@ -788,7 +788,7 @@ const LandingV2 = () => {
             Você descreve a criança em linguagem simples. O relatório sai estruturado, na linguagem certa. Domingo livre. Coordenação elogiando. R$ 47 uma única vez.
           </p>
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{
+        <a href={checkoutHref} onClick={openHotmart("urgency")} style={{
           display: "block", textDecoration: "none", textAlign: "center",
           width: "100%", padding: "20px", border: "none",
           background: "#f5c850", color: "#2a2520", borderRadius: 10,
@@ -818,7 +818,7 @@ const LandingV2 = () => {
         <p style={{ fontSize: 15, lineHeight: 1.4, margin: "0 0 36px", color: "#5a5246", fontStyle: "italic" }}>
           e você sabe disso.
         </p>
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 8px 20px rgba(196,90,62,0.3)" }}>
+        <a href={checkoutHref} onClick={openHotmart("final")} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 8px 20px rgba(196,90,62,0.3)" }}>
           Eu preciso ver isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
