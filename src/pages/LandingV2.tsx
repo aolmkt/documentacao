@@ -1,5 +1,5 @@
-import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
-import { HOTMART_URL, buildHotmartUrl } from "@/lib/checkout";
+import { useEffect, useMemo, useRef, type CSSProperties, type MouseEvent } from "react";
+import { buildHotmartUrl } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
 
@@ -39,12 +39,14 @@ const LandingV2 = () => {
   const offerRef = useRef<HTMLDivElement>(null);
   useBackredirect(() => withCurrentParams("/br1"));
 
+  const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "pv" }), []);
+
   const openHotmart = (e?: MouseEvent) => {
     if (e) e.preventDefault();
     if (typeof (window as any).trackEvent === "function") {
       (window as any).trackEvent("InitiateCheckout");
     }
-    window.open(buildHotmartUrl({ srcAppend: "pv" }), "_self");
+    window.open(checkoutHref, "_self");
   };
 
 

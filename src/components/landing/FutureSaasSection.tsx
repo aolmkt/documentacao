@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 
 interface FinalCtaSectionProps {
   onCtaClick: () => void;
+  ctaHref?: string;
 }
 
-export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
+export const FutureSaasSection = ({ onCtaClick, ctaHref }: FinalCtaSectionProps) => {
   return (
     <section className="py-16 md:py-20 px-6 bg-lavanda">
       <div className="container max-w-2xl text-center">
@@ -26,13 +27,31 @@ export const FutureSaasSection = ({ onCtaClick }: FinalCtaSectionProps) => {
           </p>
         </div>
 
-        <Button
-          onClick={onCtaClick}
-          size="lg"
-          className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
-        >
-          Acessar o método agora
-        </Button>
+        {ctaHref ? (
+          <Button
+            asChild
+            size="lg"
+            className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+          >
+            <a
+              href={ctaHref}
+              onClick={(e) => {
+                e.preventDefault();
+                onCtaClick();
+              }}
+            >
+              Acessar o método agora
+            </a>
+          </Button>
+        ) : (
+          <Button
+            onClick={onCtaClick}
+            size="lg"
+            className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+          >
+            Acessar o método agora
+          </Button>
+        )}
 
         <p className="mt-6 text-xs text-muted-foreground italic">
           Acesso imediato após a compra.

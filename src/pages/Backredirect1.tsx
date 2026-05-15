@@ -1,5 +1,5 @@
-import { useEffect, type CSSProperties, type MouseEvent } from "react";
-import { HOTMART_URL, buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
+import { useEffect, useMemo, type CSSProperties, type MouseEvent } from "react";
+import { buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
 
@@ -47,10 +47,15 @@ const Backredirect1 = () => {
     };
   }, []);
 
+  const checkoutHref = useMemo(
+    () => buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "voltar1" }),
+    [],
+  );
+
   const onCheckout = (e: MouseEvent) => {
     e.preventDefault();
     fireInitiateCheckout();
-    window.open(buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "voltar1" }), "_self");
+    window.open(checkoutHref, "_self");
   };
 
   return (
@@ -320,7 +325,7 @@ const Backredirect1 = () => {
           quando deixa pra depois.
         </div>
         <a
-          href={HOTMART_URL}
+          href={checkoutHref}
           onClick={onCheckout}
           style={{
             display: "block",
