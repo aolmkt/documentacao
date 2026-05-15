@@ -50,7 +50,7 @@ const Backredirect1 = () => {
   const onCheckout = (e: MouseEvent) => {
     e.preventDefault();
     fireInitiateCheckout();
-    window.open(buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "br1" }), "_self");
+    window.open(buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "voltar1" }), "_self");
   };
 
   return (

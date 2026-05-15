@@ -30,7 +30,7 @@ const lines: Line[] = [
 const Backredirect2 = () => {
   useBackredirect(() => {
     fireInitiateCheckout();
-    return buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" });
+    return buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" });
   });
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const Backredirect2 = () => {
     if (!tokens.includes("br1")) tokens.unshift("br1");
     current.set("src", tokens.join("|"));
     history.replaceState(null, "", `${window.location.pathname}?${current.toString()}`);
-    window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" }), "_self");
+    window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), "_self");
   };
 
   return (
@@ -74,7 +74,7 @@ const Backredirect2 = () => {
       <FakeBrowserBar
         onBack={() => {
           fireInitiateCheckout();
-          window.location.assign(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "br2" }));
+          window.location.assign(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }));
         }}
       />
       {/* Top */}

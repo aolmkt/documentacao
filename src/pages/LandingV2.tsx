@@ -44,7 +44,7 @@ const LandingV2 = () => {
     if (typeof (window as any).trackEvent === "function") {
       (window as any).trackEvent("InitiateCheckout");
     }
-    window.open(buildHotmartUrl(), "_self");
+    window.open(buildHotmartUrl({ srcAppend: "pv" }), "_self");
   };
 
 
