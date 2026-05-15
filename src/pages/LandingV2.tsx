@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, type CSSProperties, type MouseEvent } from "react";
-import { buildHotmartUrl } from "@/lib/checkout";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
 import { useBackredirect, withCurrentParams } from "@/lib/backredirect";
+import { useEngagementTracking } from "@/hooks/useEngagementTracking";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
 
 const fontHand: CSSProperties = { fontFamily: '"Caveat", "Bradley Hand", cursive' };
@@ -37,18 +38,30 @@ const ctaPrimary: CSSProperties = {
 
 const LandingV2 = () => {
   const offerRef = useRef<HTMLDivElement>(null);
+  const heroCtaRef = useRef<HTMLAnchorElement>(null);
+  const [showSticky, setShowSticky] = useState(false);
   useBackredirect(() => withCurrentParams("/br1"));
+  useEngagementTracking("landing");
 
   const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "pv" }), []);
 
-  const openHotmart = (e?: MouseEvent) => {
+  const openHotmart = (position: string) => (e?: MouseEvent) => {
     if (e) e.preventDefault();
-    if (typeof (window as any).trackEvent === "function") {
-      (window as any).trackEvent("InitiateCheckout");
-    }
+    fireInitiateCheckout({ position, page: "landing" });
     window.open(checkoutHref, "_self");
   };
 
+  // Sticky CTA: appears after hero CTA leaves viewport
+  useEffect(() => {
+    const el = heroCtaRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowSticky(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = offerRef.current;
@@ -147,7 +160,7 @@ const LandingV2 = () => {
             Rotina Pedagógica
           </span>
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{
+        <a href={checkoutHref} onClick={openHotmart("nav")} style={{
           ...fontMono, fontSize: 11, color: "#c45a3e",
           textDecoration: "none", fontWeight: 600,
           textTransform: "uppercase", letterSpacing: "0.06em",
@@ -192,7 +205,7 @@ const LandingV2 = () => {
           <span style={{ color: "#c45a3e", fontStyle: "italic" }}>Sem você escrever uma linha.</span>
         </p>
         <div style={{ position: "relative", marginBottom: 10 }}>
-          <a href={checkoutHref} onClick={openHotmart} style={ctaPrimary}>
+          <a href={checkoutHref} ref={heroCtaRef} onClick={openHotmart("hero")} style={ctaPrimary}>
             Ok. eu não vou perder isso de novo →
           </a>
           <div style={{
@@ -397,7 +410,7 @@ const LandingV2 = () => {
           Ou continuar gastando horas nisso amanhã.
         </p>
 
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
+        <a href={checkoutHref} onClick={openHotmart("middle")} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 12px 28px rgba(196,90,62,0.35)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
@@ -712,11 +725,14 @@ const LandingV2 = () => {
         <div style={{ ...fontHand, fontSize: 56, color: "#f5c850", lineHeight: 1, marginBottom: 22, letterSpacing: "-0.02em" }}>
           R$47.
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, boxShadow: "0 2px 0 #8d3d28, 0 8px 24px rgba(196,90,62,0.4)" }}>
+        <a href={checkoutHref} onClick={openHotmart("offer")} style={{ ...ctaPrimary, boxShadow: "0 2px 0 #8d3d28, 0 8px 24px rgba(196,90,62,0.4)" }}>
           Ok. mostra isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#b8a890", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
           (Pix ou cartão · acesso imediato)
+        </div>
+        <div style={{ ...fontMono, fontSize: 10, color: "#7aa05c", textAlign: "center", marginTop: 14, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          ✓ 7 dias de garantia &nbsp;·&nbsp; ✓ Pagamento seguro Hotmart
         </div>
       </div>
 
@@ -775,7 +791,7 @@ const LandingV2 = () => {
             Você descreve a criança em linguagem simples. O relatório sai estruturado, na linguagem certa. Domingo livre. Coordenação elogiando. R$ 47 uma única vez.
           </p>
         </div>
-        <a href={checkoutHref} onClick={openHotmart} style={{
+        <a href={checkoutHref} onClick={openHotmart("urgency")} style={{
           display: "block", textDecoration: "none", textAlign: "center",
           width: "100%", padding: "20px", border: "none",
           background: "#f5c850", color: "#2a2520", borderRadius: 10,
@@ -805,7 +821,7 @@ const LandingV2 = () => {
         <p style={{ fontSize: 15, lineHeight: 1.4, margin: "0 0 36px", color: "#5a5246", fontStyle: "italic" }}>
           e você sabe disso.
         </p>
-        <a href={checkoutHref} onClick={openHotmart} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 8px 20px rgba(196,90,62,0.3)" }}>
+        <a href={checkoutHref} onClick={openHotmart("final")} style={{ ...ctaPrimary, fontSize: 17, boxShadow: "0 2px 0 #8d3d28, 0 8px 20px rgba(196,90,62,0.3)" }}>
           Eu preciso ver isso. →
         </a>
         <div style={{ ...fontMono, fontSize: 11, color: "#7a6e5f", textAlign: "center", marginTop: 10, letterSpacing: "0.06em" }}>
@@ -841,6 +857,40 @@ const LandingV2 = () => {
         <div style={{ fontSize: 13, color: "#5a5246", lineHeight: 1.6 }}>
           <strong style={{ fontWeight: 600 }}>Rotina Pedagógica</strong><br />
           <span style={{ ...fontMono, fontSize: 10, color: "#7a6e5f" }}>metodo.rotinapedagogica.com</span>
+        </div>
+      </div>
+
+      {/* Sticky mobile CTA */}
+      <div
+        aria-hidden={!showSticky}
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 50,
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px 12px calc(10px + env(safe-area-inset-bottom))",
+          background: "rgba(245,239,228,0.96)",
+          borderTop: "1px solid rgba(42,37,32,0.12)",
+          backdropFilter: "blur(8px)",
+          transform: showSticky ? "translateY(0)" : "translateY(120%)",
+          transition: "transform 240ms ease",
+          pointerEvents: showSticky ? "auto" : "none",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: 456 }}>
+          <a
+            href={checkoutHref}
+            onClick={openHotmart("sticky")}
+            style={{ ...ctaPrimary, padding: "14px 18px", fontSize: 16 }}
+          >
+            Quero por R$ 47 · acesso imediato →
+          </a>
+          <div style={{ ...fontMono, fontSize: 9.5, color: "#7a6e5f", textAlign: "center", marginTop: 6, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+            7 dias de garantia · pagamento seguro Hotmart
+          </div>
         </div>
       </div>
     </main>
