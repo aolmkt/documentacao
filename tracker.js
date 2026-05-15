@@ -10,7 +10,21 @@
     const API_URL = 'https://tracking.lavishcreative.com';
     const FACEBOOK_PIXEL_ID = '960726789638096';
     const COOKIE_NAME = 'external_id';
+    const ORIGINAL_SRC_COOKIE = 'original_src';
     let cachedIp = null;
+
+    function captureOriginalSrc() {
+        try {
+            const p = new URLSearchParams(window.location.search);
+            const urlSrc = p.get('src');
+            if (!urlSrc) return;
+            const existing = document.cookie.match(new RegExp('(^| )'+ORIGINAL_SRC_COOKIE+'=([^;]+)'));
+            if (existing) return; // never overwrite — preserves ad attribution
+            const d = new Date(); d.setTime(d.getTime() + (30*24*60*60*1000));
+            document.cookie = `${ORIGINAL_SRC_COOKIE}=${encodeURIComponent(urlSrc)};expires=${d.toUTCString()};path=/;SameSite=Lax;Secure`;
+        } catch (e) {}
+    }
+    captureOriginalSrc();
 
     const STANDARD_EVENTS = [
         'AddPaymentInfo', 'AddToCart', 'AddToWishlist', 'CompleteRegistration', 'Contact',
