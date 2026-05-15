@@ -71,9 +71,7 @@ const LandingV2 = () => {
       ([entry]) => {
         if (entry.isIntersecting && !fired) {
           fired = true;
-          if (typeof (window as any).trackEvent === "function") {
-            (window as any).trackEvent("AddToCart");
-          }
+          fireAddToCart({ page: "landing" });
           obs.disconnect();
         }
       },
