@@ -39,7 +39,7 @@ const Backredirect2 = () => {
 
   useBackredirect(() => {
     fireInitiateCheckout();
-    return checkoutHref;
+    return escapeHref;
   });
 
   useEffect(() => {
