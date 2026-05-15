@@ -1,22 +1,51 @@
-# Padronizar `src` no checkout para identificar a página da venda
+## Objetivo
 
-Hoje o token `src` que vai pra Hotmart está inconsistente: a landing principal não envia nenhum token, e as páginas de voltar mandam `br1` / `br2`. Você pediu `pv`, `voltar1` e `voltar2`.
+Preservar o `src` original do anúncio em cookie e concatenar com novos `src` que chegarem via URL (ex: links enviados no inbox), em todas as rotas (`/`, `/b`, `/br1`, `/br2`).
 
-A função `buildHotmartUrl()` (em `src/lib/checkout.ts`) já faz a concatenação correta — pega o `src` que veio na URL do anúncio, divide por `|`, e adiciona o token novo no final sem duplicar. Só precisa ser chamada com o token certo em cada página.
+## Regras confirmadas
 
-## Mudanças
+- **Comportamento (a)**: cookie do `original_src` é gravado APENAS na 1ª visita. Src novo na URL NÃO sobrescreve o cookie — só entra na concatenação daquela sessão.
+- **Validade**: 30 dias (igual `external_id`).
+- **Token da página `/b`**: `b`.
 
-| Página | Arquivo | Token atual | Token novo |
-|---|---|---|---|
-| Principal `/` | `src/pages/LandingV2.tsx` (`openHotmart`, linha 47) | (nenhum) | `pv` |
-| Voltar 1 `/br1` | `src/pages/Backredirect1.tsx` (linha 53) | `br1` | `voltar1` |
-| Voltar 2 `/br2` | `src/pages/Backredirect2.tsx` (linhas 33, 69, 77) | `br2` | `voltar2` |
+## Como vai funcionar
 
-Resultado: se o anúncio mandar `?src=fb_campanha7`, ao clicar no CTA da principal o usuário vai pra Hotmart com `src=fb_campanha7|pv`. Se cair no `/br1` e clicar, vira `src=fb_campanha7|pv|voltar1`. Em `/br2`, `src=fb_campanha7|pv|voltar1|voltar2`. Você consegue ver na Hotmart exatamente onde a venda fechou.
+Formato final do `src` enviado ao Hotmart:
+```text
+src = original_src_do_cookie | src_atual_da_url | token_da_pagina
+```
+
+Partes vazias/duplicadas são removidas. Exemplos:
+
+| Cenário | Cookie | URL atual | Página | src final |
+|---|---|---|---|---|
+| 1ª visita do anúncio | (vazio, será gravado) | `?src=ig_camp123` | `/` | `ig_camp123\|pv` |
+| Volta pelo inbox | `ig_camp123` | `?src=inbox` | `/b` | `ig_camp123\|inbox\|b` |
+| Volta direto sem src | `ig_camp123` | (sem src) | `/b` | `ig_camp123\|b` |
+| Backredirect | `ig_camp123` | (sem src) | `/br1` | `ig_camp123\|voltar1` |
+
+## Mudanças técnicas
+
+**1. `public/tracker.js`** — adicionar gravação do `original_src`:
+- Novo cookie `original_src` (30 dias, `path=/`, `SameSite=Lax`, `Secure`).
+- Na 1ª visita: se a URL tem `?src=...` e o cookie ainda não existe, grava.
+- Visitas seguintes: cookie nunca é sobrescrito.
+
+**2. `src/lib/checkout.ts`** — atualizar a montagem do `src` final:
+- Ler cookie `original_src`.
+- Ler `src` da URL atual.
+- Receber token da página (já recebe hoje: `pv`/`voltar1`/`voltar2`; adicionar `b`).
+- Concatenar com `|`, remover duplicatas e vazios.
+
+**3. `src/pages/Index.tsx`** (`/b`) — passar token `b` na chamada do checkout (hoje provavelmente não passa nenhum).
 
 ## O que NÃO muda
 
-- Lógica do `buildHotmartUrl` (já funciona, só estava sendo chamada errado).
-- UTMs, `sck`, Pixel, copy, visual.
-- `/b` (legado) continua igual.
-- 6 botões da `LandingV2` usam o mesmo `openHotmart` — todos passam a mandar `pv` automaticamente.
+- `external_id` (já está correto, persistindo via cookie).
+- Lógica de `sck` no auto-linker da Hotmart.
+- Eventos de Pixel.
+- Conteúdo visual de qualquer página.
+
+## Após implementar
+
+Republicar o app para que `metodo.rotinapedagogica.com` receba a versão nova.
