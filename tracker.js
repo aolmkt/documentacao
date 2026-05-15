@@ -39,7 +39,11 @@
             return id;
         }
         const m = document.cookie.match(new RegExp('(^| )'+COOKIE_NAME+'=([^;]+)'));
-        return m ? m[2] : 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        if (m) return m[2];
+        const newId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        const d = new Date(); d.setTime(d.getTime() + (30*24*60*60*1000));
+        document.cookie = `${COOKIE_NAME}=${newId};expires=${d.toUTCString()};path=/;SameSite=Lax;Secure`;
+        return newId;
     }
     const extId = getExternalId();
     window.trackingData = { external_id: extId };
