@@ -59,13 +59,6 @@ const Backredirect2 = () => {
   const onCheckout = (e: MouseEvent) => {
     e.preventDefault();
     fireInitiateCheckout();
-    // ensure br1 is in the src chain even if user landed straight on /br2
-    const current = new URLSearchParams(window.location.search);
-    const prev = current.get("src") || "";
-    const tokens = prev ? prev.split("|") : [];
-    if (!tokens.includes("br1")) tokens.unshift("br1");
-    current.set("src", tokens.join("|"));
-    history.replaceState(null, "", `${window.location.pathname}?${current.toString()}`);
     window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), "_self");
   };
 
