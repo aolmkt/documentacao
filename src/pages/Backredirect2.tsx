@@ -76,7 +76,7 @@ const Backredirect2 = () => {
       <FakeBrowserBar
         onBack={() => {
           fireInitiateCheckout();
-          window.location.assign(checkoutHref);
+          window.location.assign(escapeHref);
         }}
       />
       {/* Top */}
