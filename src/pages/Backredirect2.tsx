@@ -1,5 +1,5 @@
-import { useEffect, type CSSProperties, type MouseEvent } from "react";
-import { HOTMART_URL, buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
+import { useEffect, useMemo, type CSSProperties, type MouseEvent } from "react";
+import { buildHotmartUrl, fireInitiateCheckout, fireAddToWishlist } from "@/lib/checkout";
 import { useBackredirect } from "@/lib/backredirect";
 import FakeBrowserBar from "@/components/FakeBrowserBar";
 
@@ -28,9 +28,14 @@ const lines: Line[] = [
 ];
 
 const Backredirect2 = () => {
+  const checkoutHref = useMemo(
+    () => buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }),
+    [],
+  );
+
   useBackredirect(() => {
     fireInitiateCheckout();
-    return buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" });
+    return checkoutHref;
   });
 
   useEffect(() => {
@@ -59,7 +64,7 @@ const Backredirect2 = () => {
   const onCheckout = (e: MouseEvent) => {
     e.preventDefault();
     fireInitiateCheckout();
-    window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), "_self");
+    window.open(checkoutHref, "_self");
   };
 
   return (
@@ -67,7 +72,7 @@ const Backredirect2 = () => {
       <FakeBrowserBar
         onBack={() => {
           fireInitiateCheckout();
-          window.location.assign(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }));
+          window.location.assign(checkoutHref);
         }}
       />
       {/* Top */}
@@ -254,7 +259,7 @@ const Backredirect2 = () => {
           </div>
         </div>
         <a
-          href={HOTMART_URL}
+          href={checkoutHref}
           onClick={onCheckout}
           style={{
             display: "block",

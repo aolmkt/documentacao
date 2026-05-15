@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { MirrorSection } from "@/components/landing/MirrorSection";
@@ -20,10 +20,11 @@ import { buildHotmartUrl, fireInitiateCheckout } from "@/lib/checkout";
 
 const Index = () => {
   const priceRef = useRef<HTMLDivElement>(null);
+  const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "b" }), []);
 
   const openHotmart = () => {
     fireInitiateCheckout();
-    window.open(buildHotmartUrl({ srcAppend: "b" }), "_self");
+    window.open(checkoutHref, "_self");
   };
 
   const scrollToPrice = () => {
@@ -90,12 +91,12 @@ const Index = () => {
       </div>
       <div className="h-px bg-border" />
       <div ref={priceRef}>
-        <PriceSection onCtaClick={openHotmart} />
+        <PriceSection onCtaClick={openHotmart} ctaHref={checkoutHref} />
       </div>
       <div className="h-px bg-border" />
       <FaqSection />
       <div className="h-px bg-border" />
-      <FutureSaasSection onCtaClick={openHotmart} />
+      <FutureSaasSection onCtaClick={openHotmart} ctaHref={checkoutHref} />
       <Footer />
     </main>
   );

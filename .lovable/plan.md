@@ -1,54 +1,45 @@
-## Diagnóstico
+## Objetivo
 
-Hoje o token de página (`pv`/`voltar1`/`voltar2`/`b`) já é injetado **apenas no link de checkout** via `srcAppend`. Bom.
+Quando o usuário passa o mouse sobre os botões de checkout, o navegador deve mostrar a URL real e completa que será aberta — incluindo `src=...|pv` (ou `voltar1`/`voltar2`/`b`), UTMs do anúncio e `sck`. Hoje o `href` é o `HOTMART_URL` cru e a URL real só é montada no `onClick`.
 
-Mas há **uma exceção** que está poluindo a URL do navegador:
+## Solução
 
-**`src/pages/Backredirect2.tsx`** (linhas 62–68, função `onCheckout`):
-```ts
-// ensure br1 is in the src chain even if user landed straight on /br2
-const current = new URLSearchParams(window.location.search);
-const prev = current.get("src") || "";
-const tokens = prev ? prev.split("|") : [];
-if (!tokens.includes("br1")) tokens.unshift("br1");
-current.set("src", tokens.join("|"));
-history.replaceState(null, "", `${window.location.pathname}?${current.toString()}`);
-```
+Em cada página, calcular o `href` uma vez via `useMemo` usando `buildHotmartUrl(...)` (a mesma função que já roda no clique). O `onClick` passa a só disparar o pixel + `window.open(checkoutHref, "_self")`, sem reconstruir a URL.
 
-Esse bloco escreve `src=br1|...` na barra de endereço via `replaceState` antes de abrir o checkout. É exatamente o tipo de poluição que você não quer. Além disso usa o token errado (`br1` em vez de `voltar1`).
+Bônus: se o JS falhar, o `<a>` ainda navega corretamente.
 
-Nada mais escreve `src` na URL — `withCurrentParams` apenas repassa os params que já vieram do anúncio entre `/` → `/br1` → `/br2`.
+## Arquivos
 
-## Comportamento depois do ajuste
+### `src/pages/LandingV2.tsx`
+- Importar `useMemo`.
+- Dentro do componente: `const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "pv" }), []);`
+- Trocar os 6 `href={HOTMART_URL}` por `href={checkoutHref}` (linhas 148, 193, 398, 713, 776, 806).
+- Simplificar `openHotmart` para só fazer pixel + `window.open(checkoutHref, "_self")`.
 
-- URL do navegador (em qualquer rota) carrega **só** o que veio do anúncio (`src=ig...`, `utm_*`, `fbclid`, etc.).
-- Link do checkout monta sempre: `original_src (cookie) | src_da_url | token_da_pagina`, com dedupe.
-- Tokens por rota:
-  - `/` → `pv`
-  - `/br1` → `voltar1`
-  - `/br2` → `voltar2`
-  - `/b` → `b`
+### `src/pages/Backredirect1.tsx`
+- Importar `useMemo`.
+- `const checkoutHref = useMemo(() => buildHotmartUrl({ br: "1", step: "backredirect", srcAppend: "voltar1" }), []);`
+- Trocar `href={HOTMART_URL}` (linha 323) por `href={checkoutHref}`.
+- `onCheckout` usa `checkoutHref` no `window.open`.
+- Mesmo `checkoutHref` no `FakeBrowserBar` `onBack` permanece como está (vai para `/br2`, não para Hotmart).
 
-Exemplos:
+### `src/pages/Backredirect2.tsx`
+- Importar `useMemo`.
+- `const checkoutHref = useMemo(() => buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), []);`
+- Trocar `href={HOTMART_URL}` (linha 257) por `href={checkoutHref}`.
+- `onCheckout`, `useBackredirect` e `FakeBrowserBar onBack` passam a usar `checkoutHref` (mesmo valor que já era reconstruído 3x — vira uma referência só).
 
-| Rota | URL navegador | src no checkout |
-|---|---|---|
-| `/?src=ig_camp` | `/?src=ig_camp` | `ig_camp\|pv` |
-| Volta → `/br1` | `/br1?src=ig_camp` | `ig_camp\|voltar1` |
-| Volta → `/br2` | `/br2?src=ig_camp` | `ig_camp\|voltar2` |
-| `/b` direto via inbox | `/b` (sem params) | `ig_camp\|b` (cookie) |
+### `src/pages/Index.tsx` (`/b`)
+- Hoje o CTA principal é `<Button onClick>` (sem `href`), então o hover já não mostra URL nenhuma. Para conseguir o preview correto, envolver o `<Button>` num `<a href={checkoutHref}>` ou trocar por `<a>` estilizado.
+- `const checkoutHref = useMemo(() => buildHotmartUrl({ srcAppend: "b" }), []);`
+- `openHotmart` usa `checkoutHref`.
 
-Observação: o token da página anterior (ex.: `voltar1`) **não** aparece na cadeia do `/br2`, porque ele nunca é persistido. Se você quiser rastrear "passou pelo br1 antes do br2" me avisa — daria pra resolver com um cookie separado (`page_path`) sem sujar a URL.
+## Detalhes técnicos
 
-## Mudança técnica
+- `buildHotmartUrl` lê `window.location.search`, cookie `original_src` e `window.trackingData.external_id` (setado pelo `tracker.js` antes do bundle React). Tudo já disponível no primeiro render do client.
+- Deps `[]` no `useMemo`: URL atual, cookie e `external_id` não mudam durante a sessão da página.
+- Sem mudanças em `tracker.js`, `checkout.ts`, ou na lógica de atribuição.
 
-Em `src/pages/Backredirect2.tsx`, função `onCheckout`: remover o bloco que faz `replaceState` na URL. Fica apenas:
-```ts
-const onCheckout = (e: MouseEvent) => {
-  e.preventDefault();
-  fireInitiateCheckout();
-  window.open(buildHotmartUrl({ br: "2", step: "backredirect-2", srcAppend: "voltar2" }), "_self");
-};
-```
+## Fora do escopo
 
-Nenhuma outra alteração é necessária — `tracker.js`, `checkout.ts`, `LandingV2.tsx`, `Index.tsx` e `Backredirect1.tsx` já estão corretos.
+Não tocar em pixel, eventos ou merge de `src`/UTMs. Apenas mover o cálculo do `href` do clique para o mount.

@@ -3,9 +3,10 @@ import { Check } from "lucide-react";
 
 interface PriceSectionProps {
   onCtaClick: () => void;
+  ctaHref?: string;
 }
 
-export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
+export const PriceSection = ({ onCtaClick, ctaHref }: PriceSectionProps) => {
   return (
     <section className="py-[72px] md:py-20 px-6">
       <div className="container max-w-2xl">
@@ -67,13 +68,31 @@ export const PriceSection = ({ onCtaClick }: PriceSectionProps) => {
             ))}
           </ul>
           
-          <Button 
-            onClick={onCtaClick}
-            size="lg"
-            className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-10 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
-          >
-            Quero organizar meus relatórios
-          </Button>
+          {ctaHref ? (
+            <Button
+              asChild
+              size="lg"
+              className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-10 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+            >
+              <a
+                href={ctaHref}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onCtaClick();
+                }}
+              >
+                Quero organizar meus relatórios
+              </a>
+            </Button>
+          ) : (
+            <Button
+              onClick={onCtaClick}
+              size="lg"
+              className="w-full sm:w-auto bg-cta hover:bg-cta-hover text-cta-foreground text-lg px-6 sm:px-10 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 whitespace-normal"
+            >
+              Quero organizar meus relatórios
+            </Button>
+          )}
           
           <div className="mt-6 pt-5 border-t border-border/50">
             <p className="text-xs text-muted-foreground">
