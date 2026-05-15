@@ -126,16 +126,23 @@
 
     initSystem();
 
-    // --- 5. AUTO-LINKER HOTMART ---
-    function autoLink() {
-        setTimeout(()=>{
-            document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(el=>{
-                if(el.href.indexOf('sck=') < 0) {
-                    const sep = el.href.includes('?') ? '&' : '?';
-                    el.href += sep + 'sck=' + extId;
-                }
-            });
-        }, 1200);
+    // --- 5. AUTO-LINKER HOTMART (MutationObserver: cobre SPA + lazy renders) ---
+    function patchLinks(root) {
+        (root.querySelectorAll ? root.querySelectorAll('a[href*="pay.hotmart.com"]') : []).forEach(el => {
+            if (el.href.indexOf('sck=') < 0) {
+                const sep = el.href.includes('?') ? '&' : '?';
+                el.href += sep + 'sck=' + extId;
+            }
+        });
     }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', autoLink); else autoLink();
+    function startAutoLink() {
+        patchLinks(document);
+        const mo = new MutationObserver(muts => {
+            for (const m of muts) {
+                m.addedNodes.forEach(n => { if (n.nodeType === 1) patchLinks(n); });
+            }
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startAutoLink); else startAutoLink();
 })();
