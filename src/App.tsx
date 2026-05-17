@@ -1,7 +1,3 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 
@@ -10,8 +6,6 @@ const Index = lazy(() => import("./pages/Index"));
 const Backredirect1 = lazy(() => import("./pages/Backredirect1"));
 const Backredirect2 = lazy(() => import("./pages/Backredirect2"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-const queryClient = new QueryClient();
 
 const LegacyLanding = () => {
   useEffect(() => {
@@ -27,24 +21,18 @@ const LegacyLanding = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/" element={<LandingV2 />} />
-            <Route path="/b" element={<LegacyLanding />} />
-            <Route path="/br1" element={<Backredirect1 />} />
-            <Route path="/br2" element={<Backredirect2 />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <BrowserRouter>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/" element={<LandingV2 />} />
+        <Route path="/b" element={<LegacyLanding />} />
+        <Route path="/br1" element={<Backredirect1 />} />
+        <Route path="/br2" element={<Backredirect2 />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  </BrowserRouter>
 );
 
 export default App;
